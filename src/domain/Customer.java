@@ -1,10 +1,6 @@
 package domain;
 
 public class Customer {
-    private static final String DEFAULT_NAME = "Unknown";
-    private static final int INVALID_ID = -1;
-    private static final float INVALID_BALANCE = -1;
-    
     private String name;
     private int ID;
     private float balance;
@@ -29,7 +25,7 @@ public class Customer {
 
     public void setName(String name){
         if (name == null || name.trim().isBlank()){
-            this.name = DEFAULT_NAME;  
+            this.name = "Unknown";  
         } else {
             this.name = name.trim();
         }
@@ -37,7 +33,7 @@ public class Customer {
 
     public void setID(int ID){
         if (ID < 0){
-            this.ID = INVALID_ID;
+            this.ID = -1;
         } else {
             this.ID = ID;
         }
@@ -45,8 +41,8 @@ public class Customer {
 
     public void setBalance(float balance){
         if (balance < 0){
-            this.balance = INVALID_BALANCE;
-        } else {
+            this.balance = -1;
+        } else{
             this.balance = balance;
         }
     }
