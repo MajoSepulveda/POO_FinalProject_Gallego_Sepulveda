@@ -4,7 +4,7 @@ public class VideoGames {
     private String genre;
     private float rating;
     private float price;
-    private int id;
+    private String id;
     private int stock;
 
     public String getTitle(){
@@ -23,7 +23,7 @@ public class VideoGames {
         return price;
     }
 
-    public int getID(){
+    public String getID(){
         return id;
     }
 
@@ -35,16 +35,16 @@ public class VideoGames {
         title = newTitle;
     }
 
-   public boolean setGenre(String newGenre) {
-    String[] genres = {"Action", "Adventure", "RPG", "Strategy", "Simulation", "Racing", "Sports", "Casual", "Horror", "FPS"};
-    for (String genre : genres) {
-        if (genre.equals(newGenre)) {
-            genre = newGenre;
-            return true;
+    public boolean setGenre(String newGenre) {
+        String[] genres = {"Action", "Adventure", "RPG", "Strategy", "Simulation", "Racing", "Sports", "Casual"};
+        for (String g : genres) {
+            if (g.equals(newGenre)) {
+                this.genre = newGenre;
+                return true;
+            }
         }
+        return false;
     }
-    return false;
-}
     
     public boolean setRating(float newRating) {
         if (newRating >= 0.0 && newRating <= 10.0) {
@@ -61,7 +61,7 @@ public class VideoGames {
         return price;
     }
 
-    public void setID(int newID){
+    public void setID(String newID){
         id = newID;
     }
 
