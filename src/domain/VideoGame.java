@@ -1,7 +1,7 @@
 
 import java.io.Serializable;
 
-public class VideoGames implements Serializable {
+public class VideoGame implements Serializable {
 
     private String id;
     private String title;
@@ -10,7 +10,7 @@ public class VideoGames implements Serializable {
     private float price;
     private int stock;
 
-    public VideoGames(String title, String genre, float rating, float price, String id, int stock){
+    public VideoGame(String title, String genre, float rating, float price, String id, int stock){
         setID(id);
         setTitle(title);
         setGenre(genre);
