@@ -1,10 +1,7 @@
-package domain;
+package src.domain;
+import java.io.Serializable;
 
-public class Customer {
-    private static final String DEFAULT_NAME = "Unknown";
-    private static final int INVALID_ID = -1;
-    private static final float INVALID_BALANCE = -1;
-    
+public class Customer implements Serializable {
     private String name;
     private int ID;
     private float balance;
@@ -29,25 +26,22 @@ public class Customer {
 
     public void setName(String name){
         if (name == null || name.trim().isBlank()){
-            this.name = DEFAULT_NAME;  
-        } else {
-            this.name = name.trim();
+            throw new IllegalArgumentException("El nombre del cliente no puede estar vacío."); 
         }
+        this.name = name.trim();
     }
 
     public void setID(int ID){
         if (ID < 0){
-            this.ID = INVALID_ID;
-        } else {
-            this.ID = ID;
+            throw new IllegalArgumentException("El ID del cliente no puede ser negativo.");
         }
+        this.ID = ID;
     }
 
     public void setBalance(float balance){
         if (balance < 0){
-            this.balance = INVALID_BALANCE;
-        } else {
-            this.balance = balance;
+            throw new IllegalArgumentException("El saldo del cliente no puede ser negativo.");
         }
+        this.balance = balance;
     }
 }
