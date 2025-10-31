@@ -1,4 +1,4 @@
-
+package src.domain;
 import java.io.Serializable;
 
 public class VideoGame implements Serializable {
