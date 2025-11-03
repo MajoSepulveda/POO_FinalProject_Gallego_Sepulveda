@@ -1,11 +1,13 @@
-package data;
+package src.data;
+
 import java.io.*;
 import java.util.ArrayList;
-
-import domain.*;
+import java.util.List;
+import src.domain.*;
 
 public class DataStorage {
     
+    //Serializar la clase Store
     public static void save(Store store, String filename){
         try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))){
             out.writeObject(store);
@@ -23,17 +25,19 @@ public class DataStorage {
         }
     }
 
-    public static ArrayList<Videogame> loadVideogames(String filename){
-        ArrayList<Videogames> videogamesList = new ArrayList<>();
+    //Cargar listas desde archivos CSV
+    public static ArrayList<VideoGame> loadVideogames(String filename) throws IOException {
+        ArrayList<VideoGame> videoGamesList = new ArrayList<>();
         String line;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))){
-            br.readLine(); //Salta la primera línea del archivo (encabezados)
+            String header = br.readLine(); // Salta la primera línea del archivo (encabezados)
+            if (header == null) return videoGamesList; // archivo vacío
 
             while ((line = br.readLine()) != null){
                 String[] data = line.split(",");
 
-                if (data.length == 6){
+                if (data.length >= 6){
                     try {
                         String tittle = data[0];
                         String genre = data[1];
@@ -42,29 +46,32 @@ public class DataStorage {
                         String ID = data[4];
                         int stock = Integer.parseInt(data[5]);
 
-                        Videogame newVideogame = new Videogame(tittle, genre, ranking, price, ID, stock);
-                        videogamesList.add(newVideogame);
+                        VideoGame newVideogame = new VideoGame(tittle, genre, ranking, price, ID, stock);
+                        videoGamesList.add(newVideogame);
 
                     } catch (NumberFormatException e){
                         System.err.println("Advertencia: Se omitió la línea '" + line + "' por formato de número inválido.");
                     }
+                } else {
+                    System.err.println("Advertencia: Se omitió la línea '" + line + "' por tener una cantidad de columnas incorrecta.");
                 }
             }
-            return videogamesList;
+            return videoGamesList;
         }
     }
 
-    public static ArrayList<Customer> loadCustomers(String filename){
+    public static ArrayList<Customer> loadCustomers(String filename) throws IOException {
         ArrayList<Customer> customerList = new ArrayList<>();
         String line;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))){
-            br.readLine();
+            String header = br.readLine();
+            if (header == null) return customerList;
 
             while ((line = br.readLine()) != null){
                 String[] data = line.split(",");
 
-                if (data.length == 3){
+                if (data.length >= 3){
                     try {
                         String name = data[0];
                         int ID = Integer.parseInt(data[1]);
@@ -75,9 +82,79 @@ public class DataStorage {
                     } catch (NumberFormatException e){
                         System.err.println("Advertencia: Se omitió la línea '" + line + "' por formato de número inválido.");
                     }
+                } else {
+                    System.err.println("Advertencia: Se omitió la línea '" + line + "' por tener una cantidad de columnas incorrecta.");
                 }
             }
             return customerList;
         }
-    }   
+    } 
+    
+    public static ArrayList<Sale> loadSales(String filename, ArrayList<Customer> allCustomers, ArrayList<VideoGame> allVideoGames) throws IOException {
+        ArrayList<Sale> saleList = new ArrayList<>();
+        String line;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))){
+            String header = br.readLine();
+            if (header == null) return saleList;
+
+            while ((line = br.readLine()) != null){
+                String[] data = line.split(",");
+
+                if (data.length >= 5) {
+                    try {
+                        String saleID = data[0];
+                        int customerID = Integer.parseInt(data[1]);
+                        String videoGameID = data[2];
+                        float mount = Float.parseFloat(data[3]);
+                        String date = data[4];
+
+                        // Buscar objetos en las listas que fueron pasadas como parámetros
+                        Customer customer = findCustomerByID(customerID, allCustomers);
+                        VideoGame videoGame = findVideoGameByID(videoGameID, allVideoGames);
+
+                        // Ambos deben existir para crear una venta válida
+                        if (customer != null && videoGame != null){
+                            Sale newSale = new Sale(saleID.trim(), customer, videoGame, mount, date);
+                            saleList.add(newSale);
+                        } else {
+                            System.err.println("Advertencia: No se encontró el Cliente (" + customerID + ") o el Juego (" + videoGameID + ") para la venta " + saleID + ". Línea omitida.");
+                        }
+                    } catch (NumberFormatException e){
+                        System.err.println("Advertencia: Se omitió la línea '" + line + "' por formato de número inválido.");
+
+                    }
+                } else {
+                    System.err.println("Advertencia: Se omitió la línea '" + line + "' por tener una cantidad de columnas incorrecta.");
+                }
+            }
+        }
+        return saleList;
+    }
+
+    // Helpers para buscar objetos por ID dentro de las listas pasadas
+    private static Customer findCustomerByID(int id, List<Customer> customers){
+        if (customers == null) return null;
+        for (Customer c : customers){
+            // Asumimos que Customer tiene un getter getID() o campo accesible
+            try {
+                if (c.getID() == id) return c;
+            } catch (Exception e) {
+                // Si la clase Customer no tiene getID, omitimos y seguimos
+            }
+        }
+        return null;
+    }
+
+    private static VideoGame findVideoGameByID(String id, List<VideoGame> videoGames){
+        if (videoGames == null) return null;
+        for (VideoGame v : videoGames){
+            try {
+                if (v.getID().equals(id)) return v;
+            } catch (Exception e) {
+                // Si no hay getID, omitimos
+            }
+        }
+        return null;
+    }
 }
