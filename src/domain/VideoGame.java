@@ -58,13 +58,17 @@ public class VideoGame implements Serializable {
     }
 
     public void setGenre(String genre) {
+        if (genre == null || genre.trim().isBlank()) {
+            throw new IllegalArgumentException("El genero no puede estar vacío");
+        }
         String[] genres = {"Action", "Adventure", "RPG", "Strategy", "Simulation", "Racing", "Sports", "Casual"};
         for (String g : genres) {
-            if (genre == null || genre.trim().isBlank() || !genre.equals(g)) {
-                throw new IllegalStateException("EL genero del videojuego no es valido");
+            if (g.equals(genre)) {
+                this.genre = genre;
+                return;
             }
         }
-        this.genre = genre;
+        throw new IllegalArgumentException("El genero del videojuego no es valido");
     }
     
     public void setRating(float rating) {
@@ -82,8 +86,8 @@ public class VideoGame implements Serializable {
     }
 
     public void setStock(int stock){
-        if (stock <= 0) {
-            throw new IllegalArgumentException("El stock del videojuego debe ser mayor a 0");
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock del videojuego no puede ser negativo");
         }
         this.stock = stock;
     }
