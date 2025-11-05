@@ -11,12 +11,19 @@ public class VideoGame implements Serializable {
     private int stock;
 
     public VideoGame(String title, String genre, float rating, float price, String id, int stock){
-        setID(id);
         setTitle(title);
         setGenre(genre);
         setRating(rating);
         setPrice(price);
-        setStock(stock);
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock del videojuego no puede ser negativo");
+        }
+        this.stock = stock;
+
+        if (id == null || id.trim().isBlank()) {
+            throw new IllegalArgumentException("El ID del videojuego no puede estar vacio");
+        }
+        this.id = id;
     }
 
     public String getID(){
@@ -41,13 +48,6 @@ public class VideoGame implements Serializable {
 
     public int getStock(){
         return stock;
-    }
-
-    public void setID(String id){
-        if (id == null || id.trim().isBlank()) {
-            throw new IllegalArgumentException("El ID del videojuego no puede estar vacio");
-        }
-        this.id = id;
     }
 
     public void setTitle(String title){
@@ -85,10 +85,20 @@ public class VideoGame implements Serializable {
         this.price = price;
     }
 
-    public void setStock(int stock){
-        if (stock < 0) {
-            throw new IllegalArgumentException("El stock del videojuego no puede ser negativo");
+    public synchronized void reduceStock() {
+        if (this.stock <= 0) {
+            throw new IllegalStateException("Stock insuficiente");
         }
-        this.stock = stock;
+        this.stock -= 1;
     }
+
+    public synchronized void addStock(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("La cantidad a agregar debe ser mayor que 0");
+        }
+        int newStock = (int) this.stock + (int) amount;
+        this.stock = (int) newStock;
+    }
+
+    
 }
