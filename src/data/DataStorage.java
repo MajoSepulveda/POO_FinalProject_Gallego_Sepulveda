@@ -103,22 +103,22 @@ public class DataStorage {
 
                 if (data.length >= 5) {
                     try {
-                        String saleID = data[0];
-                        int customerID = Integer.parseInt(data[1]);
-                        String videoGameID = data[2];
-                        float mount = Float.parseFloat(data[3]);
+                        String saleId = data[0];
+                        int customerId = Integer.parseInt(data[1]);
+                        String videoGameId = data[2];
+                        float amount = Float.parseFloat(data[3]);
                         String date = data[4];
 
                         // Buscar objetos en las listas que fueron pasadas como parámetros
-                        Customer customer = findCustomerByID(customerID, allCustomers);
-                        VideoGame videoGame = findVideoGameByID(videoGameID, allVideoGames);
+                        Customer customer = findCustomerByID(customerId, allCustomers);
+                        VideoGame videoGame = findVideoGameByID(videoGameId, allVideoGames);
 
                         // Ambos deben existir para crear una venta válida
                         if (customer != null && videoGame != null){
-                            Sale newSale = new Sale(saleID.trim(), customer, videoGame, mount, date);
+                            Sale newSale = new Sale(videoGame, customer, saleId, amount, date);
                             saleList.add(newSale);
                         } else {
-                            System.err.println("Advertencia: No se encontró el Cliente (" + customerID + ") o el Juego (" + videoGameID + ") para la venta " + saleID + ". Línea omitida.");
+                            System.err.println("Advertencia: No se encontró el Cliente (" + customerId + ") o el Juego (" + videoGameId + ") para la venta " + saleId + ". Línea omitida.");
                         }
                     } catch (NumberFormatException e){
                         System.err.println("Advertencia: Se omitió la línea '" + line + "' por formato de número inválido.");

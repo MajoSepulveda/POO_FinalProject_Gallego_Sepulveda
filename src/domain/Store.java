@@ -50,11 +50,11 @@ public class Store implements Serializable {
         return null;
     }
 
-    public static Sale findSaleByID(String ID , List<Sale> sales){
+    public static Sale findSaleByID(String id, List<Sale> sales){
         if (sales == null) return null;
         for (Sale sale : sales){
             try {
-                if (sale.getID() == ID) return sale;
+                if (sale.getId().equals(id)) return sale;
             } catch (Exception e) {
                 // Si no hay getID, omitimos
             }
@@ -86,7 +86,7 @@ public class Store implements Serializable {
         if (newSale == null){
             throw new IllegalArgumentException("La venta no puede estar vacía");
         }
-        if (findSaleById(newSale.getID(), sales) != null){
+        if (findSaleByID(newSale.getId(), sales) != null){
             throw new IllegalArgumentException("La venta ya existe en la tienda");
         }
         this.sales.add(newSale);
@@ -110,9 +110,5 @@ public class Store implements Serializable {
         }
         addSale(sale);
         removeVideoGame(sale.getVideoGame());
-    }
-
-
-
-    
+    }    
 }
