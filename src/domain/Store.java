@@ -22,15 +22,15 @@ public class Store implements Serializable {
         return customers;
     }
 
-    public ArrayList<Sale> getSale(){
+    public ArrayList<Sale> getSales(){
         return sales;
     }
 
-    private static Customer findCustomerByID(int ID, List<Customer> customers){
-        if (customers == null) return null;
-        for (Customer customer : customers){
+    private Customer findCustomerById(int id){
+        if (this.customers == null) return null;
+        for (Customer customer : this.customers){
             try {
-                if (customer.getID() == ID) return customer;
+                if (customer.getID() == id) return customer;
             } catch (Exception e) {
             
             }
@@ -38,23 +38,23 @@ public class Store implements Serializable {
         return null;
     }
 
-    private static VideoGame findVideoGameByID(String ID, List<VideoGame> videoGames){
-        if (videoGames == null) return null;
-        for (VideoGame videoGame : videoGames){
+    private VideoGame findVideoGameById(String id){
+        if (this.videoGames == null) return null;
+        for (VideoGame videoGame : this.videoGames){
             try {
-                if (videoGame.getID().equals(ID)) return videoGame;
+                if (videoGame.getID().equals(id)) return videoGame;
             } catch (Exception e) {
                 // Si no hay getID, omitimos
             }
         }
-        return null;
+         return null;
     }
 
-    public static Sale findSaleByID(String ID , List<Sale> sales){
-        if (sales == null) return null;
-        for (Sale sale : sales){
+    public Sale findSaleById(String id){
+        if (this.sales == null) return null;
+        for (Sale sale : this.sales){
             try {
-                if (sale.getID() == ID) return sale;
+                if (sale.getId().equals(id)) return sale;
             } catch (Exception e) {
                 // Si no hay getID, omitimos
             }
@@ -66,7 +66,7 @@ public class Store implements Serializable {
         if (newVideoGame == null){
             throw new IllegalArgumentException("El videojuego no puede estar vacío");
         }
-        if (findVideoGameByID(newVideoGame.getID(), videoGames) != null){
+        if (findVideoGameById(newVideoGame.getID()) != null){
             throw new IllegalArgumentException("El videojuego ya existe en la tienda");
         }
         this.videoGames.add(newVideoGame);
@@ -76,7 +76,7 @@ public class Store implements Serializable {
         if (newCustomer == null){
             throw new IllegalArgumentException("El cliente no puede estar vacío");
         }
-        if (findCustomerByID(newCustomer.getID(), customers) != null){
+        if (findCustomerById(newCustomer.getID()) != null){
             throw new IllegalArgumentException("El cliente ya existe en la tienda");
         }
         this.customers.add(newCustomer);
@@ -86,7 +86,7 @@ public class Store implements Serializable {
         if (newSale == null){
             throw new IllegalArgumentException("La venta no puede estar vacía");
         }
-        if (findSaleById(newSale.getID(), sales) != null){
+        if (findSaleById(newSale.getId()) != null){
             throw new IllegalArgumentException("La venta ya existe en la tienda");
         }
         this.sales.add(newSale);
@@ -104,15 +104,23 @@ public class Store implements Serializable {
         this.sales.remove(sale);
     }
 
-    public void manageTransaction(Sale sale){
-        if (sale == null){
-            throw new IllegalArgumentException("La venta no puede estar vacía");
+    public void processSale (int customerId, String videoGameId, String saleId){
+        VideoGame videoGame = findVideoGameById(videoGameId);
+        Customer customer = findCustomerById(customerId);
+        if (videoGame == null || customer == null){
+            throw new IllegalArgumentException("Cliente o videojuego no encontrado");
         }
-        addSale(sale);
-        removeVideoGame(sale.getVideoGame());
+        customer.reduceBalance(videoGame.getPrice());
+        Sale sale = new Sale(videoGame, customer, saleId, videoGame.getPrice(), java.time.LocalDate.now());
+        this.sales.add(sale);
+        videoGame.reduceStock();
     }
 
-
-
-    
+    public float incomeReort(){
+        float totalIncome = 0;
+        for (Sale sale: this.sales){
+            totalIncome += sale.getAmount();
+        }
+        return totalIncome;
+    }
 }
