@@ -11,22 +11,22 @@ public class VideoGame implements Serializable {
     private int stock;
 
     public VideoGame(String title, String genre, float rating, float price, String id, int stock){
+        if (stock < 0) {
+            throw new IllegalArgumentException("El stock del videojuego no puede ser negativo.");
+        }
+        if (id == null || id.trim().isBlank()) {
+            throw new IllegalArgumentException("El ID del videojuego no puede estar vacio.");
+        }
+
+        this.stock = stock;
+        this.id = id.trim();
         setTitle(title);
         setGenre(genre);
         setRating(rating);
         setPrice(price);
-        if (stock < 0) {
-            throw new IllegalArgumentException("El stock del videojuego no puede ser negativo");
-        }
-        this.stock = stock;
-
-        if (id == null || id.trim().isBlank()) {
-            throw new IllegalArgumentException("El ID del videojuego no puede estar vacio");
-        }
-        this.id = id;
     }
 
-    public String getID(){
+    public String getId(){
         return id;
     }
 
@@ -52,53 +52,57 @@ public class VideoGame implements Serializable {
 
     public void setTitle(String title){
         if (title == null || title.trim().isBlank()) {
-            throw new IllegalArgumentException("El título del videojuego no puede estar vacio");
+            throw new IllegalArgumentException("El título del videojuego no puede estar vacio.");
         }
-        this.title = title;
+        this.title = title.trim();
     }
 
     public void setGenre(String genre) {
         if (genre == null || genre.trim().isBlank()) {
-            throw new IllegalArgumentException("El genero no puede estar vacío");
+            throw new IllegalArgumentException("El genero no puede estar vacío.");
         }
         String[] genres = {"Action", "Adventure", "RPG", "Strategy", "Simulation", "Racing", "Sports", "Casual"};
+
         for (String g : genres) {
-            if (g.equals(genre)) {
-                this.genre = genre;
+            if (g.equals(genre.trim())) {
+                this.genre = genre.trim();
                 return;
             }
         }
-        throw new IllegalArgumentException("El genero del videojuego no es valido");
+        throw new IllegalArgumentException("El genero del videojuego no es valido.");
     }
     
     public void setRating(float rating) {
         if (rating < 0.0 || rating > 10.0) {
-            throw new IllegalArgumentException("La calificación del videojuego debe estar entre 0.0 y 10.0");
+            throw new IllegalArgumentException("La calificación del videojuego debe estar entre 0.0 y 10.0.");
         }
         this.rating = rating;
     }
 
     public void setPrice(float price){
         if (price < 0) {
-            throw new IllegalArgumentException("El precio del videojuego no puede ser negativo");
+            throw new IllegalArgumentException("El precio del videojuego no puede ser negativo.");
         }
         this.price = price;
     }
 
     public synchronized void reduceStock() {
         if (this.stock <= 0) {
-            throw new IllegalStateException("Stock insuficiente");
+            throw new IllegalStateException("Stock insuficiente.");
         }
         this.stock -= 1;
     }
-
+    
     public synchronized void addStock(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("La cantidad a agregar debe ser mayor que 0");
+            throw new IllegalArgumentException("La cantidad de stock a agregar no puede ser negativa o cero.");
         }
-        int newStock = (int) this.stock + (int) amount;
-        this.stock = (int) newStock;
+        this.stock += amount;
     }
 
-    
+    @Override
+    public String toString() {
+        return String.format("VideoGame ID: %s | Title: %s | Genre: %s | Rating: %.1f | Price: $%.2f | Stock: %d",
+                id, title, genre, rating, price, stock);
+    }
 }
