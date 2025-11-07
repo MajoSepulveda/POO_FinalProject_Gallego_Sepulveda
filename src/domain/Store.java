@@ -30,7 +30,7 @@ public class Store implements Serializable {
         if (customers == null) return null;
         for (Customer customer : customers){
             try {
-                if (customer.getID() == ID) return customer;
+                if (customer.getId() == ID) return customer;
             } catch (Exception e) {
             
             }
@@ -42,7 +42,7 @@ public class Store implements Serializable {
         if (videoGames == null) return null;
         for (VideoGame videoGame : videoGames){
             try {
-                if (videoGame.getID().equals(ID)) return videoGame;
+                if (videoGame.getId().equals(ID)) return videoGame;
             } catch (Exception e) {
                 // Si no hay getID, omitimos
             }
@@ -66,7 +66,7 @@ public class Store implements Serializable {
         if (newVideoGame == null){
             throw new IllegalArgumentException("El videojuego no puede estar vacío");
         }
-        if (findVideoGameByID(newVideoGame.getID(), videoGames) != null){
+        if (findVideoGameByID(newVideoGame.getId(), videoGames) != null){
             throw new IllegalArgumentException("El videojuego ya existe en la tienda");
         }
         this.videoGames.add(newVideoGame);
@@ -76,7 +76,7 @@ public class Store implements Serializable {
         if (newCustomer == null){
             throw new IllegalArgumentException("El cliente no puede estar vacío");
         }
-        if (findCustomerByID(newCustomer.getID(), customers) != null){
+        if (findCustomerByID(newCustomer.getId(), customers) != null){
             throw new IllegalArgumentException("El cliente ya existe en la tienda");
         }
         this.customers.add(newCustomer);
