@@ -1,20 +1,17 @@
 package src.ui;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.util.List;
 
 import src.domain.*;
 import src.data.*;
 
-
 public class Main {
-    private static final String MAIN_FILE = "store_data.ser";
-    private static final String BACKUP_FILE = "store_backup.ser";
-    private static final String CUSTOMERS_CSV = "customers.csv";
-    private static final String GAMES_CSV = "videogames.csv";
-    private static final String SALES_CSV = "sales.csv";
+    private static final String MAIN_FILE = "src/data/store_data.ser";
+    private static final String BACKUP_FILE = "src/data/store_backup.ser";
+    private static final String CUSTOMERS_CSV = "src/data/customers.csv";
+    private static final String GAMES_CSV = "src/data/videogames.csv";
+    private static final String SALES_CSV = "src/data/sales.csv";
 
     private static Store loadFromCSV(Scanner scanner){
         try {
