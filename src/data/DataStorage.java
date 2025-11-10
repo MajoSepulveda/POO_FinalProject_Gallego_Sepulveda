@@ -7,21 +7,16 @@ import src.domain.*;
 public class DataStorage {
     
     //Serializar la clase Store
-    public static void save(Store store, String filename){
-        try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))){
+    public static void save(Store store, String filename) throws IOException {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(store);
-        } catch (IOException e){
-            System.err.println("Error al guardar la información: " + e.getMessage());
-        }
+        } 
     }
 
-    public static Store load(String filename){
-        try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))){
-            return (Store) in.readObject();
-        } catch (IOException | ClassNotFoundException e){
-            System.err.println("Error al cargar la información: " + e.getMessage());
-            return null;
-        }
+    public static Store load(String filename) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            return (Store) in.readObject(); 
+        } 
     }
 
     //Cargar listas desde archivos CSV
