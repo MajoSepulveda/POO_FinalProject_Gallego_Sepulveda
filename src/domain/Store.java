@@ -10,23 +10,40 @@ public class Store implements Serializable {
     private ArrayList<Customer> customers;
     private ArrayList<Sale> sales;
 
-    /*Crea una tienda vacía*/
-    public Store(){
-        this.videoGames = new ArrayList<>();
-        this.customers = new ArrayList<>();
-        this.sales = new ArrayList<>();
-    }
+        /*Crea una tienda vacía*/
+        public Store(){
+            this.videoGames = new ArrayList<>();
+            this.customers = new ArrayList<>();
+            this.sales = new ArrayList<>();
+        }
 
-    /*Construye una tienda a partir de listas ya cargadas*/
-    public Store(List<VideoGame> videoGames, List<Customer> customers, List<Sale> sales){
-        if (videoGames == null) this.videoGames = new ArrayList<>();
-        else this.videoGames = new ArrayList<>(videoGames);
+        /*Crea una tienda solo con los videojuegos y clientes */
+        public Store(List<VideoGame> videoGames, List<Customer> customers){
+            if (videoGames == null) this.videoGames = new ArrayList<>();
+            else this.videoGames = new ArrayList<>(videoGames);
 
-        if (customers == null) this.customers = new ArrayList<>();
-        else this.customers = new ArrayList<>(customers);
+            if (customers == null) this.customers = new ArrayList<>();
+            else this.customers = new ArrayList<>(customers);
 
-        if (sales == null) this.sales = new ArrayList<>();
-        else this.sales = new ArrayList<>(sales);
+            this.sales = new ArrayList<>();
+        }
+
+        /*Construye una tienda a partir de listas ya cargadas*/
+        public Store(List<VideoGame> videoGames, List<Customer> customers, List<Sale> sales){
+            if (videoGames == null) this.videoGames = new ArrayList<>();
+            else this.videoGames = new ArrayList<>(videoGames);
+
+            if (customers == null) this.customers = new ArrayList<>();
+            else this.customers = new ArrayList<>(customers);
+
+            if (sales == null) this.sales = new ArrayList<>();
+            else this.sales = new ArrayList<>(sales);
+        }
+
+    public void loadInitialSales(List<Sale> sales){
+        if (sales != null) {
+            this.sales = new ArrayList<>(sales);
+        }
     }
 
     public ArrayList<VideoGame> getVideoGames(){
@@ -190,11 +207,15 @@ public class Store implements Serializable {
 
     //Métodos auxiliares para generar reportes
     public List<Sale> getSalesInPeriod(java.time.LocalDate startDate, java.time.LocalDate endDate) {
-        List<Sale> periodSales = new ArrayList<>();
     
         if (startDate == null || endDate == null) {
             throw new IllegalArgumentException("Las fechas de inicio y fin no pueden ser nulas.");
         }
+        if (startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha final.");
+        }
+
+        List<Sale> periodSales = new ArrayList<>();
     
         for (Sale sale : this.sales) {
             java.time.LocalDate saleDate = sale.getDate();
@@ -208,9 +229,9 @@ public class Store implements Serializable {
         return periodSales;
     }
 
-    public float getTotalPrice(){
+    public float getTotalIncome(List<Sale> sales){
         float totalIncome = 0;
-        for (Sale sale: this.sales){
+        for (Sale sale: sales){
             totalIncome += sale.getAmount();
         }
         return totalIncome;
@@ -248,19 +269,19 @@ public class Store implements Serializable {
         return topGenre;
     }
 
-    public VideoGame getTopSellingGame(List<Sale> salesList) {
-        if (salesList == null || salesList.isEmpty()) {
+    public VideoGame getTopSellingGame(List<Sale> sales) {
+        if (sales == null || sales.isEmpty()) {
             return null;
         }
 
         VideoGame topGame = null;
         int maxCount = 0;
 
-        for (int i = 0; i < salesList.size(); i++) {
-            VideoGame gameReference = salesList.get(i).getVideoGame();
+        for (int i = 0; i < sales.size(); i++) {
+            VideoGame gameReference = sales.get(i).getVideoGame();
             int currentCount = 0;
 
-            for (Sale sale : salesList) {
+            for (Sale sale : sales) {
                 if (sale.getVideoGame().equals(gameReference)) {
                     currentCount++;
                 }
@@ -280,23 +301,24 @@ public class Store implements Serializable {
             return "No se registraron ventas entre " + startDate + " y " + endDate + ".";
         }
 
-        float totalIncome = 0;
-    
-        for (Sale sale : salesInPeriod) {
-            totalIncome += getTotalPrice();
-        }
-    
+        float totalIncome = getTotalIncome(salesInPeriod);
         String topGenre = getTopSellingGenre(salesInPeriod);
         VideoGame topGame = getTopSellingGame(salesInPeriod);
+        
+        String title;
+        if (topGame == null){
+            title = "N/A";
+        } else {
+            title = topGame.getTitle();
+        }
 
-    
         String report = "\n--- REPORTE DE INGRESOS ---";
         report += "\nPeríodo: " + startDate + " a " + endDate;
         report += "\nTotal de Ventas: " + salesInPeriod.size();
         report += String.format("\nIngreso Total Generado: $%.2f", totalIncome);
         report += "\n-----------------------------";
         report += "\nGénero Más Vendido: " + topGenre;
-        report += "\nVideojuego Más Vendido: " + (topGame != null ? topGame.getTitle() : "N/A");
+        report += "\nVideojuego Más Vendido: " + title;
         report += "\n-----------------------------";
     
         return report;
