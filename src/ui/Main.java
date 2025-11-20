@@ -2,7 +2,6 @@ package src.ui;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.List;
-
 import src.domain.*;
 import src.data.*;
 
@@ -82,7 +81,7 @@ public class Main {
         
         if (store != null) { //inicia el programa
             
-
+            
             System.out.println("\nGuardando cambios de la sesión..."); //Cuando se va a cerrar el programa
             handleSave(store);
         }
