@@ -5,8 +5,8 @@ import src.domain.Store;
 
 public class StartMenu {
 
-    public static void show(Store store, Scanner scanner) {
-        if (scanner == null) scanner = new Scanner(System.in);
+    public static void show(Store store, Scanner input) {
+        if (input == null) input = new Scanner(System.in);
         while (true) {
             System.out.println("======================================");
             System.out.println("   BIENVENIDO/A A LA TIENDA DE JUEGOS");
@@ -15,10 +15,10 @@ public class StartMenu {
             System.out.println("2) Salir");
             System.out.print("Seleccione una opción: ");
 
-            String option = scanner.nextLine().trim();
+            String option = input.nextLine().trim();
             switch (option) {
                 case "1":
-                    StoreMenu.show(store, scanner);
+                    StoreMenu.show(store, input);
                     break;
                 case "2":
                     System.out.println("Gracias por visitar la tienda. Saliendo...");

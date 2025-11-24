@@ -3,8 +3,7 @@ package src.ui;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-import src.domain.Store;
-import src.domain.VideoGame;
+import src.domain.*;
 
 public class StoreMenu {
 
@@ -21,14 +20,13 @@ public class StoreMenu {
             String option = input.nextLine().trim();
             switch (option) {
                 case "1":
-                    showCatalog(store);
-                    SelectMenu.SelectById(store, input);
+                    showCatalog(store, input);
                     break;
                 case "2":
                     //aca va el menú de busqueda.
                     break;
                 case "3":
-                    AdminMenu.show(store, input);
+                    AdminMenu.Show(store, input);
                     break;
                 case "4":
                     System.out.println("Volviendo al menú principal...");
@@ -40,7 +38,7 @@ public class StoreMenu {
         }
     }
 
-    private static void showCatalog(Store store) {
+    private static void showCatalog(Store store, Scanner input) {
         if (store == null) {
             System.out.println("Error: tienda no inicializada.");
             return;
@@ -66,5 +64,6 @@ public class StoreMenu {
             System.out.printf("%-6s  %-60s  %-12s  %-6s  %-7s  %-5s%n",
                     id, title, genre, rating, price, stock);
         }
+        SelectMenu.SelectById(store, input);
     }
 }

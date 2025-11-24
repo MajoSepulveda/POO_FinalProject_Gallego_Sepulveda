@@ -103,7 +103,7 @@ public class SelectMenu {
 
             String saleId;
             while (true) {
-                System.out.print("Ingrese ID para la venta (ej. S001) (ENTER para cancelar): ");
+                System.out.print("Ingrese ID para la venta (ENTER para cancelar): ");
                 saleId = scanner.nextLine().trim();
                 if (saleId.isEmpty()) {
                     System.out.println("Compra cancelada.");
