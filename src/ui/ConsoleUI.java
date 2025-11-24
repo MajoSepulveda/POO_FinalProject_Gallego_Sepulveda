@@ -46,6 +46,17 @@ public class ConsoleUI {
     }
 
     /**
+     * Prints a formatted string to the console, similar to System.out.printf, 
+     * but using the defined writeLine method for consistency (and automatic newline).
+     * @param format The format string (e.g., "%-15s %5.2f").
+     * @param args The arguments referenced by the format specifiers.
+     */
+    public void writeStringf(String format, Object... args) {
+        String formattedMessage = String.format(format, args);
+        this.writeLine(formattedMessage);
+    }
+
+    /**
      * Prompts the user for an int number (int).
      * @param message The prompt message to display to the user.
      * @return The validated int number entered by the user.
@@ -107,9 +118,7 @@ public class ConsoleUI {
         while (true) {
             String inputLine = input.nextLine(); 
         
-            if (inputLine.isBlank()) {
-                return null;
-            }
+            if (inputLine.isBlank()) return null;
             try {
                 return Float.parseFloat(inputLine.trim()); 
             } catch (NumberFormatException e) {
