@@ -29,16 +29,16 @@ public class Main {
         }
     }
 
-    private static Store handleFailedLoad(Scanner scanner){
+    private static Store handleFailedLoad(Scanner input){
         System.out.println("\n--- OPCIONES DE INICIO ---");
         System.out.println("1. Cargar datos iniciales desde archivos CSV.");
         System.out.println("2. Iniciar la tienda vacía.");
         System.out.print("Seleccione una opción (1 o 2): ");
 
-        String option = scanner.nextLine();
+        String option = input.nextLine();
             
         if (option.equals("1")) {
-            return loadFromCSV(scanner);
+            return loadFromCSV(input);
         } else if (option.equals("2")) {   
             System.out.println("\nIniciando tienda vacía con éxito.");
             return new Store(); 
@@ -80,7 +80,6 @@ public class Main {
         }
         
         if (store != null) { //inicia el programa
-            
             
             System.out.println("\nGuardando cambios de la sesión..."); //Cuando se va a cerrar el programa
             handleSave(store);
