@@ -22,6 +22,7 @@ public class SearchMenu {
         int option = 0;
 
         while (option != 5 && option != 7) {
+            console.cls();
             console.writeLine("\n---- CONFIGURACIÓN DE FILTROS ----\n");
             console.writeLine("1. Título: " + (currentTitle != null ? currentTitle : "[No Aplicado]"));
             console.writeLine("2. Género: " + (currentGenre != null ? currentGenre : "[No Aplicado]"));
@@ -59,8 +60,12 @@ public class SearchMenu {
         
         if (option == 7){
             console.writeLine("Volviendo al menú principal sin aplicar filtros...");
+            console.sleep(1000);
             return;
         }
+
+        console.sleep(1000);
+        console.cls();
 
         List<VideoGame> results = store.filterVideoGames(currentTitle, currentGenre, currentMaxPrice, currentMinRating);
 
@@ -68,6 +73,8 @@ public class SearchMenu {
             console.writeLine("\nNo se encontraron videojuegos que coincidan con los filtros aplicados.");
         } else {
             displayVideoGameList(results, console);
+            console.sleep(2000);
+            console.cls();
         }   
     }
 
