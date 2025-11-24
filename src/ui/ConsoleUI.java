@@ -9,6 +9,27 @@ public class ConsoleUI {
     private final Scanner input;
 
     /**
+     * Pauses the program execution for the specified duration in milliseconds.
+     * @param milliseconds The duration to pause execution, measured in milliseconds 
+     */
+    public void sleep(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); 
+        }
+    }
+
+    /**
+     * Clears the console screen using standard ANSI escape sequences.
+     * This method effectively simulates clearing the screen on modern terminal environments like PowerShell, Unix-based terminals (macOS/Linux), and most modern IDE consoles.
+     */
+    public void cls() {
+        System.out.print("\033[H\033[2J"); 
+        System.out.flush(); 
+    }
+    
+    /**
      * Initializes the console interface with a specific data input source.
      * @param input The Scanner object used to read user input.
      */
