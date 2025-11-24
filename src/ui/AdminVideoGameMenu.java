@@ -2,11 +2,12 @@ package src.ui;
 
 import src.domain.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class AdminVideoGameMenu {
 
-    public static void Show(Store store, Scanner input){
+    public static void show(Store store, Scanner input){
 
         if(input == null) input = new Scanner(System.in);
         while (true) {
@@ -173,8 +174,14 @@ public class AdminVideoGameMenu {
         }
         System.out.println("--- VIDEOJUEGOS ---");
         for (VideoGame g : games) {
-            System.out.printf("ID: %s | Título: %s | Género: %s | Rating: %.1f | Precio: $%.2f | Stock: %d%n",
-                    g.getId(), g.getTitle(), g.getGenre(), g.getRating(), g.getPrice(), g.getStock());
+            String id = Objects.toString(g.getId(), "");
+            String title = Objects.toString(g.getTitle(), "");
+            String genre = Objects.toString(g.getGenre(), "");
+            String rating = String.format("%.1f", g.getRating());
+            String price = String.format("%.2f", g.getPrice());
+            String stock = String.valueOf(g.getStock());
+            System.out.printf("%-6s  %-60s  %-12s  %-6s  %-7s  %-5s%n",
+                    id, title, genre, rating, price, stock);
         }
     }
 }

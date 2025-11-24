@@ -1,61 +1,58 @@
 package src.ui;
 
-import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import src.domain.Store;
 
 public class AdminMenu {
 
-    public static void Show(Store store, Scanner input) {
-        if (input == null) input = new Scanner(System.in);
+    public static void Show(Store store, ConsoleUI console) {
         if (store == null) {
-            System.out.println("Tienda no inicializada.");
+            console.writeLine("Tienda no inicializada.");
             return;
         }
         
         while (true) {
-            System.out.println("\n--- ADMINISTRACIÓN DE LA TIENDA ---");
-            System.out.println("1) Gestionar clientes.");
-            System.out.println("2) Gestionar videojuegos.");
-            System.out.println("3) Gestionar ventas.");
-            System.out.println("4) Generar reporte."); 
-            System.out.println("5) Volver.");
-            System.out.print("Seleccione una opción: ");
+            console.writeLine("\n--- ADMINISTRACIÓN DE LA TIENDA ---");
+            console.writeLine("1) Gestionar clientes.");
+            console.writeLine("2) Gestionar videojuegos.");
+            console.writeLine("3) Gestionar ventas.");
+            console.writeLine("4) Generar reporte."); 
+            console.writeLine("5) Volver.");
 
-            String option = input.nextLine().trim();
+            int option = console.readInt("Seleccione una opción: ");
             try {
                 switch (option) {
-                    case "1": AdminCustomerMenu.Show(store, input);
-                    case "2": AdminVideoGameMenu.Show(store, input);
-                    case "3": AdminSaleMenu.Show(store, input);
-                    case "4": generateIncomeReport(store, input);
-                    case "5": return;
+                    case 1: AdminCustomerMenu.show(store, console);
+                    case 2: AdminVideoGameMenu.show(store, console);
+                    case 3: AdminSaleMenu.show(store, console);
+                    case 4: generateIncomeReport(store, console);
+                    case 5: return;
                     default: System.out.println("Opción inválida.");
                 }
             } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+                console.writeLine("Error: " + e.getMessage());
             }
         }
     }
 
-    private static void generateIncomeReport(Store store, Scanner input) {
+    private static void generateIncomeReport(Store store, ConsoleUI console) {
         try {
-            LocalDate[] period = readPeriod(input);
+            LocalDate[] period = readPeriod(console);
             String report = store.generateIncomeReport(period[0], period[1]);
-            System.out.println(report);
+            console.writeLine(report);
         } catch (DateTimeParseException e) {
-            System.out.println("Formato de fecha inválido. Use dd-MM-yyyy.");
+            console.writeLine("Formato de fecha inválido. Use dd-MM-yyyy.");
         } catch (Exception e) {
-            System.out.println("Error al generar reporte: " + e.getMessage());
+            console.writeLine("Error al generar reporte: " + e.getMessage());
         }
     }
 
-    private static LocalDate[] readPeriod(Scanner input) {
-        System.out.print("Fecha inicio (dd-MM-yyyy): ");
-        String startStr = input.nextLine().trim();
-        System.out.print("Fecha fin (dd-MM-yyyy): ");
-        String endStr = input.nextLine().trim();
+    private static LocalDate[] readPeriod(ConsoleUI console) {
+        console.writeLine("Fecha inicio (dd-MM-yyyy): ");
+        String startStr = console.readString("Fecha inicio (dd-MM-yyyy): ");
+        console.writeLine("Fecha fin (dd-MM-yyyy): ");
+        String endStr = console.readString("Fecha fin (dd-MM-yyyy): ");
         LocalDate start = LocalDate.parse(startStr);
         LocalDate end = LocalDate.parse(endStr);
         return new LocalDate[]{start, end};

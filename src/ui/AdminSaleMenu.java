@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class AdminSaleMenu {
 
-    public static void Show(Store store, Scanner input){
+    public static void show(Store store, Scanner input){
 
         if (input == null) input = new Scanner(System.in);
         while (true) {
