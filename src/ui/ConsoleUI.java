@@ -4,11 +4,31 @@ import java.util.Scanner;
 /**
  * Represents the command-line User Interface (UI) for the application.
  * This class handles safe data reading (int, float, String) and message output.
- * @author Majo Sepúlveda
  */
 public class ConsoleUI {
     private final Scanner input;
 
+    /**
+     * Pauses the program execution for the specified duration in milliseconds.
+     * @param milliseconds The duration to pause execution, measured in milliseconds 
+     */
+    public void sleep(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); 
+        }
+    }
+
+    /**
+     * Clears the console screen using standard ANSI escape sequences.
+     * This method effectively simulates clearing the screen on modern terminal environments like PowerShell, Unix-based terminals (macOS/Linux), and most modern IDE consoles.
+     */
+    public void cls() {
+        System.out.print("\033[H\033[2J"); 
+        System.out.flush(); 
+    }
+    
     /**
      * Initializes the console interface with a specific data input source.
      * @param input The Scanner object used to read user input.
@@ -26,14 +46,13 @@ public class ConsoleUI {
     }
 
     /**
-     * Prompts the user for input and reads a valid integer.
-     * The method repeats the prompt until a correctly formatted integer is entered, 
-     * handling NumberFormatException errors.
+     * Prompts the user for an int number (int).
      * @param message The prompt message to display to the user.
-     * @return The validated integer value entered by the user.
+     * @return The validated int number entered by the user.
      */
     public int readInt(String message) {
         System.out.print(message);
+
         while (true){
             String inputLine = input.nextLine();
         
@@ -42,7 +61,6 @@ public class ConsoleUI {
                 System.out.print(message);
                 continue;
             }
-
             try {
                 return Integer.parseInt(inputLine.trim());
             } catch (NumberFormatException e) {
@@ -68,7 +86,6 @@ public class ConsoleUI {
                 System.out.print(message);
                 continue;
             }
-        
             try {
                 return Float.parseFloat(inputLine.trim()); 
             } catch (NumberFormatException e) {
@@ -93,7 +110,6 @@ public class ConsoleUI {
             if (inputLine.isBlank()) {
                 return null;
             }
-        
             try {
                 return Float.parseFloat(inputLine.trim()); 
             } catch (NumberFormatException e) {
@@ -104,23 +120,22 @@ public class ConsoleUI {
     }
     
     /**
-     * Prompts the user for a text string, ensuring the input is not empty or blank.
+     * Prompts the user for a text string (String).
      * @param message The prompt message to display to the user.
-     * @return The validated and trimmed String entered by the user.
+     * @return The validated and trimmed text String entered by the user.
      */
     public String readString(String message) {
         System.out.print(message);
-        String result = null;
     
-        while (result == null || result.isBlank()) {
-            String inputLine = input.nextLine();
-            result = inputLine.trim();         
+        while (true) {
+            String inputLine = input.nextLine().trim();
 
-            if (result.isBlank()) {
+            if (inputLine.isBlank()) {
                 System.err.println("Error: La entrada no puede estar vacía o contener solo espacios. Intente de nuevo.");
-                System.out.print(message); 
+                System.out.print(message);
+                continue;
             }
+            return inputLine; 
         }
-        return result;
     }
 }
