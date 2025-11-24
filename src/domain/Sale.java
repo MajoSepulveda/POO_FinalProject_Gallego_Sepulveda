@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class Sale implements Serializable {
+public class Sale implements Serializable, Displayable {
     private VideoGame videoGame;
     private Customer customer;
     private String id;
@@ -12,26 +12,14 @@ public class Sale implements Serializable {
     private LocalDate date;
 
     public Sale(VideoGame videoGame, Customer customer, String id, float amount, LocalDate date) {
-        if (videoGame == null) {
-            throw new IllegalArgumentException("El videojuego no puede estar vacío.");
-        }
-        if (customer == null) {
-            throw new IllegalArgumentException("El cliente no puede estar vacío.");
-        }
-        if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("El ID no puede estar vacío.");
-        }
-        if (amount < 0) {
-            throw new IllegalArgumentException("El monto no puede ser negativo.");
-        }
-        if (date == null) {
-            throw new IllegalArgumentException("La fecha no puede estar vacía.");
-        }
+        if (videoGame == null) throw new IllegalArgumentException("El videojuego no puede estar vacío.");
+        if (customer == null) throw new IllegalArgumentException("El cliente no puede estar vacío.");
+        if (id == null || id.trim().isEmpty()) throw new IllegalArgumentException("El ID no puede estar vacío.");
+        if (amount < 0) throw new IllegalArgumentException("El monto no puede ser negativo.");
+        if (date == null) throw new IllegalArgumentException("La fecha no puede estar vacía.");
 
         LocalDate now = LocalDate.now();
-        if (date.isAfter(now)) {
-            throw new IllegalArgumentException("La fecha de venta no puede ser futura");
-        }
+        if (date.isAfter(now)) throw new IllegalArgumentException("La fecha de venta no puede ser futura");
 
         this.videoGame = videoGame;
         this.customer = customer;
@@ -80,7 +68,7 @@ public class Sale implements Serializable {
     }
 
     @Override
-    public String toString() {
+    public String displayObject() {
         return String.format("Venta ID: %s | Cliente: %s | Juego: %s | Monto: $%.2f | Fecha: %s",
             id, customer.getName(), videoGame.getTitle(), amount, getFormattedDate());
     }

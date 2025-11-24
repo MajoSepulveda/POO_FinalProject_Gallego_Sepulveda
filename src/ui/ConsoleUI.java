@@ -1,6 +1,8 @@
 package src.ui;
 import java.util.Scanner;
 
+import src.domain.Displayable;
+
 /**
  * Represents the command-line User Interface (UI) for the application.
  * This class handles safe data reading (int, float, String) and message output.
@@ -137,5 +139,13 @@ public class ConsoleUI {
             }
             return inputLine; 
         }
+    }
+
+    /**
+     * Prints any object that implements the Displayable interface.
+     * @param item The object to be displayed.
+     */
+    public void printDisplayableDetails(Displayable object) {
+        this.writeLine(object.displayObject());
     }
 }

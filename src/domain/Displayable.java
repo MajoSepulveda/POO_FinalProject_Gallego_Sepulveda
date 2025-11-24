@@ -10,5 +10,5 @@ public interface Displayable {
      * intended for user output (not for debugging).
      * @return The formatted summary string.
      */
-    String getDisplaySummary();
+    String displayObject();
 }
