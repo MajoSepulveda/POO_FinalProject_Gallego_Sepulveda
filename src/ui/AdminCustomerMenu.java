@@ -29,6 +29,9 @@ public class AdminCustomerMenu {
                 case 4:
                     listCustomers(store, console);
                     break;
+                case 5:
+                    console.writeLine("Volviendo al menú principal...");
+                    return;
                 default:
                     System.out.println("Opción inválida. Intente de nuevo.");
             }
@@ -86,7 +89,6 @@ public class AdminCustomerMenu {
                         }
                         break;
                     case 2:
-                        System.out.print("Monto a agregar (ENTER para cancelar): ");
                         float amount = console.readFloat("Monto a agregar (ENTER para cancelar)");
                         try {
                             c.addBalance(amount);

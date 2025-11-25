@@ -2,14 +2,11 @@ package src.ui;
 
 import src.domain.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class AdminVideoGameMenu {
 
-    public static void show(Store store, Scanner input){
+    public static void show(Store store, ConsoleUI console){
 
-        if(input == null) input = new Scanner(System.in);
         while (true) {
             System.out.println("----------- GESTIÓN DE VIDEOJUEGOS  -----------");
             System.out.println("1) Agregar videojuego.");
@@ -19,169 +16,149 @@ public class AdminVideoGameMenu {
             System.out.println("5) Volver al menú principal.");
             System.out.print("Seleccione una opción: ");
 
-            String option = input.nextLine().trim();
+            int option = console.readInt("Seleccione una opción: ");
             switch (option) {
-                case "1":
-                    addVideoGame(store, input);
+                case 1:
+                    addVideoGame(store, console);
                     break;
-                case "2":
-                    removeVideoGame(store, input);
+                case 2:
+                    removeVideoGame(store, console);
                     break;
-                case "3":
-                    modifyVideoGame(store, input);
+                case 3:
+                    modifyVideoGame(store, console);
                     break;
-                case "4":
-                    listVideoGames(store);
+                case 4:
+                    listVideoGames(store, console);
                     break;
+                case 5:
+                    console.writeLine("Volviendo al menú principal...");
+                    return;
                 default:
                     System.out.println("Opción inválida. Intente de nuevo.");
             }   
         }
     }
 
-    private static void addVideoGame(Store store, Scanner input) {
+    private static void addVideoGame(Store store, ConsoleUI console) {
         try {
-            System.out.print("ID del videojuego: ");
-            String id = input.nextLine().trim();
-            System.out.print("Título: ");
-            String title = input.nextLine().trim();
-            System.out.print("Género: ");
-            String genre = input.nextLine().trim();
-            System.out.print("Rating: ");
-            float rating = Float.parseFloat(input.nextLine().trim());
+            String id = console.readString("ID del videojuego: ");
+            String title = console.readString("Titulo: ");
+            String genre = console.readString("Genero: ");
+            float rating = console.readFloat("Rating: ");
             System.out.print("Precio: ");
-            float price = Float.parseFloat(input.nextLine().trim());
+            float price = console.readFloat("Precio: ");
             System.out.print("Stock: ");
-            int stock = Integer.parseInt(input.nextLine().trim());
+            int stock = console.readInt("Stock: ");
             VideoGame vg = new VideoGame(title, genre, rating, price, id, stock);
             store.addGame(vg);
-            System.out.println("Videojuego agregado: ID = " + vg.getId() + " Título = " + vg.getTitle());
+            console.writeLine("Videojuego agregado: ID = " + vg.getId() + " Título = " + vg.getTitle());
         } catch (Exception e) {
-            System.out.println("No se pudo agregar el videojuego: " + e.getMessage());
+            console.writeLine("No se pudo agregar el videojuego: " + e.getMessage());
         }
     }
 
-    private static void removeVideoGame(Store store, Scanner input) {
+    private static void removeVideoGame(Store store, ConsoleUI console) {
         try {
-            System.out.print("ID del videojuego a eliminar (ej. A001): ");
-            String id = input.nextLine().trim();
+            String id = console.readString("ID del videojuego a eliminar: ");
             store.removeVideoGame(id);
-            System.out.println("Videojuego eliminado: " + id);
+            console.writeLine("Videojuego eliminado: " + id);
         } catch (Exception e) {
-            System.out.println("No se pudo eliminar el videojuego: " + e.getMessage());
+            console.writeLine("No se pudo eliminar el videojuego: " + e.getMessage());
         }
     }
 
-    private static void modifyVideoGame(Store store, Scanner input) {
+    private static void modifyVideoGame(Store store, ConsoleUI console) {
         if (store == null) return;
         while (true) {
-            System.out.print("Ingrese ID del videojuego a modificar (ENTER para cancelar): ");
-            String id = input.nextLine().trim();
-            if (id.isEmpty()) return;
+            String id = console.readString("Ingrese ID del videojuego a modificar (ENTER para cancelar): ");
             VideoGame g = store.findVideoGameById(id);
             if (g == null) {
-                System.out.println("Videojuego no encontrado. Intente nuevamente.");
+                console.writeLine("Videojuego no encontrado. Intente nuevamente.");
                 continue;
             }
 
             boolean done = false;
             while (!done) {
-                System.out.println("\nVideojuego actual: " + g);
-                System.out.println("1) Cambiar título");
-                System.out.println("2) Cambiar género");
-                System.out.println("3) Cambiar rating");
-                System.out.println("4) Cambiar precio");
-                System.out.println("5) Agregar stock");
-                System.out.println("6) Volver");
-                System.out.print("Seleccione: ");
-                String option = input.nextLine().trim();
+                console.writeLine("\nVideojuego actual: " + g);
+                console.writeLine("1) Cambiar título");
+                console.writeLine("2) Cambiar género");
+                console.writeLine("3) Cambiar rating");
+                console.writeLine("4) Cambiar precio");
+                console.writeLine("5) Agregar stock");
+                console.writeLine("6) Volver");
+                int option = console.readInt("Selecione una opción");
                 switch (option) {
-                    case "1":
-                        System.out.print("Nuevo título: ");
-                        String newTitle = input.nextLine().trim();
+                    case 1:
+                        String newTitle = console.readString("Nuevo titulo: ");
                         try {
                             g.setTitle(newTitle);
-                            System.out.println("Título actualizado.");
+                            console.writeLine("Título actualizado.");
                         } catch (Exception e) {
-                            System.out.println("Error: " + e.getMessage());
+                            console.writeLine("Error: " + e.getMessage());
                         }
                         break;
-                    case "2":
-                        System.out.print("Nuevo género (Action, Adventure, RPG, Strategy, Simulation, Racing, Sports, Casual): ");
-                        String newGenre = input.nextLine().trim();
+                    case 2:
+                        String newGenre = console.readString("Nuevo género (Acción, Aventura, RPG, Estrategia, Simulación, Carreras, Deportes, Casual): ");
                         try {
                             g.setGenre(newGenre);
-                            System.out.println("Género actualizado.");
+                            console.writeLine("Género actualizado.");
                         } catch (Exception e) {
-                            System.out.println("Error: " + e.getMessage());
+                            console.writeLine("Error: " + e.getMessage());
                         }
                         break;
-                    case "3":
-                        System.out.print("Nuevo rating (0.0 - 10.0): ");
-                        String newRating = input.nextLine().trim();
+                    case 3:
+                        float newRating = console.readFloat("Nuenvo rating (0.0 - 10.0): ");
                         try {
-                            float r = Float.parseFloat(newRating);
-                            g.setRating(r);
-                            System.out.println("Rating actualizado.");
+                            g.setRating(newRating);
+                            console.writeLine("Rating actualizado.");
                         } catch (NumberFormatException nfe) {
-                            System.out.println("Número inválido.");
+                            console.writeLine("Número inválido.");
                         } catch (Exception e) {
-                            System.out.println("Error: " + e.getMessage());
+                            console.writeLine("Error: " + e.getMessage());
                         }
                         break;
-                    case "4":
-                        System.out.print("Nuevo precio: ");
-                        String newPrice = input.nextLine().trim();
+                    case 4:
+                        float newPrice = console.readFloat("Nuevo precio: ");
                         try {
-                            float p = Float.parseFloat(newPrice);
-                            g.setPrice(p);
-                            System.out.println("Precio actualizado.");
+                            g.setPrice(newPrice);
+                            console.writeLine("Precio actualizado.");
                         } catch (NumberFormatException nfe) {
-                            System.out.println("Número inválido.");
+                            console.writeLine("Número inválido.");
                         } catch (Exception e) {
-                            System.out.println("Error: " + e.getMessage());
+                            console.writeLine("Error: " + e.getMessage());
                         }
                         break;
-                    case "5":
-                        System.out.print("Cantidad a agregar al stock: ");
-                        String addStock = input.nextLine().trim();
+                    case 5:
+                        int addStock = console.readInt("Cantidad a agregar al stock: ");
                         try {
-                            int a = Integer.parseInt(addStock);
-                            g.addStock(a);
-                            System.out.println("Stock actualizado. Nuevo stock: " + g.getStock());
+                            g.addStock(addStock);
+                            console.writeLine("Stock actualizado. Nuevo stock: " + g.getStock());
                         } catch (NumberFormatException nfe) {
-                            System.out.println("Número inválido.");
+                            console.writeLine("Número inválido.");
                         } catch (Exception e) {
-                            System.out.println("Error: " + e.getMessage());
+                            console.writeLine("Error: " + e.getMessage());
                         }
                         break;
-                    case "6":
+                    case 6:
                         done = true;
                         break;
                     default:
-                        System.out.println("Opción inválida.");
+                        console.writeLine("Opción inválida.");
                 }
             }
             return;
         }
     }
 
-    private static void listVideoGames(Store store) {
+    private static void listVideoGames(Store store, ConsoleUI console) {
         List<VideoGame> games = store.getVideoGames();
         if (games == null || games.isEmpty()) {
-            System.out.println("No hay videojuegos registrados.");
+            console.writeLine("No hay videojuegos registrados.");
             return;
         }
-        System.out.println("--- VIDEOJUEGOS ---");
+        console.writeLine("--- VIDEOJUEGOS ---");
         for (VideoGame g : games) {
-            String id = Objects.toString(g.getId(), "");
-            String title = Objects.toString(g.getTitle(), "");
-            String genre = Objects.toString(g.getGenre(), "");
-            String rating = String.format("%.1f", g.getRating());
-            String price = String.format("%.2f", g.getPrice());
-            String stock = String.valueOf(g.getStock());
-            System.out.printf("%-6s  %-60s  %-12s  %-6s  %-7s  %-5s%n",
-                    id, title, genre, rating, price, stock);
+            g.displayObject();
         }
     }
 }

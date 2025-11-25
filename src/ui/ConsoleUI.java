@@ -1,5 +1,6 @@
 package src.ui;
 import java.util.Scanner;
+import src.domain.Displayable;
 
 /**
  * Represents the command-line User Interface (UI) for the application.
@@ -43,6 +44,17 @@ public class ConsoleUI {
      */
     public void writeLine(String message) {
         System.out.println(message);
+    }
+
+    /**
+     * Prints a formatted string to the console, similar to System.out.printf, 
+     * but using the defined writeLine method for consistency (and automatic newline).
+     * @param format The format string (e.g., "%-15s %5.2f").
+     * @param args The arguments referenced by the format specifiers.
+     */
+    public void writeStringf(String format, Object... args) {
+        String formattedMessage = String.format(format, args);
+        this.writeLine(formattedMessage);
     }
 
     /**
@@ -107,9 +119,7 @@ public class ConsoleUI {
         while (true) {
             String inputLine = input.nextLine(); 
         
-            if (inputLine.isBlank()) {
-                return null;
-            }
+            if (inputLine.isBlank()) return null;
             try {
                 return Float.parseFloat(inputLine.trim()); 
             } catch (NumberFormatException e) {
@@ -137,5 +147,13 @@ public class ConsoleUI {
             }
             return inputLine; 
         }
+    }
+
+    /**
+     * Prints any object that implements the Displayable interface.
+     * @param item The object to be displayed.
+     */
+    public void printDisplayableDetails(Displayable object) {
+        this.writeLine(object.displayObject());
     }
 }

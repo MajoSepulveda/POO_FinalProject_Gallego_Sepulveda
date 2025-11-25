@@ -14,7 +14,7 @@ public class SearchMenu {
      * @param store The central data store containing the list of VideoGames to filter.
      * @param console The ConsoleUI instance used for all safe input/output operations.
      */
-    public static void searchMenu(Store store, ConsoleUI console){
+    public static void show(Store store, ConsoleUI console){
         String currentTitle = null;
         String currentGenre = null;
         Float currentMaxPrice = null; 
@@ -28,10 +28,10 @@ public class SearchMenu {
             console.writeLine("2) Género: " + (currentGenre != null ? currentGenre : "[No Aplicado]"));
             console.writeLine("3) Precio Máximo: " + (currentMaxPrice != null ? "$" + currentMaxPrice : "[No Aplicado]"));
             console.writeLine("4) Rating Mínimo: " + (currentMinRating != null ? currentMinRating : "[No Aplicado]"));
-            console.writeLine("5. Aplicar Filtros y Mostrar Resultados");
-            console.writeLine("6. Restablecer Filtros");
-            console.writeLine("7. Volver");
-            option = console.readInt("\nIngrese una opción (1-7): ");
+            console.writeLine("5) Aplicar Filtros y Mostrar Resultados");
+            console.writeLine("6) Restablecer Filtros");
+            console.writeLine("7) Volver");
+            option = console.readInt("\nSelecione una opción: ");
             console.writeLine("------------------------------\n");
 
             switch (option) {
@@ -72,7 +72,7 @@ public class SearchMenu {
         if (results.isEmpty()) {
             console.writeLine("\nNo se encontraron videojuegos que coincidan con los filtros aplicados.");
         } else {
-            displayVideoGameList(results, console);
+            displayVideoGameList(results, console, null);
             SelectMenu.SelectById(store, console);
             console.sleep(2000);
             console.cls();
@@ -86,12 +86,12 @@ public class SearchMenu {
      */
     private static void displayVideoGameList(List<VideoGame> videoGames, ConsoleUI console, Displayable videoGame) {
         console.writeLine("\n--- RESULTADOS ---");
-        System.out.printf("%-6s  %-60s  %-12s  %-6s  %-7s  %-5s%n",
+        console.writeStringf("%-6s  %-60s  %-12s  %-6s  %-7s  %-5s%n",
                 "ID", "TÍTULO", "GÉNERO", "RATING", "PRECIO", "STOCK");
         console.writeLine("-------------------------------------------------------------------------------------------------------------");
 
         for (VideoGame game : videoGames) {
-            console.printDisplayableDetails(videoGame);
+            console.printDisplayableDetails(game);
         }
         
         console.writeLine("------------------");

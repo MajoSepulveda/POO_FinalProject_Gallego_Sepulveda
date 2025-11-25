@@ -1,8 +1,6 @@
 package src.ui;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
 import src.domain.*;
 
 public class StoreMenu {
@@ -21,7 +19,7 @@ public class StoreMenu {
                     showCatalog(store, console);
                     break;
                 case 2:
-                    //aca va el menú de busqueda.
+                    SearchMenu.show(store, console);
                     break;
                 case 3:
                     AdminMenu.Show(store, console);

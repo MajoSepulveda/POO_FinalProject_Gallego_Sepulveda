@@ -23,11 +23,21 @@ public class AdminMenu {
             int option = console.readInt("Seleccione una opción: ");
             try {
                 switch (option) {
-                    case 1: AdminCustomerMenu.show(store, console);
-                    case 2: AdminVideoGameMenu.show(store, console);
-                    case 3: AdminSaleMenu.show(store, console);
-                    case 4: generateIncomeReport(store, console);
-                    case 5: return;
+                    case 1:
+                        AdminCustomerMenu.show(store, console);
+                        break;
+                    case 2:
+                        AdminVideoGameMenu.show(store, console);
+                        break;
+                    case 3:
+                        AdminSaleMenu.show(store, console);
+                        break;
+                    case 4:
+                        generateIncomeReport(store, console);
+                        break;
+                    case 5:
+                        console.writeLine("Volviendo...");
+                        return;
                     default: System.out.println("Opción inválida.");
                 }
             } catch (Exception e) {

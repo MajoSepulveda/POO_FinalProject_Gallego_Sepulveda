@@ -12,7 +12,7 @@ public class Main {
     private static final String GAMES_CSV = "src/data/videogames.csv";
     private static final String SALES_CSV = "src/data/sales.csv";
 
-    private static Store loadFromCSV(Scanner scanner){
+    private static Store loadFromCSV(Scanner scanner) {
         try {
             List<Customer> customers = DataStorage.loadCustomers(CUSTOMERS_CSV);
             List<VideoGame> videoGames = DataStorage.loadVideogames(GAMES_CSV);
@@ -29,7 +29,7 @@ public class Main {
         }
     }
 
-    private static Store handleFailedLoad(Scanner input){
+    private static Store handleFailedLoad(Scanner input) {
         System.out.println("\n--- OPCIONES DE INICIO ---");
         System.out.println("1. Cargar datos iniciales desde archivos CSV.");
         System.out.println("2. Iniciar la tienda vacía.");
@@ -67,7 +67,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Store store;
 
