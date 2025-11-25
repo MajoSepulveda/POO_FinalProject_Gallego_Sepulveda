@@ -4,8 +4,16 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import src.domain.Store;
 
+/**
+* Handles the main administrative menu for the store application.
+* Provides access to sub-menus for managing customers, video games, sales, and generating reports.
+*/
 public class AdminMenu {
-
+    /**
+    * Displays the main administration menu loop and handles navigation to sub-menus.
+    * @param store The main Store object instance.
+    * @param console The ConsoleUI object used for user input and output.
+    */
     public static void Show(Store store, ConsoleUI console) {
         if (store == null) {
             console.writeLine("Tienda no inicializada.");
@@ -18,25 +26,30 @@ public class AdminMenu {
             console.writeLine("2) Gestionar videojuegos.");
             console.writeLine("3) Gestionar ventas.");
             console.writeLine("4) Generar reporte."); 
-            console.writeLine("5) Volver.");
+            console.writeLine("5) Volver al menú principal.");
 
             int option = console.readInt("Seleccione una opción: ");
             try {
                 switch (option) {
                     case 1:
+                        // Navigates to the Customer Management menu
                         AdminCustomerMenu.show(store, console);
                         break;
                     case 2:
+                        // Navigates to the Video Game Management menu
                         AdminVideoGameMenu.show(store, console);
                         break;
                     case 3:
+                        // Navigates to the Sales Management menu
                         AdminSaleMenu.show(store, console);
                         break;
                     case 4:
+                        // Generates a financial report for a specific period
                         generateIncomeReport(store, console);
                         break;
                     case 5:
-                        console.writeLine("Volviendo...");
+                        console.writeLine("Volviendo al menú principal...");
+                        console.sleep(1000);
                         return;
                     default: System.out.println("Opción inválida.");
                 }
@@ -46,6 +59,12 @@ public class AdminMenu {
         }
     }
 
+    /**
+    * Prompts the user for a start and end date and generates an report from the store data.
+    * Handles exceptions related to date parsing and report generation.
+    * @param store The Store object to generate the report from.
+    * @param console The ConsoleUI object for input/output operations.
+    */
     private static void generateIncomeReport(Store store, ConsoleUI console) {
         try {
             LocalDate[] period = readPeriod(console);
@@ -58,11 +77,15 @@ public class AdminMenu {
         }
     }
 
+    /**
+    * Prompts the user to input the start and end dates for a period in dd-MM-yyyy format.
+    * Note: This method may throw a DateTimeParseException if the input format is incorrect.
+    * @param console The ConsoleUI object for input/output operations.
+    * @return A two-element array where element 0 is the start date (LocalDate) and element 1 is the end date (LocalDate).
+    */
     private static LocalDate[] readPeriod(ConsoleUI console) {
-        console.writeLine("Fecha inicio (dd-MM-yyyy): ");
-        String startStr = console.readString("Fecha inicio (dd-MM-yyyy): ");
-        console.writeLine("Fecha fin (dd-MM-yyyy): ");
-        String endStr = console.readString("Fecha fin (dd-MM-yyyy): ");
+        String startStr = console.readValidString("Fecha inicio (dd-MM-yyyy): ");
+        String endStr = console.readValidString("Fecha fin (dd-MM-yyyy): ");
         LocalDate start = LocalDate.parse(startStr);
         LocalDate end = LocalDate.parse(endStr);
         return new LocalDate[]{start, end};

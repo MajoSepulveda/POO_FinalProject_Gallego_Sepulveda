@@ -1,4 +1,5 @@
 package src.ui;
+
 import java.util.Scanner;
 import src.domain.*;
 

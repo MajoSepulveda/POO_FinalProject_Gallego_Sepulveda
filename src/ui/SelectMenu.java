@@ -1,19 +1,26 @@
 package src.ui;
 
-import src.domain.Store;
-import src.domain.VideoGame;
-import src.domain.Customer;
+import src.domain.*;
 
+/**
+ * Handles the selection and purchasing process for a single VideoGame chosen by the user.
+ * It guides the user through identifying the game and then completing the purchase for a customer.
+ */
 public class SelectMenu {
-
+    /**
+     * Prompts the user to enter a VideoGame ID and attempts to find the corresponding game in the store.
+     * If found, it calls the showSelectedMenu for further action.
+     * @param store The main Store object containing game data.
+     * @param console The ConsoleUI object for user input and output.
+     * @return The found VideoGame object, or null if the input is empty, the store is not initialized, or the game is not found.
+     */
     public static VideoGame SelectById(Store store, ConsoleUI console) {
         if (store == null) {
             console.writeLine("Tienda no inicializada.");
             return null;
         }
 
-        String id = console.readString("Ingrese el ID del videojuego para seleccionar (ENTER para volver)");
-        if (id.isEmpty()) return null;
+        String id = console.readVideoGameID("Ingrese el ID del videojuego para seleccionar.");
 
         VideoGame game = store.findVideoGameById(id);
         if (game == null) {
@@ -25,11 +32,18 @@ public class SelectMenu {
         return game;
     }
 
+    /**
+     * Displays a menu for a successfully selected VideoGame, giving the option to buy or return.
+     * This method loops until the user chooses to exit.
+     * @param game The VideoGame object that was selected.
+     * @param store The main Store object.
+     * @param console The ConsoleUI object for input and output.
+     */
     public static void showSelectedMenu(VideoGame game, Store store, ConsoleUI console) {
         if (game == null || store == null) return;
 
         while (true) {
-            console.writeLine("Has seleccionado el videojuego: " + game.displayObject());
+            console.writeLine("Has seleccionado el videojuego: " + game.getTitle());
             console.writeLine("1) Comprar videojuego");
             console.writeLine("2) Volver");
 
@@ -46,7 +60,15 @@ public class SelectMenu {
         }
     }
 
-        private static void handleBuy(VideoGame game, Store store, ConsoleUI console) {
+    /**
+     * Handles the complex logic for purchasing a selected VideoGame.
+     * This method prompts for Customer ID, checks stock and balance, asks for confirmation,
+     * and finally processes the sale (including unique Sale ID input).
+     * @param game The VideoGame object to be purchased.
+     * @param store The main Store object to process the transaction.
+     * @param console The ConsoleUI object for all interaction.
+     */
+    private static void handleBuy(VideoGame game, Store store, ConsoleUI console) {
         if (game == null || store == null) return;
 
         if (game.getStock() <= 0) {
@@ -56,24 +78,12 @@ public class SelectMenu {
 
         boolean finished = false;
         while (!finished) {
-            String customerId = console.readString("Ingrese el ID del cliente para realizar la compra (ENTER para cancelar)");
-            if (customerId.isEmpty()) {
-                console.writeLine("Compra cancelada.");
-                break;
-            }
-
-            //cambiar esta validación
-            /*try {
-                
-            } catch (NumberFormatException e) {
-                console.writeLine("ID de cliente inválido. Intente de nuevo o presione ENTER para cancelar.");
-                continue;
-            }*/
+            String customerId = console.readCustomerID("Ingrese el ID del cliente para realizar la compra.");
 
             Customer customer = store.findCustomerById(customerId);
             if (customer == null) {
-                console.writeLine("Cliente no encontrado con ID: " + customerId + ". Intente de nuevo o presione ENTER para cancelar.");
-                continue;
+                console.writeLine("Cliente no encontrado con ID: " + customerId + ".");
+                break;
             }
 
             float before = customer.getBalance();
@@ -81,27 +91,18 @@ public class SelectMenu {
             console.writeStringf("Saldo cliente antes: $%.2f | Precio del juego: $%.2f%n", before, price);
 
             if (before < price) {
-                console.writeLine("Saldo insuficiente para realizar la compra. Ingrese otro ID o presione ENTER para cancelar.");
-                continue;
+                console.writeLine("Saldo insuficiente para realizar la compra.");
+                break;
             }
 
-            String confirm = console.readString("¿Confirmar compra? (s/n)").toLowerCase();
+            String confirm = console.readValidString("¿Confirmar compra? (s/n)").toLowerCase();
             if (!confirm.equals("s") && !confirm.equals("y")) {
                 console.writeLine("Compra cancelada.");
                 break;
             }
 
             while (true) {
-                String saleId = console.readString("Ingrese el ID para la venta (ENTER para cancelar): ");
-                if (saleId.isEmpty()) {
-                    console.writeLine("Compra cancelada.");
-                    finished = true;
-                    break;
-                }
-                if (store.findSaleById(saleId) != null) {
-                    console.writeLine("Ese ID ya existe. Intente otro ID o presione ENTER para cancelar.");
-                    continue;
-                }
+                String saleId = store.generateSaleId();
                 try {
                     store.processSale(customer.getId(), game.getId(), saleId);
                     float after = customer.getBalance();

@@ -1,4 +1,5 @@
 package src.domain;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -404,5 +405,30 @@ public class Store implements Serializable {
         report += "\n-----------------------------";
     
         return report;
+    }
+
+    /**
+     * Generates the Sale ID by reversing the VideoGame ID.
+     * Assumes the Game ID has already been validated.
+     * @param gameId The validated Game ID (e.g., "A001").
+     * @return The generated Sale ID (e.g., "100A"), or an empty string if gameId is invalid/missing.
+     */
+    // En la clase src.domain.Store
+
+
+    public String generateSaleId() {
+        int currentId = 1;
+        String newSaleId;
+
+        while (true) {
+            newSaleId = String.valueOf(currentId);
+
+            if (findSaleById(newSaleId) == null) {
+                break; 
+            }
+
+            currentId++; 
+        }
+        return newSaleId;
     }
 }

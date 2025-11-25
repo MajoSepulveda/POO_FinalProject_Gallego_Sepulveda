@@ -1,4 +1,5 @@
 package src.domain;
+
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class Validator {
      * @throws IllegalArgumentException if the ID is null, empty, not 10 digits, or zero.
      */
     public static String getValidCustomerId(String id) {
-        if (id== null || id.trim().isEmpty()) throw new IllegalArgumentException("El id del cliente no puede estar vacío.");
+        if (id == null || id.trim().isEmpty()) throw new IllegalArgumentException("El id del cliente no puede estar vacío.");
 
         String cleanedId = id.trim();
         if (!cleanedId.matches(CLIENT_ID_REGEX)) throw new IllegalArgumentException("El id del cliente debe tener 10 dígitos.");
@@ -170,19 +171,5 @@ public class Validator {
         char genreInitial = genre.trim().toUpperCase().charAt(0);
 
         return idInitial == genreInitial;
-    }
-
-    // --- IDENTIFIER GENERATION UTILITIES ---
-
-    /**
-     * Generates the Sale ID by reversing the VideoGame ID.
-     * Assumes the Game ID has already been validated.
-     * @param gameId The validated Game ID (e.g., "A001").
-     * @return The generated Sale ID (e.g., "100A"), or an empty string if gameId is invalid/missing.
-     */
-    public static String generateSaleId(String gameId) {
-        if (gameId == null || gameId.isEmpty()) return "";
-    
-        return new StringBuilder(gameId).reverse().toString();
     }
 }

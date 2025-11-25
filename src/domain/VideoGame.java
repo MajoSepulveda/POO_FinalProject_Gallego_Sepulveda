@@ -1,4 +1,5 @@
 package src.domain;
+
 import java.io.Serializable;
 
 /**

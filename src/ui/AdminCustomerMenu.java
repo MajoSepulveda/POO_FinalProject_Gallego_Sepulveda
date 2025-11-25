@@ -3,18 +3,27 @@ package src.ui;
 import src.domain.*;
 import java.util.List;
 
+/**
+* Handles the administrative menu for managing customer entities within the store system.
+* Provides options to add, remove, modify, and list customers.
+*/
 public class AdminCustomerMenu {
-    public static void show(Store store, ConsoleUI console){
+
+    /**
+    * Displays the main Customer Management menu loop and handles user navigation.
+    * @param store The main Store object containing customer data.
+    * @param console The ConsoleUI object used for user input and output.
+    */
+    public static boolean show(Store store, ConsoleUI console){
 
         while (true) {
-            System.out.println("----------- GESTIÓN DE CLIENTES  -----------");
-            System.out.println("1) Agregar cliente.");
-            System.out.println("2) Eliminar cliente.");
-            System.out.println("3) Modificar cliente.");
-            System.out.println("4) Lista de clientes.");
-            System.out.println("5) Volver al menú principal.");
-            System.out.print("Seleccione una opción: ");
-
+            console.writeLine("----------- GESTIÓN DE CLIENTES  -----------");
+            console.writeLine("1) Agregar cliente.");
+            console.writeLine("2) Eliminar cliente.");
+            console.writeLine("3) Modificar cliente.");
+            console.writeLine("4) Lista de clientes.");
+            console.writeLine("5) Volver.");
+            
             int option = console.readInt("Seleccione una opción: ");
             switch (option) {
                 case 1:
@@ -30,19 +39,26 @@ public class AdminCustomerMenu {
                     listCustomers(store, console);
                     break;
                 case 5:
-                    console.writeLine("Volviendo al menú principal...");
-                    return;
+                    console.writeLine("Volviendo...");
+                    console.sleep(1000);
+                    return true;
                 default:
-                    System.out.println("Opción inválida. Intente de nuevo.");
+                    console.writeLine("Opción inválida. Intente de nuevo.");
             }
         }
     }
 
+    /**
+    * Prompts the user for customer details (Name, ID, Balance) and adds a new customer to the store.
+    * Handles potential exceptions during data input or customer creation.
+    * @param store The Store object to which the customer will be added.
+    * @param console The ConsoleUI object for input/output operations.
+    */
     private static void addCustomer(Store store, ConsoleUI console) {
         try {
-            String name = console.readString("Nombre del cliente: ");
-            String id = console.readString("ID: ");
-            float balance = console.readFloat("Saldo inicial: ");
+            String name = console.readValidString("Nombre del cliente: ");
+            String id = console.readCustomerID("ID: ");
+            float balance = console.readPositiveFloat("Saldo inicial: ");
             Customer c = new Customer(name, id, balance);
             store.addCustomer(c);
             console.writeLine("Cliente agregado: ID = " + c.getId() + " Nombre = " + c.getName());
@@ -51,9 +67,15 @@ public class AdminCustomerMenu {
         }
     }
 
+    /**
+    * Prompts the user for a customer ID and attempts to remove the customer from the store.
+    * Handles exceptions if the ID is invalid or the customer is not found.
+    * @param store The Store object from which the customer will be removed.
+    * @param console The ConsoleUI object for input/output operations.
+    */
     private static void removeCustomer(Store store, ConsoleUI console) {
         try {
-            String id = console.readString("ID del cliente a eliminar: ");
+            String id = console.readCustomerID("ID del cliente a eliminar: ");
             store.removeCustomer(id);
             console.writeLine("Cliente eliminado: " + id);
         } catch (Exception e) {
@@ -61,14 +83,20 @@ public class AdminCustomerMenu {
         }
     }
 
+    /**
+    * Allows the user to find and modify an existing customer's details in a sub-menu loop.
+    * Modification options include changing the name and adding balance.
+    * @param store The Store object containing the customer data.
+    * @param console The ConsoleUI object for input/output operations.
+    */
     private static void modifyCustomer(Store store, ConsoleUI console) {
         if (store == null) return;
         while (true) {
-            String id = console.readString("Ingrese ID del cliente a modificar (ENTER para cancelar): ");
+            String id = console.readCustomerID("Ingrese ID del cliente a modificar: ");
             Customer customer = store.findCustomerById(id);
             if (customer == null) {
-                console.writeLine("Cliente no encontrado. Intente nuevamente.");
-                continue;
+                console.writeLine("Cliente no encontrado. Verifique el ID.");
+                break;
             }
 
             boolean done = false;
@@ -80,7 +108,7 @@ public class AdminCustomerMenu {
                 int option = console.readInt("Seleccione una opción");
                 switch (option) {
                     case 1:
-                        String name = console.readString("Nuevo nombre");
+                        String name = console.readValidString("Nuevo nombre");
                         try {
                             customer.setName(name);
                             console.writeLine("Nombre actualizado.");
@@ -89,7 +117,7 @@ public class AdminCustomerMenu {
                         }
                         break;
                     case 2:
-                        float amount = console.readFloat("Monto a agregar (ENTER para cancelar)");
+                        float amount = console.readPositiveFloat("Monto a agregar.");
                         try {
                             customer.addBalance(amount);
                             console.writeLine("Saldo agregado. Nuevo saldo: $" + String.format("%.2f", customer.getBalance()));
@@ -110,6 +138,11 @@ public class AdminCustomerMenu {
         }
     }
 
+    /**
+    * Retrieves the list of all customers from the store and displays their details to the console.
+    * @param store The Store object to retrieve the customer list from.
+    * @param console The ConsoleUI object for output operations.
+    */
     private static void listCustomers(Store store, ConsoleUI console) {
         List<Customer> customers = store.getCustomers();
         if (customers == null || customers.isEmpty()) {
@@ -118,7 +151,7 @@ public class AdminCustomerMenu {
         }
         console.writeLine("--- CLIENTES ---");
         for (Customer c : customers) {
-            System.out.printf("ID: %d | Nombre: %s | Saldo: $%.2f%n", c.getId(), c.getName(), c.getBalance());
+            console.printDisplayableDetails(c);
         }
     }
 }

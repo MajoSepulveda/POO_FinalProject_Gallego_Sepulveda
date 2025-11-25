@@ -1,4 +1,5 @@
 package src.domain;
+
 import java.io.Serializable;
 
 /**
@@ -18,7 +19,7 @@ public class Customer implements Serializable, Displayable {
      * @throws IllegalArgumentException if id is non-positive.
      */
     public Customer(String name, String id, float balance) {
-        setId(id);
+        this.id = id;
         setName(name);
         setBalance(balance);
     }
@@ -42,10 +43,6 @@ public class Customer implements Serializable, Displayable {
      */
     public float getBalance() {
         return balance;
-    }
-
-    private void setId(String id){
-        if (id == null || id.trim().isBlank()) throw new IllegalArgumentException("El id del cliente no puede estar vacío.");
     }
 
     /**
