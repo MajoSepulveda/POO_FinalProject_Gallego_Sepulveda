@@ -1,7 +1,6 @@
 package src.ui;
 import java.util.List;
 import src.domain.*;
-
 /**
  * Manages the interactive search and filtering interface for VideoGames.
  * This class allows the user to iteratively set optional filters (Title, Genre, Max Price, Min Rating).
