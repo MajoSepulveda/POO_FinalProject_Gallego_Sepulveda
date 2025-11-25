@@ -17,7 +17,8 @@ public class Main {
     private static final String GAMES_CSV = "src/data/videogames.csv";
     private static final String SALES_CSV = "src/data/sales.csv";
 
-    // --- Loading Methods ---
+    private static ConsoleUI console;
+     // --- Loading Methods ---
 
     /**
      * Attempts to load the initial application data from CSV files.
@@ -34,12 +35,12 @@ public class Main {
             // Load Sales, which requires the initialized Store to link Customer/VideoGame objects
             List<Sale> sales = DataStorage.loadSales(SALES_CSV, store);
             store.loadInitialSales(sales);
-            System.out.println("\nDatos cargados desde los archivos CSV con éxito.");
+            console.writeLine("\nDatos cargados desde los archivos CSV con éxito.");
             return store;
 
         } catch (IOException e) {
-            System.err.println("Error al cargar datos desde archivos CSV. " + e.getMessage());
-            System.err.println("Verifique la existencia y formato de los archivos CSV.");
+            console.writeLine("Error al cargar datos desde archivos CSV. " + e.getMessage());
+            console.writeLine("Verifique la existencia y formato de los archivos CSV.");
             return null;
         }
     }
@@ -51,20 +52,18 @@ public class Main {
      * @return A newly initialized Store (from CSV or empty), or null if the user chooses to exit.
      */
     private static Store handleFailedLoad(Scanner input) {
-        System.out.println("\n--- OPCIONES DE INICIO ---");
-        System.out.println("1. Cargar datos iniciales desde archivos CSV.");
-        System.out.println("2. Iniciar la tienda vacía.");
-        System.out.print("Seleccione una opción (1 o 2): ");
-
-        String option = input.nextLine();
+        console.writeLine("\n--- OPCIONES DE INICIO ---");
+        console.writeLine("1. Cargar datos iniciales desde archivos CSV.");
+        console.writeLine("2. Iniciar la tienda vacía.");
+        String option = console.readString("Seleccione una opción (1 o 2): ");
             
         if (option.equals("1")) {
             return loadFromCSV(input);
-        } else if (option.equals("2")) {   
-            System.out.println("\nIniciando tienda vacía con éxito.");
+        } else if (option.equals("2")) { 
+            console.writeLine("\nIniciando tienda vacía con éxito.");
             return new Store(); 
         } else {
-            System.err.println("\nOpción inválida. El programa finalizará.");
+            console.writeLine("\nOpción inválida. El programa finalizará.");
             return null;
         }
     }
@@ -77,20 +76,20 @@ public class Main {
      * @param store The Store object containing the current session data.
      */
     private static void handleSave(Store store) {
-        // Attempt 1: Save to the main file
         try {
+            // Attempt 1: Save to the main file
             DataStorage.save(store, MAIN_FILE);
-            System.out.println("\nDatos de la tienda guardados con éxito en " + MAIN_FILE);
+            console.writeLine("\nDatos de la tienda guardados con éxito en " + MAIN_FILE);
         } catch (IOException e) {
-            System.err.println("\nAvertencia: Falló el guardado principal en " + MAIN_FILE + ". Intentando respaldo en " + BACKUP_FILE);
-        
+            console.writeLine("\nAvertencia: Falló el guardado principal en " + MAIN_FILE + ". Intentando respaldo en " + BACKUP_FILE);
+
             // Attempt 2: Save to the backup file
             try {
                 DataStorage.save(store, BACKUP_FILE);
-                System.out.println("\nDatos guardados con éxito en el archivo de respaldo " + BACKUP_FILE);
+                console.writeLine("\nDatos guardados con éxito en el archivo de respaldo " + BACKUP_FILE);
             } catch (IOException innerE) {
                 // Both attempts failed
-                System.err.println("\nERROR CRÍTICO: Fallaron ambos intentos de guardado. Los datos de esta sesión no se guardarán. " + innerE.getMessage());
+                console.writeLine("\nERROR CRÍTICO: Fallaron ambos intentos de guardado. Los datos de esta sesión no se guardarán. " + innerE.getMessage());
             }
         }
     }
@@ -105,23 +104,27 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Store store;
+        
+        console = new ConsoleUI(scanner);
 
-        // --- Load Serialized Data ---  
+        // --- Load Serialized Data --- 
         try{
             store = DataStorage.load(MAIN_FILE);
-            System.out.println("\nDatos de la tienda cargados con éxito desde " + MAIN_FILE + "\n Inicializando programa...");
+            console.writeLine("\nDatos de la tienda cargados con éxito desde " + MAIN_FILE + "\n Inicializando programa...");
         } catch (IOException | ClassNotFoundException e){
-            System.err.println("\nError al cargar los datos de la tienda desde " + MAIN_FILE + ": " + e.getMessage());
+            console.writeLine("\nError al cargar los datos de la tienda desde " + MAIN_FILE + ": " + e.getMessage());
             store = handleFailedLoad(scanner);
         }
+        
         // --- Program Execution and Shutdown ---
         if (store != null) {
-            
-            System.out.println("\nGuardando cambios de la sesión...");
+            StartMenu.show(store, console);
+
+            console.writeLine("\nGuardando cambios de la sesión...");
             handleSave(store);
         }
         
         scanner.close();
-        System.out.println("\nPrograma finalizado.");
+        console.writeLine("\nPrograma finalizado.");
     }
 }

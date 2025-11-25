@@ -4,8 +4,18 @@ import src.domain.Store;
 import src.domain.VideoGame;
 import src.domain.Customer;
 
+/**
+ * Handles the selection and purchasing process for a single VideoGame chosen by the user.
+ * It guides the user through identifying the game and then completing the purchase for a customer.
+ */
 public class SelectMenu {
-
+    /**
+     * Prompts the user to enter a VideoGame ID and attempts to find the corresponding game in the store.
+     * If found, it calls the showSelectedMenu for further action.
+     * @param store The main Store object containing game data.
+     * @param console The ConsoleUI object for user input and output.
+     * @return The found VideoGame object, or null if the input is empty, the store is not initialized, or the game is not found.
+     */
     public static VideoGame SelectById(Store store, ConsoleUI console) {
         if (store == null) {
             console.writeLine("Tienda no inicializada.");
@@ -25,11 +35,18 @@ public class SelectMenu {
         return game;
     }
 
+    /**
+     * Displays a menu for a successfully selected VideoGame, giving the option to buy or return.
+     * This method loops until the user chooses to exit.
+     * @param game The VideoGame object that was selected.
+     * @param store The main Store object.
+     * @param console The ConsoleUI object for input and output.
+     */
     public static void showSelectedMenu(VideoGame game, Store store, ConsoleUI console) {
         if (game == null || store == null) return;
 
         while (true) {
-            console.writeLine("Has seleccionado el videojuego: " + game.displayObject());
+            console.writeLine("Has seleccionado el videojuego: " + game.getTitle());
             console.writeLine("1) Comprar videojuego");
             console.writeLine("2) Volver");
 
@@ -46,7 +63,15 @@ public class SelectMenu {
         }
     }
 
-        private static void handleBuy(VideoGame game, Store store, ConsoleUI console) {
+    /**
+     * Handles the complex logic for purchasing a selected VideoGame.
+     * This method prompts for Customer ID, checks stock and balance, asks for confirmation,
+     * and finally processes the sale (including unique Sale ID input).
+     * @param game The VideoGame object to be purchased.
+     * @param store The main Store object to process the transaction.
+     * @param console The ConsoleUI object for all interaction.
+     */
+    private static void handleBuy(VideoGame game, Store store, ConsoleUI console) {
         if (game == null || store == null) return;
 
         if (game.getStock() <= 0) {

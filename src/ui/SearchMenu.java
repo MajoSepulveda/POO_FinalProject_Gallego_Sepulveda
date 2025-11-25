@@ -51,17 +51,15 @@ public class SearchMenu {
                     currentGenre = null;
                     currentMaxPrice = null; 
                     currentMinRating = null; 
-
+                case 7:
+                    console.writeLine("Volviendo al menú principal sin aplicar filtros...");
+                    console.sleep(1000);
+                    return;
                 default:
                     System.out.println("Opción inválida. Intente de nuevo.");
             }
         } 
         
-        if (option == 7){
-            console.writeLine("Volviendo al menú principal sin aplicar filtros...");
-            console.sleep(1000);
-            return;
-        }
 
         console.sleep(1000);
         console.cls();

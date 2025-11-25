@@ -3,18 +3,26 @@ package src.ui;
 import src.domain.*;
 import java.util.List;
 
+/**
+* Handles the administrative menu for managing VideoGame entities within the store system.
+* Provides options to add, remove, modify, and list video games.
+*/
 public class AdminVideoGameMenu {
 
+    /**
+    * Displays the main Video Game Management menu loop and handles user navigation.
+    * @param store The main Store object containing video game data.
+    * @param console The ConsoleUI object used for user input and output.
+    */
     public static void show(Store store, ConsoleUI console){
 
         while (true) {
-            System.out.println("----------- GESTIÓN DE VIDEOJUEGOS  -----------");
-            System.out.println("1) Agregar videojuego.");
-            System.out.println("2) Eliminar videojuego.");
-            System.out.println("3) Modificar videojuego.");
-            System.out.println("4) Lista de videojuegos.");
-            System.out.println("5) Volver al menú principal.");
-            System.out.print("Seleccione una opción: ");
+            console.writeLine("----------- GESTIÓN DE VIDEOJUEGOS  -----------");
+            console.writeLine("1) Agregar videojuego.");
+            console.writeLine("2) Eliminar videojuego.");
+            console.writeLine("3) Modificar videojuego.");
+            console.writeLine("4) Lista de videojuegos.");
+            console.writeLine("5) Volver.");
 
             int option = console.readInt("Seleccione una opción: ");
             switch (option) {
@@ -31,7 +39,8 @@ public class AdminVideoGameMenu {
                     listVideoGames(store, console);
                     break;
                 case 5:
-                    console.writeLine("Volviendo al menú principal...");
+                    console.writeLine("Volviendo...");
+                    console.sleep(1000);
                     return;
                 default:
                     System.out.println("Opción inválida. Intente de nuevo.");
@@ -39,15 +48,20 @@ public class AdminVideoGameMenu {
         }
     }
 
+    /**
+    * Prompts the user for all video game details (ID, Title, Genre, Rating, Price, Stock)
+    * and adds a new video game to the store.
+    * Handles potential exceptions during data input or game creation.
+    * @param store The Store object to which the video game will be added.
+    * @param console The ConsoleUI object for input/output operations.
+    */
     private static void addVideoGame(Store store, ConsoleUI console) {
         try {
             String id = console.readString("ID del videojuego: ");
             String title = console.readString("Titulo: ");
             String genre = console.readString("Genero: ");
             float rating = console.readFloat("Rating: ");
-            System.out.print("Precio: ");
             float price = console.readFloat("Precio: ");
-            System.out.print("Stock: ");
             int stock = console.readInt("Stock: ");
             VideoGame vg = new VideoGame(title, genre, rating, price, id, stock);
             store.addGame(vg);
@@ -57,6 +71,12 @@ public class AdminVideoGameMenu {
         }
     }
 
+    /**
+    * Prompts the user for a video game ID and attempts to remove the game from the store.
+    * Handles exceptions if the ID is invalid or the video game is not found.
+    * @param store The Store object from which the video game will be removed.
+    * @param console The ConsoleUI object for input/output operations.
+    */
     private static void removeVideoGame(Store store, ConsoleUI console) {
         try {
             String id = console.readString("ID del videojuego a eliminar: ");
@@ -67,6 +87,12 @@ public class AdminVideoGameMenu {
         }
     }
 
+    /**
+    * Allows the user to find and modify an existing video game's details in a sub-menu loop.
+    * Modification options include changing title, genre, rating, price, and adding stock.
+    * @param store The Store object containing the video game data.
+    * @param console The ConsoleUI object for input/output operations.
+    */
     private static void modifyVideoGame(Store store, ConsoleUI console) {
         if (store == null) return;
         while (true) {
@@ -150,6 +176,12 @@ public class AdminVideoGameMenu {
         }
     }
 
+    /**
+    * Retrieves the list of all video games from the store and displays their details to the console.
+    * Uses the VideoGame object's displayObject method for formatting.
+    * @param store The Store object to retrieve the video game list from.
+    * @param console The ConsoleUI object for output operations.
+    */
     private static void listVideoGames(Store store, ConsoleUI console) {
         List<VideoGame> games = store.getVideoGames();
         if (games == null || games.isEmpty()) {
@@ -158,7 +190,7 @@ public class AdminVideoGameMenu {
         }
         console.writeLine("--- VIDEOJUEGOS ---");
         for (VideoGame g : games) {
-            g.displayObject();
+            console.printDisplayableDetails(g);
         }
     }
 }

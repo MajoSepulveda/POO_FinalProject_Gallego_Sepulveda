@@ -3,8 +3,16 @@ package src.ui;
 import java.util.List;
 import src.domain.*;
 
+/**
+ * Represents the main menu of the store, accessible after starting the application.
+ * Provides options for browsing the catalog, searching for games, accessing administration, or returning to the start menu.
+ */
 public class StoreMenu {
-
+    /**
+     * Displays the main Store menu loop and handles user navigation.
+     * @param store The main Store object instance.
+     * @param console The ConsoleUI object used for user input and output.
+     */
     public static void show(Store store, ConsoleUI console) {
         while (true) {
             console.writeLine("----------- TIENDA -----------");
@@ -26,6 +34,7 @@ public class StoreMenu {
                     break;
                 case 4:
                     console.writeLine("Volviendo al menú principal...");
+                    console.sleep(1000);
                     return;
                 default:
                     console.writeLine("Opción inválida. Intente de nuevo.");
@@ -34,6 +43,12 @@ public class StoreMenu {
         }
     }
 
+    /**
+     * Retrieves the complete list of video games from the store and displays them in a formatted table.
+     * After displaying the catalog, it allows the user to select a game by ID for purchase or further action.
+     * @param store The Store object to retrieve the catalog from.
+     * @param console The ConsoleUI object for output operations.
+     */
     private static void showCatalog(Store store, ConsoleUI console) {
         if (store == null) {
             console.writeLine("Error: tienda no inicializada.");
@@ -46,13 +61,17 @@ public class StoreMenu {
             return;
         }
 
+        // Display header
         System.out.printf("%-6s  %-60s  %-12s  %-6s  %-7s  %-5s%n",
                 "ID", "TÍTULO", "GÉNERO", "RATING", "PRECIO", "STOCK");
         console.writeLine("-------------------------------------------------------------------------------------------------------------");
 
+        // Display each game using its displayObject method
         for (VideoGame g : games) {
-            g.displayObject();
+            console.writeLine(g.displayObject());
         }
+        
+        // Allows the user to select one of the displayed games
         SelectMenu.SelectById(store, console);
     }
 }
