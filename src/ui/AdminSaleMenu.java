@@ -48,11 +48,25 @@ public class AdminSaleMenu {
     */
     private static void removeSale(Store store, ConsoleUI console) {
         try {
-            String id = console.readint("ID de la venta a eliminar: ");
-            store.removeSale(id);
-            console.writeLine("Venta eliminada: " + id);
+            String id = console.readSaleId("ID de la venta a eliminar: ");
+            Sale sale = store.findSaleById(id);
+
+            if (sale == null) {
+                console.writeError("Venta no encontrada con ID: " + id);
+                return;
+            }
+        
+            String confirmationMessage = String.format("¿Está seguro de que desea eliminar la Venta ID: %s? Esta acción afectará el stock y los ingresos. Escriba 'SI' para confirmar: ", sale.getId());
+            String confirmation = console.readString(confirmationMessage);
+
+            if (confirmation.trim().equalsIgnoreCase("SI")) {
+                store.removeSale(id);
+                console.writeLine("Venta eliminada: " + sale.getId());
+            } else {
+                console.writeLine("Operación de eliminación de venta cancelada.");
+            }
         } catch (Exception e) {
-            console.writeLine("No se pudo eliminar la venta: " + e.getMessage());
+            console.writeError("No se pudo eliminar la venta: " + e.getMessage());
         }
     }
 

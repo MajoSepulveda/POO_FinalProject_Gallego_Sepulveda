@@ -2,6 +2,7 @@ package src.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.List;
@@ -15,6 +16,9 @@ public class Store implements Serializable {
     private ArrayList<VideoGame> videoGames;
     private ArrayList<Customer> customers;
     private ArrayList<Sale> sales;
+    
+    // Defines the standard date format (DD-MM-YYYY) used for converting LocalDate objects into strings
+    private static final DateTimeFormatter SALE_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     // --- Constructors ---
 
@@ -274,7 +278,9 @@ public class Store implements Serializable {
         if (customer.getBalance() < videoGame.getPrice()) throw new IllegalStateException("El cliente no tiene suficiente saldo.");
 
         customer.reduceBalance(videoGame.getPrice());
-        Sale sale = new Sale(videoGame, customer, saleId, videoGame.getPrice(), java.time.LocalDate.now());
+        // Uses the defined SALE_DATE_FORMATTER to convert the current LocalDate object (java.time.LocalDate.now()) 
+        // into a formatted String (DD-MM-YYYY) as required by the Sale constructor for internal validation.
+        Sale sale = new Sale(videoGame, customer, saleId, videoGame.getPrice(), java.time.LocalDate.now().format(SALE_DATE_FORMATTER)); 
         this.sales.add(sale);
         videoGame.reduceStock();
     }

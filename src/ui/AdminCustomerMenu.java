@@ -56,7 +56,7 @@ public class AdminCustomerMenu {
     */
     private static void addCustomer(Store store, ConsoleUI console) {
         try {
-            String name = console.readValidString("Nombre del cliente: ");
+            String name = console.readValidName("Nombre del cliente: ");
             String id = console.readCustomerID("ID: ");
             float balance = console.readPositiveFloat("Saldo inicial: ");
             Customer c = new Customer(name, id, balance);
@@ -76,10 +76,25 @@ public class AdminCustomerMenu {
     private static void removeCustomer(Store store, ConsoleUI console) {
         try {
             String id = console.readCustomerID("ID del cliente a eliminar: ");
-            store.removeCustomer(id);
-            console.writeLine("Cliente eliminado: " + id);
+            Customer customer = store.findCustomerById(id);
+
+            if (customer == null) {
+                console.writeError("Cliente no encontrado con ID: " + id);
+                return;
+            }
+
+            String confirmationMessage = String.format("¿Está seguro de que desea eliminar al cliente %s (ID: %s)? Escriba 'SI' para confirmar: ", customer.getName(), customer.getId());
+        
+            String confirmation = console.readString(confirmationMessage);
+
+            if (confirmation.trim().equalsIgnoreCase("SI")) {
+                store.removeCustomer(id);
+                console.writeLine("Cliente eliminado: " + customer.getName() + " (ID: " + id + ")");
+            } else {
+                console.writeLine("Operación de eliminación cancelada.");
+            }
         } catch (Exception e) {
-            console.writeLine("No se pudo eliminar el cliente: " + e.getMessage());
+        console.writeError("No se pudo eliminar el cliente: " + e.getMessage());
         }
     }
 
@@ -108,7 +123,7 @@ public class AdminCustomerMenu {
                 int option = console.readInt("Seleccione una opción");
                 switch (option) {
                     case 1:
-                        String name = console.readValidString("Nuevo nombre");
+                        String name = console.readValidName("Nuevo nombre");
                         try {
                             customer.setName(name);
                             console.writeLine("Nombre actualizado.");

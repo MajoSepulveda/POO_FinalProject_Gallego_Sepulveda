@@ -80,10 +80,25 @@ public class AdminVideoGameMenu {
     private static void removeVideoGame(Store store, ConsoleUI console) {
         try {
             String id = console.readVideoGameID("ID del videojuego a eliminar: ");
-            store.removeVideoGame(id);
-            console.writeLine("Videojuego eliminado: " + id);
+            VideoGame game = store.findVideoGameById(id);
+
+            if (game == null) {
+                console.writeError("Videojuego no encontrado con ID: " + id);
+                return;
+            }
+        
+            String confirmationMessage = String.format("¿Está seguro de que desea eliminar el videojuego '%s' (ID: %s)? Escriba 'SI' para confirmar: ", game.getTitle(), game.getId());
+        
+            String confirmation = console.readString(confirmationMessage);
+
+            if (confirmation.trim().equalsIgnoreCase("SI")) {
+                store.removeVideoGame(id);
+                console.writeLine("Videojuego eliminado: " + game.getTitle() + " (ID: " + id + ")");
+            } else {
+                console.writeLine("Operación de eliminación cancelada.");
+            }
         } catch (Exception e) {
-            console.writeLine("No se pudo eliminar el videojuego: " + e.getMessage());
+            console.writeError("No se pudo eliminar el videojuego: " + e.getMessage());
         }
     }
 
@@ -105,7 +120,7 @@ public class AdminVideoGameMenu {
 
             boolean done = false;
             while (!done) {
-                console.writeLine("\nVideojuego actual: " + g);
+                console.writeLine("\nVideojuego actual: " + g.getTitle());
                 console.writeLine("1) Cambiar título");
                 console.writeLine("2) Cambiar género");
                 console.writeLine("3) Cambiar rating");

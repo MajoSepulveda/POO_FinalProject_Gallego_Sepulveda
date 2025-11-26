@@ -39,7 +39,6 @@ public class StoreMenu {
                 default:
                     console.writeLine("Opción inválida. Intente de nuevo.");
             }
-            System.out.println();
         }
     }
 
@@ -51,7 +50,7 @@ public class StoreMenu {
      */
     private static void showCatalog(Store store, ConsoleUI console) {
         if (store == null) {
-            console.writeLine("Error: tienda no inicializada.");
+            console.writeError("Tienda no inicializada.");
             return;
         }
 

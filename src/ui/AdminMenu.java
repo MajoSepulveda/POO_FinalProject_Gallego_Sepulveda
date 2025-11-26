@@ -2,7 +2,7 @@ package src.ui;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import src.domain.Store;
+import src.domain.*;
 
 /**
 * Handles the main administrative menu for the store application.
@@ -71,9 +71,11 @@ public class AdminMenu {
             String report = store.generateIncomeReport(period[0], period[1]);
             console.writeLine(report);
         } catch (DateTimeParseException e) {
-            console.writeLine("Formato de fecha inválido. Use dd-MM-yyyy.");
+            console.writeError("Formato de fecha inválido. Use dd-MM-yyyy.");
+        } catch (IllegalArgumentException e){
+            console.writeError("Fecha incorrecta: " + e.getMessage());
         } catch (Exception e) {
-            console.writeLine("Error al generar reporte: " + e.getMessage());
+            console.writeError("Reporte no generado: " + e.getMessage());
         }
     }
 
@@ -86,8 +88,8 @@ public class AdminMenu {
     private static LocalDate[] readPeriod(ConsoleUI console) {
         String startStr = console.readValidString("Fecha inicio (dd-MM-yyyy): ");
         String endStr = console.readValidString("Fecha fin (dd-MM-yyyy): ");
-        LocalDate start = LocalDate.parse(startStr);
-        LocalDate end = LocalDate.parse(endStr);
+        LocalDate start = Validator.getValidDate(startStr);
+        LocalDate end = Validator.getValidDate(endStr);
         return new LocalDate[]{start, end};
     }
 }

@@ -52,6 +52,7 @@ public class SearchMenu {
                     currentGenre = null;
                     currentMaxPrice = null; 
                     currentMinRating = null; 
+                    break;
                 case 7:
                     console.writeLine("Volviendo al menú principal sin aplicar filtros...");
                     console.sleep(1000);

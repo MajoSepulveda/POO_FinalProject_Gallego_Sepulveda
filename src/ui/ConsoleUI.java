@@ -1,5 +1,6 @@
 package src.ui;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 import src.domain.*;
 
@@ -9,6 +10,12 @@ import src.domain.*;
  */
 public class ConsoleUI {
     private final Scanner input;
+
+    // Defines the ANSI escape code sequence to initiate the RED font color in the console output. Used primarily for error messages.
+    private static final String ANSI_RED = "\u001b[31m";
+
+    //Defines the ANSI escape code sequence to RESET the font color to the console's default setting.
+    private static final String ANSI_RESET = "\u001b[0m";
 
     /**
      * Pauses the program execution for the specified duration in milliseconds.
@@ -47,9 +54,12 @@ public class ConsoleUI {
         System.out.println(message);
     }
 
+    public void writePrompt(String message) {
+        System.out.print(message);
+    }
+
     /**
-     * Prints a formatted string to the console, similar to System.out.printf, 
-     * but using the defined writeLine method for consistency (and automatic newline).
+     * Prints a formatted string to the console, similar to System.out.printf, but using the defined writeLine method for consistency.
      * @param format The format string (e.g., "%-15s %5.2f").
      * @param args The arguments referenced by the format specifiers.
      */
@@ -59,51 +69,47 @@ public class ConsoleUI {
     }
 
     /**
+     * Writes an error message to the standard error stream (System.err).
+     * It formats the message with a consistent prefix for clarity.
+     * @param message The error message to display.
+     */
+    public void writeError(String message) {
+        String coloredMessage = ANSI_RED + "[ERROR] " + message + ANSI_RESET;
+        this.writeLine(coloredMessage);
+    }   
+
+    /**
+     * Reads a line of text from the console, prompts the user, and trims whitespace.
+     * Returns an empty string ("") if the user only presses Enter or enters whitespace.
+     * This method ensures the input is never null.
+     * @param message The prompt message to display.
+     * @return The trimmed input string.
+     */
+    public String readString(String message) {
+        this.writePrompt(message);
+        String inputLine = input.nextLine().trim();
+        return inputLine; 
+    }
+
+    /**
      * Prompts the user for an int number (int).
      * @param message The prompt message to display to the user.
      * @return The validated int number entered by the user.
      */
     public int readInt(String message) {
-        System.out.print(message);
-
         while (true){
-            String inputLine = input.nextLine();
+            String inputLine = this.readString(message); 
         
             if (inputLine.isBlank()) { 
-                System.err.println("Error: La entrada no puede estar vacía o contener solo espacios. Intente de nuevo.");
-                System.out.print(message);
+                this.writeError("La entrada no puede estar vacía o contener solo espacios. Intente de nuevo.");
+                this.sleep(500);
                 continue;
             }
             try {
                 return Integer.parseInt(inputLine.trim());
             } catch (NumberFormatException e) {
-                System.err.println("Error: Ingrese un número entero válido.");
-                System.out.print(message);
-            }
-        }
-    }
-
-    /**
-     * Prompts the user for a decimal number (float).
-     * @param message The prompt message to display to the user.
-     * @return The validated number as a primitive float. 
-     */
-    public float readFloat(String message) {
-        System.out.print(message);
-    
-        while (true) {
-            String inputLine = input.nextLine(); 
-        
-            if (inputLine.isBlank()) {
-                System.err.println("Error: La entrada no puede estar vacía o contener solo espacios. Intente de nuevo.");
-                System.out.print(message);
-                continue;
-            }
-            try {
-                return Float.parseFloat(inputLine.trim()); 
-            } catch (NumberFormatException e) {
-                System.err.println("Error: Ingrese un número decimal válido.");
-                System.out.print(message);
+                this.writeError("Ingrese un número entero válido.");
+                this.sleep(500);
             }
         }
     }
@@ -115,38 +121,24 @@ public class ConsoleUI {
      * @return The validated number as a Float object, or null if the input is blank.
      */
     public Float readFloatObject(String message) {
-        System.out.print(message);
-    
         while (true) {
-            String inputLine = input.nextLine(); 
+            String inputLine = this.readString(message); 
         
             if (inputLine.isBlank()) return null;
+
             try {
                 return Float.parseFloat(inputLine.trim()); 
             } catch (NumberFormatException e) {
-                System.err.println("Error: Ingrese un número decimal válido.");
-                System.out.print(message);
+                this.writeError("Ingrese un número decimal válido.");
+                this.sleep(500); 
             }
         }
     }
-    
-    /**
-     * Reads a line of text from the console, prompts the user, and trims whitespace.
-     * Returns an empty string ("") if the user only presses Enter or enters whitespace.
-     * This method ensures the input is never null.
-     * @param message The prompt message to display.
-     * @return The trimmed input string.
-     */
-    public String readString(String message) {
-        System.out.print(message);
-        String inputLine = input.nextLine().trim();
-        return inputLine; 
-    }
 
     /**
-     * Prompts the user repeatedly for a valid Customer ID (10 digits, positive value).
-     * @param message The prompt message to display.
-     * @return The validated Customer ID (String).
+     * Prints the displayable details of an object to the console.
+     * It uses the displayObject() method defined by the Displayable interface to retrieve the formatted string, and then outputs it using the central output method (writeLine).
+     * @param object The object implementing the Displayable interface to be displayed.
      */
     public void printDisplayableDetails(Displayable object) {
         this.writeLine(object.displayObject());
@@ -164,7 +156,7 @@ public class ConsoleUI {
             try {
                 return Validator.getValidCustomerId(inputId);
             } catch (IllegalArgumentException e) {
-                System.err.println("Error: " + e.getMessage());
+                this.writeError(e.getMessage());
                 this.sleep(500); 
             }
         }
@@ -182,7 +174,26 @@ public class ConsoleUI {
             try {
                 return Validator.getValidGameId(inputId);
             } catch (IllegalArgumentException e) {
-                System.err.println("Error: " + e.getMessage());
+                this.writeError(e.getMessage());
+                this.sleep(500); 
+            }
+        }
+    }
+
+    /**
+     * Prompts the user repeatedly for a valid Sale ID.
+     * Ensures the input is a non-empty string that represents a positive integer.
+     * @param message The prompt message to display to the user.
+     * @return The validated Sale ID (String).
+     */
+    public String readSaleId(String message){
+        while (true) {
+            String inputId = this.readString(message);
+
+            try {
+                return Validator.getValidSaleId(inputId);
+            } catch (IllegalArgumentException e) {
+                this.writeError("Error: " + e.getMessage());
                 this.sleep(500); 
             }
         }
@@ -190,19 +201,35 @@ public class ConsoleUI {
 
     /**
      * Prompts the user repeatedly for a required text string (Name, Title, etc.).
-     * NOTE: This method requires the field name to call the Validator correctly.
      * @param message The prompt message to display.
-     * @param fieldName The name of the field (e.g., "customer name") for the Validator.
      * @return The validated non-empty string.
      */
     public String readValidString(String message) {    
         while (true) {
-            String inputText = this.readString(message);
+            String inputLine = this.readString(message);
 
             try {
-                return Validator.getValidString(inputText);
+                return Validator.getValidString(inputLine);
             } catch (IllegalArgumentException e) {
-                System.err.println("Validation Error: " + e.getMessage());
+                this.writeError(e.getMessage());
+                this.sleep(500); 
+            }
+        }
+    }
+
+    /**
+     * Prompts the user repeatedly for a required name string.
+     * @param message The prompt message to display.
+     * @return The validated non-empty string.
+     */
+    public String readValidName(String message) {    
+        while (true) {
+            String inputLine = this.readString(message);
+
+            try {
+                return Validator.getValidName(inputLine);
+            } catch (IllegalArgumentException e) {
+                this.writeError(e.getMessage());
                 this.sleep(500); 
             }
         }
@@ -215,12 +242,12 @@ public class ConsoleUI {
      */
     public String readGenre(String message) {    
         while (true) {
-            String inputText = this.readString(message);
+            String inputLine = this.readString(message);
 
             try {
-                return Validator.getValidGenre(inputText);
+                return Validator.getValidGenre(inputLine);
             } catch (IllegalArgumentException e) {
-                System.err.println("Validation Error: " + e.getMessage());
+                this.writeError(e.getMessage());
                 this.sleep(500); 
             }
         }
@@ -233,12 +260,12 @@ public class ConsoleUI {
      */
     public float readRating(String message) {
         while (true) {
-            String inputString = this.readString(message);
+            String inputLine = this.readString(message);
 
             try {
-                return Validator.getValidRating(inputString);
+                return Validator.getValidRating(inputLine);
             } catch (IllegalArgumentException e) {
-                System.err.println("Validation Error: " + e.getMessage());
+                this.writeError(e.getMessage());
                 this.sleep(500); 
             }
         }
@@ -246,19 +273,17 @@ public class ConsoleUI {
 
     /**
      * Prompts the user repeatedly for a valid positive float (Price or Balance).
-     * NOTE: This method requires the field name to call the Validator correctly.
      * @param message The prompt message to display.
-     * @param fieldName The name of the field (e.g., "price") for the Validator.
      * @return The validated non-negative float value.
      */
     public float readPositiveFloat(String message) {
         while (true) {
-            String inputString = this.readString(message);
+            String inputLine = this.readString(message);
 
             try {
-                return Validator.getValidPositiveFloat(inputString);
+                return Validator.getValidPositiveFloat(inputLine);
             } catch (IllegalArgumentException e) {
-                System.err.println("Validation Error: " + e.getMessage());
+                this.writeError(e.getMessage());
                 this.sleep(500); 
             }
         }
@@ -276,7 +301,25 @@ public class ConsoleUI {
             try {
                 return Validator.getValidStock(inputString);
             } catch (IllegalArgumentException e) {
-                System.err.println("Validation Error: " + e.getMessage());
+                this.writeError(e.getMessage());
+                this.sleep(500); 
+            }
+        }
+    }
+
+    /**
+     * Prompts the user repeatedly for a valid date in DD-MM-YYYY format.
+     * @param prompt The message to display to the user.
+     * @return The validated LocalDate object.
+     */
+    public LocalDate readValidDate(String prompt) {
+        while (true) {
+            String inputString = this.readString(prompt);
+
+            try {
+                return Validator.getValidDate(inputString);
+            } catch (IllegalArgumentException e) {
+                this.writeError(e.getMessage());
                 this.sleep(500); 
             }
         }

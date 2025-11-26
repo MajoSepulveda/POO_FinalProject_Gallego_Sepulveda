@@ -40,7 +40,7 @@ public class Main {
             return store;
 
         } catch (IOException e) {
-            console.writeLine("Error al cargar datos desde archivos CSV. " + e.getMessage());
+            console.writeError("Carga de datos desde archivos CSV incorrecta. " + e.getMessage());
             console.writeLine("Verifique la existencia y formato de los archivos CSV.");
             return null;
         }
@@ -90,7 +90,7 @@ public class Main {
                 console.writeLine("\nDatos guardados con éxito en el archivo de respaldo " + BACKUP_FILE);
             } catch (IOException innerE) {
                 // Both attempts failed
-                console.writeLine("\nERROR CRÍTICO: Fallaron ambos intentos de guardado. Los datos de esta sesión no se guardarán. " + innerE.getMessage());
+                console.writeError("\nERROR CRÍTICO: Fallaron ambos intentos de guardado. Los datos de esta sesión no se guardarán. " + innerE.getMessage());
             }
         }
     }
@@ -105,7 +105,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Store store;
-        
         console = new ConsoleUI(scanner);
 
         // --- Load Serialized Data --- 
@@ -113,7 +112,9 @@ public class Main {
             store = DataStorage.load(MAIN_FILE);
             console.writeLine("\nDatos de la tienda cargados con éxito desde " + MAIN_FILE + "\n Inicializando programa...");
         } catch (IOException | ClassNotFoundException e){
-            console.writeLine("\nError al cargar los datos de la tienda desde " + MAIN_FILE + ": " + e.getMessage());
+            console.writeError("Carga de los datos de la tienda incorrecta desde el archivo: " + e.getMessage());
+            console.sleep(2000);
+            console.cls();
             store = handleFailedLoad(scanner);
         }
         

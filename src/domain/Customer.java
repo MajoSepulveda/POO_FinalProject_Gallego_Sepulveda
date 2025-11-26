@@ -16,10 +16,10 @@ public class Customer implements Serializable, Displayable {
      * @param name The name of the customer.
      * @param id The unique identifier for the customer.
      * @param balance The current account balance.
-     * @throws IllegalArgumentException if id is non-positive.
+     * @throws IllegalArgumentException if any validation fails.
      */
     public Customer(String name, String id, float balance) {
-        this.id = id;
+        setId(id);
         setName(name);
         setBalance(balance);
     }
@@ -46,13 +46,21 @@ public class Customer implements Serializable, Displayable {
     }
 
     /**
+     * Sets the customer's unique identifier. 
+     * @param id The ID string to be validated and set.
+     * @throws IllegalArgumentException if the ID is null, empty, or fails the validation rules defined in the Validator.
+     */
+    private void setId(String id){
+        this.id = Validator.getValidCustomerId(id);
+    }
+
+    /**
      * Sets the customer's name.
      * @param name The new name for the customer.
      * @throws IllegalArgumentException if the name is null, empty, or only whitespace.
      */
     public void setName(String name) {
-        if (name == null || name.trim().isBlank()) throw new IllegalArgumentException("El nombre del cliente no puede estar vacío.");
-        this.name = name.trim();
+        this.name = Validator.getValidString(name);
     }
 
     /**
@@ -93,6 +101,6 @@ public class Customer implements Serializable, Displayable {
      */
     @Override
     public String displayObject() {
-        return String.format("Cliente ID: %d | Nombre: %s | Saldo: $%.2f", id, name, balance);
+        return String.format("Cliente ID: %s | Nombre: %s | Saldo: $%.2f", id, name, balance);
     }
 }

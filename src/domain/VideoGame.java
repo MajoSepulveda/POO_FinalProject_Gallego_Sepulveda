@@ -22,18 +22,17 @@ public class VideoGame implements Serializable, Displayable {
      * @param price The selling price of the game.
      * @param id The unique identifier for the game (e.g., A001, R123).
      * @param stock The current quantity in stock.
-     * @throws IllegalArgumentException if stock is negative, ID is empty, or any setter validation fails.
+     * @throws IllegalArgumentException if any validation fails
      */
     public VideoGame(String title, String genre, float rating, float price, String id, int stock) {
-        if (stock < 0) throw new IllegalArgumentException("El stock del videojuego no puede ser negativo.");
-        if (id == null || id.trim().isBlank()) throw new IllegalArgumentException("El ID del videojuego no puede estar vacio.");
-
-        this.stock = stock;
-        this.id = id.trim();
+        setStock(stock);
+        setId(id);
         setTitle(title);
         setGenre(genre);
         setRating(rating);
         setPrice(price);
+
+        validateIdGenreMatch();
     }
 
     /**
@@ -79,41 +78,49 @@ public class VideoGame implements Serializable, Displayable {
     }
 
     /**
+     * Sets the stock quantity, ensuring it is non-negative.
+     * @param stock The new stock amount.
+     * @throws IllegalArgumentException if the stock is negative.
+     */
+    private void setStock(int stock){
+        if (stock < 0) throw new IllegalArgumentException("El stock no puede ser negativo."); 
+        this.stock = stock;
+    }
+
+    /**
+     * Sets the unique Game ID. Delegates format and type validation to the Validator.
+     * @param id The ID string.
+     * @throws IllegalArgumentException if the ID is null, empty, or fails the format rules defined in the Validator.
+     */
+    private void setId(String id){
+        this.id = Validator.getValidGameId(id);
+    }
+
+    /**
      * Sets the title of the game.
      * @param title The new title.
-     * @throws IllegalArgumentException if the title is null or empty.
+     * @throws IllegalArgumentException if the title is null, empty, or only whitespace.
      */
     public void setTitle(String title) {
-        if (title == null || title.trim().isBlank()) throw new IllegalArgumentException("El título del videojuego no puede estar vacio.");
-        this.title = title.trim();
+        this.title = Validator.getValidString(title);
     }
 
     /**
      * Sets the genre of the game, validating against a predefined list.
-     * @param genre The new genre.
-     * @throws IllegalArgumentException if the genre is null, empty, or not found in the valid list.
+     * @param genre The new genre.  
+     * @throws IllegalArgumentException if the genre is not recognized or is empty.
      */
     public void setGenre(String genre) {
-        if (genre == null || genre.trim().isBlank()) throw new IllegalArgumentException("El genero no puede estar vacío.");
-        
-        String[] genres = {"Action", "Adventure", "RPG", "Strategy", "Simulation", "Racing", "Sports", "Casual"};
-
-        for (String g : genres) {
-            if (g.equals(genre.trim())) {
-                this.genre = genre.trim();
-                return;
-            }
-        }
-        throw new IllegalArgumentException("El genero del videojuego no es valido.");
+        this.genre = Validator.getValidGenre(genre);
     }
     
     /**
      * Sets the rating of the game.
      * @param rating The new rating value.
-     * @throws IllegalArgumentException if the rating is outside the range 0.0 to 10.0.
+     * @throws IllegalArgumentException if the rating is outside the valid range (0.0 to 10.0).
      */
     public void setRating(float rating) {
-        if (rating < 0.0 || rating > 10.0) throw new IllegalArgumentException("La calificación del videojuego debe estar entre 0.0 y 10.0.");
+        if (rating < 0.0f || rating > 10.0f) throw new IllegalArgumentException("Rating must be between 0.0 and 10.0.");
         this.rating = rating;
     }
 
@@ -123,7 +130,7 @@ public class VideoGame implements Serializable, Displayable {
      * @throws IllegalArgumentException if the price is negative.
      */
     public void setPrice(float price) {
-        if (price < 0) throw new IllegalArgumentException("El precio del videojuego no puede ser negativo.");
+        if (price < 0.0f) throw new IllegalArgumentException("Price cannot be negative.");
         this.price = price;
     }
 
@@ -146,6 +153,22 @@ public class VideoGame implements Serializable, Displayable {
     public synchronized void addStock(int amount) {
         if (amount <= 0) throw new IllegalArgumentException("La cantidad de stock a agregar no puede ser negativa o cero.");
         this.stock += amount;
+    }
+
+    /**
+     * Ensures the business rule is met: the first letter of the game ID 
+     * must match the first letter of the genre.
+     * @throws IllegalArgumentException if the ID and Genre do not match initials.
+     */
+    private void validateIdGenreMatch() {
+        boolean matches = Validator.doesGameIdMatchGenre(this.id, this.genre);
+
+        if (!matches) {
+            char idInitial = this.id.trim().toUpperCase().charAt(0);
+            char genreInitial = this.genre.trim().toUpperCase().charAt(0);
+
+            throw new IllegalArgumentException(String.format("La validacíon del ID del videojuego falló. La incicial del ID ('%c') debe seri igual al la incial del género correspondiente ('%c').", idInitial, genreInitial));
+        }
     }
 
     /**
