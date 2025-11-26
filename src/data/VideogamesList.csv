@@ -1,219 +1,41 @@
 id,title,genre,raiting,price,stock
-A001,The Legend of Zelda: TOTK,Adventure,9.7,69.99,15
-A002,God of War Ragnarök,Action,9.5,59.99,22
-R003,Elden Ring,RPG,9.6,49.99,30
-E004,Civilization VI,Strategy,9.0,29.99,18
-S005,Forza Horizon 5,Simulation,9.2,39.99,10
-D006,FIFA 25,Sports,8.8,69.99,45
-R008,Cyberpunk 2077,RPG,8.7,34.99,25
-A009,Resident Evil 4 Remake,Action,9.3,49.99,17
-S010,Stardew Valley,Simulation,9.8,14.99,40
-A012,Red Dead Redemption 2,Adventure,9.7,19.99,28
-A013,Hollow Knight,Action,9.0,14.99,35
-R014,Final Fantasy XVI,RPG,9.0,59.99,12
-S015,F1 Manager 2024,Simulation,8.6,49.99,8
+A001,The Legend of Zelda: TOTK,Aventura,9.7,69.99,15
+A002,God of War Ragnarök,Accion,9.5,59.99,22
+R003,Elden Ring,Rol,9.6,49.99,30
+E004,Civilization VI,Estrategia,9.0,29.99,18
+S005,Forza Horizon 5,Simulacion,9.2,39.99,10
+D006,FIFA 25,Deportes,8.8,69.99,45
+R008,Cyberpunk 2077,Rol,8.7,34.99,25
+A009,Resident Evil 4 Remake,Accion,9.3,49.99,17
+S010,Stardew Valley,Simulacion,9.8,14.99,40
+A012,Red Dead Redemption 2,Aventura,9.7,19.99,28
+A013,Hollow Knight,Accion,9.0,14.99,35
+R014,Final Fantasy XVI,Rol,9.0,59.99,12
+S015,F1 Manager 2024,Simulacion,8.6,49.99,8
 C016,Tetris Effect: Connected,Casual,9.1,29.99,20
-E017,XCOM 2,Strategy,9.0,19.99,14
-A018,Marvel's Spider-Man 2,Action,9.4,69.99,19
-A019,Uncharted 4,Adventure,9.3,9.99,32
-D020,NBA 2K25,Sports,8.4,69.99,28
-R021,The Witcher 3,RPG,9.6,19.99,40
-A022,Grand Theft Auto V,Adventure,9.2,19.99,50
-E023,StarCraft II,Strategy,9.3,29.99,18
-S024,The Sims 4 (Base Game),Simulation,7.8,9.99,40
-A025,Doom Eternal,Action,9.1,24.99,16
-R026,Persona 5 Royal,RPG,9.5,39.99,11
-D027,Madden NFL 25,Sports,8.0,69.99,33
-C028,Among Us (PC/Console),Casual,7.9,4.99,55
-E029,Age of Empires IV,Strategy,8.6,39.99,13
-A030,Sekiro: Shadows Die Twice,Action,9.2,29.99,20
-R031,Dragon Age: Inquisition,RPG,8.8,9.99,27
-S032,Microsoft Flight Sim,Simulation,9.0,59.99,9
-A033,Horizon Forbidden West,Adventure,9.3,49.99,18
-D034,Gran Turismo 7,Sports,8.9,59.99,14
-C035,Fall Guys (Physical Ed.),Casual,8.2,19.99,25
-E036,Company of Heroes 3,Strategy,8.0,49.99,11
-A037,Devil May Cry 5,Action,9.1,19.99,23
-R038,Disco Elysium,RPG,9.7,19.99,10
-S039,Planet Zoo,Simulation,8.5,44.99,15
-A040,Assassin's Creed Valhalla,Adventure,8.1,19.99,30
-D041,F1 24,Sports,8.5,69.99,16
-C042,Human Fall Flat,Casual,8.4,9.99,25
-E043,Heroes of Might and Magic III,Strategy,9.5,14.99,19
-A044,Hades,Action,9.3,19.99,38
-R045,Fallout: New Vegas,RPG,8.4,9.99,26
-S046,Kerbal Space Program,Simulation,9.0,19.99,11
-A047,Metro Exodus,Adventure,8.6,14.99,21
-D048,Rocket League (Base Game),Sports,8.7,19.99,30
-C049,Bloons TD 6,Casual,8.9,9.99,40
-E050,Stellaris,Strategy,8.5,39.99,12
-A051,Ghost of Tsushima,Adventure,9.3,49.99,17
-A052,Doom 3,Action,8.0,9.99,25
-R053,Baldur's Gate 3,RPG,9.6,59.99,28
-E054,Crusader Kings III,Strategy,9.0,49.99,10
-S055,Cities: Skylines II,Simulation,8.0,39.99,15
-D056,MLB The Show 25,Sports,8.6,69.99,35
-C057,Plants vs. Zombies,Casual,9.2,4.99,50
-R058,Mass Effect Legendary,RPG,9.0,29.99,20
-A059,Dying Light 2,Action,8.5,29.99,19
-S060,Farm Simulator 25,Simulation,7.5,49.99,13
-A061,Days Gone,Adventure,8.0,19.99,24
-D062,Pro Evolution Soccer 2021,Sports,8.5,9.99,30
-C063,Getting Over It,Casual,6.5,7.99,22
-E064,Total War: Warhammer III,Strategy,8.5,59.99,16
-A065,Bloodborne,Action,9.2,19.99,26
-R066,Divinity: Original Sin 2,RPG,9.3,44.99,14
-S067,Euro Truck Simulator 2,Simulation,8.8,19.99,17
-A068,Subnautica,Adventure,9.0,24.99,29
-D069,Tony Hawk's Pro Skater 1+2,Sports,9.0,39.99,18
-C070,Puyo Puyo Tetris 2,Casual,8.3,39.99,27
-E071,Slay the Spire,Strategy,9.1,24.99,20
-A072,Nioh 2,Action,8.9,29.99,15
-R073,Star Wars Jedi: Survivor,RPG,8.8,69.99,23
-S074,House Flipper,Simulation,8.0,19.99,16
-A075,Marvel's Guardians of the Galaxy,Adventure,8.5,29.99,31
-D076,WWE 2K25,Sports,7.9,69.99,25
-C077,Bejeweled 3,Casual,8.5,9.99,48
-E078,Northgard (Digital),Strategy,8.0,14.99,19
-A079,Bayonetta 3,Action,9.0,59.99,10
-R080,Tales of Arise,RPG,8.9,39.99,19
-S081,Two Point Hospital,Simulation,8.5,29.99,12
-A082,The Last of Us Part I,Adventure,9.5,49.99,21
-D083,Golf With Your Friends,Sports,8.0,9.99,38
+A079,Bayonetta 3,Accion,9.0,59.99,10
+R080,Tales of Arise,Rol,8.9,39.99,19
+S081,Two Point Hospital,Simulacion,8.5,29.99,12
+A082,The Last of Us Part I,Aventura,9.5,49.99,21
+D083,Golf With Your Friends,Deportes,8.0,9.99,38
 C084,Mini Motorways,Casual,9.0,9.99,30
-E085,Command & Conquer Remastered,Strategy,8.2,19.99,17
-A086,Ghostwire: Tokyo,Action,8.1,29.99,20
-R087,Pathfinder: Wrath of the Righteous,RPG,9.1,49.99,9
-S088,Elite Dangerous,Simulation,8.4,29.99,14
-A089,Death Stranding,Adventure,8.5,19.99,26
-D090,Need for Speed Unbound,Sports,7.5,29.99,22
+E085,Command & Conquer Remastered,Estrategia,8.2,19.99,17
+A086,Ghostwire: Tokyo,Accion,8.1,29.99,20
+R087,Pathfinder: Wrath of the Righteous,Rol,9.1,49.99,9
+S088,Elite Dangerous,Simulacion,8.4,29.99,14
+A089,Death Stranding,Aventura,8.5,19.99,26
+D090,Need for Speed Unbound,Deportes,7.5,29.99,22
 C091,Peggle,Casual,8.8,4.99,44
-E092,Halo Wars 2,Strategy,8.3,19.99,13
-A093,Borderlands 3,Action,8.0,14.99,34
-R094,Xenoblade Chronicles 3,RPG,9.2,59.99,11
-S095,Railway Empire 2,Simulation,7.9,49.99,10
-A096,Watch Dogs: Legion,Adventure,7.0,19.99,27
-D097,Riders Republic,Sports,7.8,24.99,15
-C098,Among Us VR,Casual,8.0,9.99,20
-E099,FTL: Faster Than Light,Strategy,9.0,9.99,25
-A100,Doom (2016),Action,9.0,14.99,30
-R101,World of Warcraft (Base Game),RPG,8.6,19.99,25
-S102,Gas Station Simulator,Simulation,7.5,19.99,18
-A103,Final Fantasy XV,Adventure,8.1,14.99,24
-D104,Hot Wheels Unleashed 2,Sports,8.1,49.99,16
-C105,PowerWash Simulator,Casual,8.4,24.99,21
-E106,Northgard,Strategy,8.3,29.99,14
-A107,Control,Action,8.8,19.99,28
-R108,Kingdom Hearts III,RPG,8.2,29.99,17
-S109,Prison Architect,Simulation,8.5,29.99,12
-A110,Sea of Thieves (Base Game),Adventure,8.0,29.99,25
-D111,Tony Hawk's Pro Skater 4,Sports,9.0,9.99,30
-C112,Untitled Goose Game,Casual,8.9,19.99,23
-E113,Into the Breach,Strategy,9.1,14.99,15
-A114,Hi-Fi RUSH,Action,9.0,29.99,19
-R115,Nier: Automata,RPG,8.8,39.99,20
-S116,PC Building Simulator 2,Simulation,7.5,24.99,11
-A117,Psychonauts 2,Adventure,9.0,29.99,16
-D118,Dirt 5,Sports,7.5,19.99,29
-C119,Portal 2,Casual,9.5,9.99,33
-E120,Frostpunk,Strategy,8.4,29.99,18
-A121,Tekken 8,Action,9.0,69.99,14
-R122,Hades II,RPG,9.4,29.99,22
-S123,Cities: Skylines,Simulation,9.0,24.99,15
-A124,Batman: Arkham Knight,Adventure,8.7,19.99,26
-D125,NBA Jam,Sports,8.5,9.99,35
-C126,Cut the Rope (Mobile Pay),Casual,7.0,0.99,50
-E127,Endless Legend,Strategy,8.2,29.99,13
-A128,Devil May Cry 4,Action,8.5,9.99,28
-R129,The Elder Scrolls V: Skyrim,RPG,9.3,19.99,45
-S130,Surgeon Simulator 2,Simulation,6.8,19.99,10
-A131,It Takes Two,Adventure,9.1,39.99,20
-D132,Steep,Sports,7.5,9.99,24
-C133,Limbo,Casual,9.0,9.99,28
-E134,Age of Mythology,Strategy,8.5,19.99,17
-A135,Call of Duty: Warzone 2.0,Action,7.5,29.99,35
-R136,Diablo IV,RPG,8.5,69.99,16
-S137,Train Sim World 4,Simulation,7.0,49.99,9
-A138,Prince of Persia: The Lost Crown,Adventure,9.0,49.99,14
-D139,Riders Republic: Winter Expansion,Sports,8.0,19.99,20
-C140,The Witness,Casual,9.0,39.99,15
-E141,Factorio,Strategy,9.6,34.99,11
-A142,Call of Duty: Black Ops 7,Action,8.5,69.99,40
-R143,Monster Hunter: World,RPG,8.8,19.99,23
-S144,Cooking Simulator,Simulation,7.8,19.99,19
-A145,Metro 2033 Redux,Adventure,8.5,9.99,30
-D146,WWE 2K24,Sports,8.0,69.99,25
-C147,A Short Hike,Casual,8.9,7.99,27
-E148,Northgard: Clans of the Dragon,Strategy,8.0,9.99,15
-A149,Sifu,Action,8.8,39.99,18
-R150,Final Fantasy VII Rebirth,RPG,9.2,69.99,15
-S151,Goat Simulator 3,Simulation,6.5,29.99,17
-A152,BioShock Infinite,Adventure,9.4,19.99,29
-D153,MLB The Show 24,Sports,8.5,69.99,32
-C154,The Talos Principle 2,Casual,9.1,39.99,14
-E155,"Warhammer 40,000: Mechanicus",Strategy,8.1,29.99,16
-A156,Rainbow Six Siege (Base Game),Action,8.0,19.99,38
-R157,Kingdom Come: Deliverance,RPG,8.4,29.99,21
-S158,PC Building Simulator,Simulation,7.9,19.99,12
-A159,Life is Strange,Adventure,8.5,9.99,35
-D160,NHL 25,Sports,8.2,69.99,26
-C161,Among the Sleep,Casual,6.8,14.99,20
-E162,Company of Heroes 2,Strategy,8.0,19.99,19
-A163,Monster Hunter Rise,Action,8.5,39.99,22
-R164,Final Fantasy XIV (Starter),RPG,9.2,19.99,20
-S165,Police Simulator: Patrol Duty,Simulation,6.5,24.99,10
-A166,Middle-earth: Shadow of War,Adventure,8.0,14.99,28
-D167,The Golf Club 2019,Sports,7.5,19.99,23
-C168,Potion Craft,Casual,8.6,19.99,18
-E169,Civilization V,Strategy,9.0,19.99,25
-A170,Far Cry 6,Action,7.5,19.99,30
-R171,Dragon Quest XI S,RPG,9.0,39.99,13
-S172,Car Mechanic Simulator 2021,Simulation,8.2,29.99,15
-A173,Watch Dogs 2,Adventure,8.5,14.99,27
-D174,WRC Generations,Sports,8.0,39.99,16
-C175,Toca Kitchen 2,Casual,7.0,2.99,35
-E176,Stellaris: Federations,Strategy,8.4,19.99,14
-A177,SteamWorld Dig 2,Adventure,9.3,19.99,28
-R178,Final Fantasy X/X-2 HD Remaster,RPG,8.5,24.99,17
-S179,Farming Simulator 19,Simulation,7.0,19.99,22
-A180,Metal Gear Solid V: The Phantom Pain,Action,9.1,9.99,31
-D181,Dirt Rally 2.0,Sports,8.8,24.99,18
-C182,Baba Is You,Casual,9.3,14.99,24
-E183,StarCraft (Remastered),Strategy,9.5,14.99,20
-A184,Dishonored 2,Action,9.0,19.99,26
-R185,Fallout 4,RPG,8.5,14.99,35
-S186,House Flipper 2,Simulation,8.5,34.99,13
-A187,Zelda: Breath of the Wild,Adventure,9.7,59.99,25
-D188,Street Fighter 6,Sports,9.0,69.99,15
+E092,Halo Wars 2,Estrategia,8.0,14.99,19
+A187,Zelda: Breath of the Wild,Aventura,9.7,59.99,25
+D188,Street Fighter 6,Deportes,9.0,69.99,15
 C189,Limbo,Casual,9.0,9.99,28
-E190,Company of Heroes,Strategy,9.3,9.99,17
-A191,Middle-earth: Shadow of Mordor,Action,8.7,9.99,29
-R192,The Outer Worlds,RPG,8.5,24.99,21
-S193,The Long Dark,Simulation,8.5,24.99,14
-A194,God of War (2018),Action,9.4,19.99,33
-D195,Gran Turismo 6,Sports,8.0,9.99,27
+E190,Company of Heroes,Estrategia,9.3,9.99,17
+A191,Middle-earth: Shadow of Mordor,Accion,8.7,9.99,29
+R192,The Outer Worlds,Rol,8.5,24.99,21
+S193,The Long Dark,Simulacion,8.5,24.99,14
+A194,God of War (2018),Accion,9.4,19.99,33
+D195,Gran Turismo 6,Deportes,8.0,9.99,27
 C196,Threes!,Casual,8.5,5.99,30
-E197,Tropico 6,Strategy,8.0,39.99,16
-A198,DOOM,Action,9.0,14.99,22
-R199,Divinity: Original Sin,RPG,8.7,24.99,19
-S200,Cities: Skylines - Campus,Simulation,8.0,12.99,15
-R201,Hollow Knight: Silksong,Adventure,9.5,24.99,15
-E202,Sid Meier's Alpha Centauri,Strategy,9.0,9.99,18
-A203,Marvel's Midnight Suns,RPG,8.5,49.99,12
-A204,Returnal,Action,8.7,39.99,14
-S205,Subnautica: Below Zero,Adventure,8.6,29.99,19
-A206,Deathloop,Action,8.5,29.99,21
-R207,Pillars of Eternity II: Deadfire,RPG,8.8,39.99,10
-E208,Europa Universalis IV,Strategy,8.9,19.99,16
-S209,Construction Simulator,Simulation,7.0,49.99,9
-D210,PGA Tour 2K25,Sports,8.0,69.99,25
-C211,GRIS,Casual,9.0,16.99,29
-A212,God Hand,Action,7.8,9.99,17
-R213,Dragon's Dogma 2,RPG,8.5,69.99,13
-S214,Animal Crossing: New Horizons,Simulation,9.0,59.99,22
-A215,Shadow of the Colossus,Adventure,9.3,19.99,26
-D216,UFC 5,Sports,8.0,69.99,19
-E217,RimWorld,Strategy,9.5,34.99,11
-A218,Resident Evil Village,Action,8.5,29.99,20
-C219,Florence,Casual,8.8,5.99,33
-R220,Octopath Traveler II,RPG,9.0,59.99,14
+E197,Tropico 6,Estrategia,8,15.99,16
+R199,Divinity: Original Sin 2,Rol,9.5,24.99,11

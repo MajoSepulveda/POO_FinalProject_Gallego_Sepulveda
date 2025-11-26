@@ -21,7 +21,7 @@ public class Validator {
     private static final String GAME_ID_FORMAT_REGEX = "^[A-Z]\\d{3}$";
 
     // List of valid genres for the application.
-    private static final List<String> VALID_GENRES = List.of("Accion", "Aventura", "RPG", "Estrategia", "Simulacion", "Carreras", "Deportes", "Casual");
+    private static final List<String> VALID_GENRES = List.of("Accion", "Aventura", "Rol", "Estrategia", "Simulacion", "Carreras", "Deportes", "Casual");
 
     // The date format.
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");

@@ -37,12 +37,14 @@ public class Main {
             // Load Sales, which requires the initialized Store to link Customer/VideoGame objects
             List<Sale> sales = DataStorage.loadSales(SALES_CSV, store);
             store.loadInitialSales(sales);
-            console.writeLine("Datos cargados desde los archivos CSV con éxito.");
+            console.writeLine("\nDatos cargados desde los archivos CSV con éxito.");
+            console.readString("[Enter] para continuar");
             console.sleep(2000);
             return store;
         } catch (IOException e) {
             console.writeError("Carga de datos desde archivos CSV incorrecta. " + e.getMessage());
             console.writeLine("Verifique la existencia y formato de los archivos CSV.");
+            console.readString("[Enter] para continuar");
             console.sleep(2000);
             return null;
         }

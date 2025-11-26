@@ -63,11 +63,11 @@ public class DataStorage {
 
                 if (data.length >= 6){
                     try {
-                        String tittle = data[0].trim();
-                        String genre = data[1].trim();
-                        float ranking = Float.parseFloat(data[2].trim());
-                        float price = Float.parseFloat(data[3].trim());
-                        String ID = data[4].trim();
+                        String ID = data[0].trim();
+                        String tittle = data[1].trim();
+                        String genre = data[2].trim();
+                        float ranking = Float.parseFloat(data[3].trim());
+                        float price = Float.parseFloat(data[4].trim());
                         int stock = Integer.parseInt(data[5].trim());
 
                         VideoGame newVideogame = new VideoGame(tittle, genre, ranking, price, ID, stock);
@@ -75,6 +75,8 @@ public class DataStorage {
 
                     } catch (NumberFormatException e){
                         System.err.println("Advertencia: Se omitió la línea '" + line + "' por formato de número inválido.");
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Advertencia: Se omitió la línea '" + line + "'.");
                     }
                 } else {
                     System.err.println("Advertencia: Se omitió la línea '" + line + "' porque tiene una cantidad de columnas incorrecta.");
@@ -104,14 +106,16 @@ public class DataStorage {
 
                 if (data.length >= 3){
                     try {
-                        String name = data[0].trim();
-                        String id = data[1].trim();
+                        String id = data[0].trim();
+                        String name = data[1].trim();
                         float balance = Float.parseFloat(data[2].trim());
 
                         Customer newCustomer = new Customer(name, id, balance);
                         customerList.add(newCustomer);
                     } catch (NumberFormatException e){
                         System.err.println("Advertencia: Se omitió la línea '" + line + "' por formato de número inválido.");
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Advertencia: Se omitió la línea '" + line + "'.");
                     }
                 } else {
                     System.err.println("Advertencia: Se omitió la línea '" + line + "' por tener una cantidad de columnas incorrecta.");
@@ -149,8 +153,8 @@ public class DataStorage {
                 if (data.length >= 5) {
                     try {
                         String saleId = data[0].trim();
-                        String customerId = data[1].trim();
-                        String videoGameId = data[2].trim();
+                        String videoGameId = data[1].trim();
+                        String customerId = data[2].trim();
                         float amount = Float.parseFloat(data[3].trim());
                         String date = data[4].trim();
 
@@ -166,7 +170,8 @@ public class DataStorage {
                         }
                     } catch (NumberFormatException e){
                         System.err.println("Advertencia: Se omitió la línea '" + line + "' por formato de número inválido.");
-
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Advertencia: Se omitió la línea '" + line + "'.");
                     }
                 } else {
                     System.err.println("Advertencia: Se omitió la línea '" + line + "' porque tiene una cantidad de columnas incorrecta.");
