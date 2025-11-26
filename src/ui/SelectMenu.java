@@ -15,19 +15,15 @@ public class SelectMenu {
      * @return The found VideoGame object, or null if the input is empty, the store is not initialized, or the game is not found.
      */
     public static VideoGame SelectById(Store store, ConsoleUI console) {
-        if (store == null) {
-            console.writeLine("Tienda no inicializada.");
-            return null;
-        }
-
-        String id = console.readVideoGameID("Ingrese el ID del videojuego para seleccionar.");
+        String id = console.readVideoGameID("\nIngrese el ID del videojuego para seleccionar.");
 
         VideoGame game = store.findVideoGameById(id);
         if (game == null) {
-            console.writeLine("No se encontró juego con ID: " + id);
+            console.writeLine("\nNo se encontró juego con ID: " + id);
             return null;
         }
 
+        console.sleep(200);
         showSelectedMenu(game, store, console);
         return game;
     }
@@ -43,19 +39,24 @@ public class SelectMenu {
         if (game == null || store == null) return;
 
         while (true) {
+            console.cls();
             console.writeLine("Has seleccionado el videojuego: " + game.getTitle());
-            console.writeLine("1) Comprar videojuego");
-            console.writeLine("2) Volver");
+            console.writeLine("1) Comprar videojuego.");
+            console.writeLine("2) Volver.");
 
-            int option = console.readInt("selecione una opción: ");
+            int option = console.readInt("\nSelecione una opción: ");
             switch (option) {
                 case 1:
+                    console.sleep(200);
                     handleBuy(game, store, console);
                     return;
                 case 2:
+                    console.writeLine("\nVolviendo a la tienda...");
+                    console.sleep(1000);
                     return;
                 default:
-                    console.writeLine("Opción inválida. Intente de nuevo.");
+                    console.writeLine("\nOpción inválida. Intente de nuevo.");
+                    console.sleep(1000);
             }
         }
     }
@@ -72,17 +73,19 @@ public class SelectMenu {
         if (game == null || store == null) return;
 
         if (game.getStock() <= 0) {
-            console.writeLine("No hay stock disponible para este juego.");
+            console.writeLine("\nNo hay stock disponible para este juego.");
+            console.sleep(1000);
             return;
         }
 
         boolean finished = false;
         while (!finished) {
-            String customerId = console.readCustomerID("Ingrese el ID del cliente para realizar la compra.");
+            String customerId = console.readCustomerID("\nIngrese el ID del cliente para realizar la compra.");
 
             Customer customer = store.findCustomerById(customerId);
             if (customer == null) {
-                console.writeLine("Cliente no encontrado con ID: " + customerId + ".");
+                console.writeLine("\nCliente no encontrado con ID: " + customerId + ".");
+                console.sleep(1000);
                 break;
             }
 
@@ -92,12 +95,14 @@ public class SelectMenu {
 
             if (before < price) {
                 console.writeLine("Saldo insuficiente para realizar la compra.");
+                console.sleep(1000);
                 break;
             }
 
             String confirm = console.readValidString("¿Confirmar compra? (s/n)").toLowerCase();
             if (!confirm.equals("s") && !confirm.equals("y")) {
                 console.writeLine("Compra cancelada.");
+                console.sleep(1000);
                 break;
             }
 
@@ -106,11 +111,11 @@ public class SelectMenu {
                 try {
                     store.processSale(customer.getId(), game.getId(), saleId);
                     float after = customer.getBalance();
-                    console.writeStringf("Compra realizada con éxito. Saldo antes: $%.2f | Precio: $%.2f | Saldo ahora: $%.2f%n",
+                    console.writeStringf("\nCompra realizada con éxito. Saldo antes: $%.2f | Precio: $%.2f | Saldo ahora: $%.2f%n",
                             before, price, after);
                     console.writeLine("Stock restante del juego: " + game.getStock());
                 } catch (Exception e) {
-                    console.writeLine("No se pudo completar la compra: " + e.getMessage());
+                    console.writeLine("\nNo se pudo completar la compra: " + e.getMessage());
                 }
                 finished = true;
                 break;

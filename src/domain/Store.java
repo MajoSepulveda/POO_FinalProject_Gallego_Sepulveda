@@ -314,7 +314,7 @@ public class Store implements Serializable {
      * @param sales The list of sales transactions.
      * @return The total sum of all sale amounts.
      */
-    public float getTotalIncome(List<Sale> sales){
+    private float getTotalIncome(List<Sale> sales){
         float totalIncome = 0;
         for (Sale sale: sales){
             totalIncome += sale.getAmount();

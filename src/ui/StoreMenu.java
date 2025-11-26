@@ -15,29 +15,34 @@ public class StoreMenu {
      */
     public static void show(Store store, ConsoleUI console) {
         while (true) {
+            console.cls();
             console.writeLine("----------- TIENDA -----------");
             console.writeLine("1) Mostrar catálogo completo.");
             console.writeLine("2) Buscar juego.");
             console.writeLine("3) Administrar la tienda.");
             console.writeLine("4) Volver al menú principal.");
 
-            int option = console.readInt("Seleccione una opción: ");
+            int option = console.readInt("\nSeleccione una opción: ");
             switch (option) {
                 case 1:
+                    console.sleep(300);
                     showCatalog(store, console);
                     break;
                 case 2:
+                    console.sleep(300);
                     SearchMenu.show(store, console);
                     break;
                 case 3:
+                    console.sleep(300);
                     AdminMenu.Show(store, console);
                     break;
                 case 4:
-                    console.writeLine("Volviendo al menú principal...");
+                    console.writeLine("\nVolviendo al menú principal...");
                     console.sleep(1000);
                     return;
                 default:
-                    console.writeLine("Opción inválida. Intente de nuevo.");
+                    console.writeLine("\nOpción inválida. Intente de nuevo.");
+                    console.sleep(1000);
             }
         }
     }
@@ -56,7 +61,8 @@ public class StoreMenu {
 
         List<VideoGame> games = store.getVideoGames();
         if (games == null || games.isEmpty()) {
-            console.writeLine("Catálogo vacío.");
+            console.writeLine("\nCatálogo vacío.");
+            console.sleep(1000);
             return;
         }
 
@@ -72,5 +78,7 @@ public class StoreMenu {
         
         // Allows the user to select one of the displayed games
         SelectMenu.SelectById(store, console);
+        console.sleep(300);
+
     }
 }

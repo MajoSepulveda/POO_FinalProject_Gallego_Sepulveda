@@ -7,8 +7,7 @@ import src.domain.*;
 import src.data.*;
 
 /**
- * Main class for the application. Handles initialization, data loading 
- * (from serialization or CSV), saving, and program termination.
+ * Main class for the application. Handles initialization, data loading (from serialization or CSV), saving, and program termination.
  */
 public class Main {
     // --- Data File Constants ---
@@ -19,12 +18,13 @@ public class Main {
     private static final String SALES_CSV = "src/data/SalesList.csv";
 
     private static ConsoleUI console;
-     // --- Loading Methods ---
+
+    // --- Loading Methods ---
 
     /**
      * Attempts to load the initial application data from CSV files.
      * This is used when no serialized state is found.
-     * @param scanner Scanner instance to handle user input (if needed later).
+     * @param scanner Scanner instance to handle user input.
      * @return An initialized Store object loaded with CSV data, or null if loading fails critically.
      */
     private static Store loadFromCSV(Scanner scanner) {
@@ -33,15 +33,17 @@ public class Main {
             List<Customer> customers = DataStorage.loadCustomers(CUSTOMERS_CSV);
             List<VideoGame> videoGames = DataStorage.loadVideogames(GAMES_CSV);
             Store store = new Store(videoGames, customers);
+
             // Load Sales, which requires the initialized Store to link Customer/VideoGame objects
             List<Sale> sales = DataStorage.loadSales(SALES_CSV, store);
             store.loadInitialSales(sales);
-            console.writeLine("\nDatos cargados desde los archivos CSV con éxito.");
+            console.writeLine("Datos cargados desde los archivos CSV con éxito.");
+            console.sleep(2000);
             return store;
-
         } catch (IOException e) {
             console.writeError("Carga de datos desde archivos CSV incorrecta. " + e.getMessage());
             console.writeLine("Verifique la existencia y formato de los archivos CSV.");
+            console.sleep(2000);
             return null;
         }
     }
@@ -53,18 +55,22 @@ public class Main {
      * @return A newly initialized Store (from CSV or empty), or null if the user chooses to exit.
      */
     private static Store handleFailedLoad(Scanner input) {
-        console.writeLine("\n--- OPCIONES DE INICIO ---");
+        console.cls();
+        console.writeLine("--- OPCIONES DE INICIO ---");
         console.writeLine("1. Cargar datos iniciales desde archivos CSV.");
         console.writeLine("2. Iniciar la tienda vacía.");
-        String option = console.readString("Seleccione una opción (1 o 2): ");
+        int option = console.readInt("\nSeleccione una opción (1 o 2): ");
             
-        if (option.equals("1")) {
+        if (option == 1) {
+            console.sleep(2000);
             return loadFromCSV(input);
-        } else if (option.equals("2")) { 
-            console.writeLine("\nIniciando tienda vacía con éxito.");
+        } else if (option == 2) { 
+            console.writeLine("\nIniciando tienda vacía...");
+            console.sleep(2000);
             return new Store(); 
         } else {
-            console.writeLine("\nOpción inválida. El programa finalizará.");
+            console.writeError("\nOpción inválida. El programa finalizará.");
+            console.sleep(2000);
             return null;
         }
     }
@@ -72,8 +78,7 @@ public class Main {
     // --- Saving Method ---
 
     /**
-     * Handles the application shutdown saving process, implementing a primary 
-     * file and a backup file strategy for robustness.
+     * Handles the application shutdown saving process, implementing a primary file and a backup file if the first one fails.
      * @param store The Store object containing the current session data.
      */
     private static void handleSave(Store store) {
@@ -82,7 +87,7 @@ public class Main {
             DataStorage.save(store, MAIN_FILE);
             console.writeLine("\nDatos de la tienda guardados con éxito en " + MAIN_FILE);
         } catch (IOException e) {
-            console.writeLine("\nAvertencia: Falló el guardado principal en " + MAIN_FILE + ". Intentando respaldo en " + BACKUP_FILE);
+            console.writeError("\nAvertencia: Falló el guardado principal en " + MAIN_FILE + ". Intentando respaldo en " + BACKUP_FILE);
 
             // Attempt 2: Save to the backup file
             try {
@@ -108,25 +113,29 @@ public class Main {
         console = new ConsoleUI(scanner);
 
         // --- Load Serialized Data --- 
+        console.cls();
+        console.sleep(1000);
         try{
             store = DataStorage.load(MAIN_FILE);
-            console.writeLine("\nDatos de la tienda cargados con éxito desde " + MAIN_FILE + "\n Inicializando programa...");
+            console.writeLine("Datos de la tienda cargados con éxito desde " + MAIN_FILE + "\n Inicializando programa...");
         } catch (IOException | ClassNotFoundException e){
-            console.writeError("Carga de los datos de la tienda incorrecta desde el archivo: " + e.getMessage());
+            console.writeError("No se pudo cargar los datos de la tienda desde el archivo: " + e.getMessage());
             console.sleep(2000);
-            console.cls();
             store = handleFailedLoad(scanner);
+            console.cls();
         }
         
         // --- Program Execution and Shutdown ---
         if (store != null) {
             StartMenu.show(store, console);
-
-            console.writeLine("\nGuardando cambios de la sesión...");
+            console.cls();
+            console.writeLine("Guardando cambios de la sesión...");
             handleSave(store);
         }
         
         scanner.close();
-        console.writeLine("\nPrograma finalizado.");
+        console.cls();
+        console.sleep(500);
+        console.writeLine("Programa finalizado.");
     }
 }
