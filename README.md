@@ -2,7 +2,7 @@
 ## Proyecto Final Programación Orientada a Objetos
 
 ## Integrantes
-* **Jeróniom Gallego Restrepo** - 60880
+* **Jerónimo Gallego Restrepo** - 60880
 * **Maria José Sepúlveda Montes** - 59886
 
 ---
@@ -36,18 +36,17 @@ El proyecto fue desarrollado y compilado con **Java Development Kit (JDK) versi�
 Asegúrese de que los archivos de datos iniciales (`VideogamesList.csv`, `CustomersList.csv`, `SalesList.csv`) se encuentren en la carpeta **`Data`** del proyecto para la carga inicial.
 
 ### Ejecución del Programa
-Para compilar y ejecutar el programa desde la línea de comandos:
+Para compilar y ejecutar el programa desde la línea de comandos, asegúrese de estar en la raíz del proyecto:
 
-1.  **Compilar el proyecto:**
+1.  **Compilar el proyecto:** (Crea el directorio bin/ y compila)
     ```bash
-    javac -cp . src/**/*.java
+    mkdir bin
+    javac -d bin src/**/*.java
     ```
-
-2.  **Ejecutar la clase principal:**
+2.  **Ejecutar la clase principal:** (Usando el Classpath)
     ```bash
-    java com.ui.Main
+    java -cp bin com.ui.Main
     ```
-
 ---
 
 ## Ejemplo de Entrada/Salida
