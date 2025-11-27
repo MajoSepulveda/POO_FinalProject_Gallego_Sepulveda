@@ -30,23 +30,28 @@ El estado de la aplicación se guarda mediante **serialización de objetos Java*
 ## Requisitos e Instrucciones de Ejecución
 
 ### Requisitos del Sistema
-El proyecto fue desarrollado y compilado con **Java Development Kit (JDK) versión 17 o superior**. No utiliza librerías externas.
+El proyecto fue desarrollado y compilado con **Java Development Kit (JDK) versión 17 o superior**.
 
 ### Estructura de Archivos
 Asegúrese de que los archivos de datos iniciales (`VideogamesList.csv`, `CustomersList.csv`, `SalesList.csv`) se encuentren en la carpeta **`Data`** del proyecto para la carga inicial.
 
-### Ejecución del Programa
-Para compilar y ejecutar el programa desde la línea de comandos, asegúrese de estar en la raíz del proyecto:
+---
 
-1.  **Compilar el proyecto:** (Crea el directorio bin/ y compila)
-    ```bash
-    mkdir bin
-    javac -d bin src/**/*.java
-    ```
-2.  **Ejecutar la clase principal:** (Usando el Classpath)
-    ```bash
-    java -cp bin com.ui.Main
-    ```
+##     Ejecución del Programa (Método Recomendado)
+
+Para una puesta en marcha rápida y sin problemas de *shell* o compilación manual, la forma más sencilla de ejecutar el proyecto es a través de un Entorno de Desarrollo Integrado (**IDE**).
+
+### 1. Ubicación del Archivo Principal
+El archivo de inicio que contiene el método **`main`** se encuentra en la ruta:
+
+### 2. Pasos para Ejecutar en IDE
+
+1.  **Abrir Proyecto:** Use la opción **"Open"** o **"Import Project"** de su IDE (IntelliJ IDEA, Eclipse, VS Code) y seleccione la carpeta principal de este repositorio.
+2.  **Ejecutar Main:** Localice el archivo `Main.java` ubicado en la carpeta `ui`y haga clic derecho sobre él.
+3.  Seleccione la opción **"Run 'Main.main()'"** o su equivalente.
+
+El IDE se encargará de la compilación y de configurar el *classpath* automáticamente.
+
 ---
 
 ## Ejemplo de Entrada/Salida
@@ -55,100 +60,88 @@ A continuación, se muestra el flujo de interacción del usuario para agregar un
 
 ```
 Datos de la tienda cargados con éxito desde src/data/store_data.ser
-
 Iniciando programa...
+
 BIENVENIDO/A A LA TIENDA DE JUEGOS
 ========================================
+1) Entrar a la tienda.
+2) Salir.
 
-Entrar a la tienda.
+Seleccione una opción: 1
 
-Salir.
+----------- TIENDA -----------
+1) Mostrar catálogo completo.
+2) Buscar juego.
+3) Administrar tienda.
+4) Volver al menú principal.
 
-Seleccione una opción: 1 ----------- TIENDA -----------
+Seleccione una opción: 3
 
-Mostrar catálogo completo.
+--- ADMINISTRACIÓN DE LA TIENDA ---
+1) Gestionar clientes.
+2) Gestionar videojuegos.
+3) Gestionar ventas.
+4) Generar reporte.
+5) Volver al menú principal.
 
-Buscar juego.
+Seleccione una opción: 1
 
-Administrar tienda.
+----------- GESTIÓN DE CLIENTES  -----------
+1) Agregar cliente.
+2) Eliminar cliente.
+3) Modificar cliente.
+4) Lista de clientes.
+5) Volver.
 
-Volver al menú principal.
+Seleccione una opción: 1
 
-Seleccione una opción: 3 --- ADMINISTRACIÓN DE LA TIENDA ---
+Nombre del cliente: Maria
+ID: 5374820592
+Saldo inicial: 2000
+Cliente agregado: ID = 5374820592 Nombre = Maria
 
-Gestionar clientes.
-
-Gestionar videojuegos.
-
-Gestionar ventas.
-
-Generar reporte.
-
-Volver al menú principal.
-
-Seleccione una opción: 1 ----------- GESTIÓN DE CLIENTES  -----------
-
-Agregar cliente.
-
-Eliminar cliente.
-
-Modificar cliente.
-
-Lista de clientes.
-
-Volver.
-
-Seleccione una opción: 1 Nombre del cliente: Maria  ID: 5374820592 Saldo inicial: 2000 Cliente agregado: ID = 5374820592 Nombre = Maria ----------- GESTIÓN DE CLIENTES  -----------
-
-Agregar cliente.
-
-Eliminar cliente.
-
-Modificar cliente.
-
-Lista de clientes.
-
-Volver.
+----------- GESTIÓN DE CLIENTES  -----------
+1) Agregar cliente.
+2) Eliminar cliente.
+3) Modificar cliente.
+4) Lista de clientes.
+5) Volver.
 
 Seleccione una opción: 5
 
-Volviendo... --- ADMINISTRACIÓN DE LA TIENDA ---
+Volviendo...
 
-Gestionar clientes.
-
-Gestionar videojuegos.
-
-Gestionar ventas.
-
-Generar reporte.
-
-Volver al menú principal.
+--- ADMINISTRACIÓN DE LA TIENDA ---
+1) Gestionar clientes.
+2) Gestionar videojuegos.
+3) Gestionar ventas.
+4) Generar reporte.
+5) Volver al menú principal.
 
 Seleccione una opción: 5
 
-Volviendo... ----------- TIENDA -----------
+Volviendo...
 
-Mostrar catálogo completo.
-
-Buscar juego.
-
-Administrar tienda.
-
-Volver al menú principal.
+----------- TIENDA -----------
+1) Mostrar catálogo completo.
+2) Buscar juego.
+3) Administrar tienda.
+4) Volver al menú principal.
 
 Seleccione una opción: 4
 
 Volviendo al menú principal...
+
+========================================
 BIENVENIDO/A A LA TIENDA DE JUEGOS
 ========================================
-
-Entrar a la tienda.
-
-Salir.
+1) Entrar a la tienda.
+2) Salir.
 
 Seleccione una opción: 2
 
-Gracias por visitar la tienda. Saliendo... Guardando cambios de la sesión...
+Gracias por visitar la tienda. Saliendo...
+Guardando cambios de la sesión...
 
 Datos de la tienda guardados con éxito en src/data/store_data.ser
 ```
