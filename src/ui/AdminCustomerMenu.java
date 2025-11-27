@@ -28,24 +28,20 @@ public class AdminCustomerMenu {
             int option = console.readInt("\nSeleccione una opción: ");
             switch (option) {
                 case 1:
-                    console.sleep(option);
+                    console.sleep(200);
                     addCustomer(store, console);
-                    console.sleep(option);
                     break;
                 case 2:
-                    console.sleep(option);
+                    console.sleep(200);
                     removeCustomer(store, console);
-                    console.sleep(option);
                     break;
                 case 3:
-                    console.sleep(option);
+                    console.sleep(200);
                     modifyCustomer(store, console);
-                    console.sleep(option);
                     break;
                 case 4:
-                    console.sleep(option);
+                    console.sleep(200);
                     listCustomers(store, console);
-                    console.sleep(option);
                     break;
                 case 5:
                     console.writeLine("\nVolviendo...");
@@ -76,6 +72,7 @@ public class AdminCustomerMenu {
         } catch (Exception e) {
             console.writeError("No se pudo agregar el cliente: " + e.getMessage());
         }
+        console.sleep(2000);
     }
 
     /**
@@ -107,6 +104,7 @@ public class AdminCustomerMenu {
         } catch (Exception e) {
         console.writeError("No se pudo eliminar el cliente: " + e.getMessage());
         }
+        console.sleep(2000);
     }
 
     /**
@@ -162,8 +160,10 @@ public class AdminCustomerMenu {
                         break;
                     default:
                         console.writeLine("\nOpción inválida. Intente de nuevo.");
+                        console.sleep(1000);
                 }
             }
+            console.sleep(2000);
             return;
         }
     }
@@ -184,5 +184,8 @@ public class AdminCustomerMenu {
         for (Customer c : customers) {
             console.printDisplayableDetails(c);
         }
+
+        console.readString("Presione cualquier tecla para continuar.");
+        console.sleep(200);
     }
 }

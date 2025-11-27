@@ -27,12 +27,10 @@ public class AdminSaleMenu {
                 case 1:
                     console.sleep(200);
                     removeSale(store, console);
-                    console.sleep(200);
                     break;
                 case 2:
                     console.sleep(200);
                     listSales(store, console);
-                    console.sleep(200);
                     break;
                 case 3:
                     console.writeLine("\nVolviendo...");
@@ -75,6 +73,7 @@ public class AdminSaleMenu {
         } catch (Exception e) {
             console.writeError("No se pudo eliminar la venta: " + e.getMessage());
         }
+        console.sleep(2000);
     }
 
     /**
@@ -95,5 +94,7 @@ public class AdminSaleMenu {
         for (Sale s : sales) {
             console.printDisplayableDetails(s);
         }
+        console.readString("Presione cualquier tecla para continuar.");
+        console.sleep(200);
     }
 }

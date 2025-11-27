@@ -49,7 +49,6 @@ public class AdminMenu {
                         // Generates a financial report for a specific period
                         console.sleep(200);
                         generateIncomeReport(store, console);
-                        console.sleep(200);
                         break;
                     case 5:
                         console.writeLine("\nVolviendo...");
@@ -84,6 +83,9 @@ public class AdminMenu {
         } catch (Exception e) {
             console.writeError("Reporte no generado: " + e.getMessage());
         }
+
+        console.readString("Presione cualquier tecla para continuar");
+        console.sleep(200);
     }
 
     /**

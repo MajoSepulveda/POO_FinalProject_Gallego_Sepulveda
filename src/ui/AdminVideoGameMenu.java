@@ -30,22 +30,18 @@ public class AdminVideoGameMenu {
                 case 1:
                     console.sleep(200);
                     addVideoGame(store, console);
-                    console.sleep(200);
                     break;
                 case 2:
                     console.sleep(200);
                     removeVideoGame(store, console);
-                    console.sleep(200);
                     break;
                 case 3:
                     console.sleep(200);
                     modifyVideoGame(store, console);
-                    console.sleep(200);
                     break;
                 case 4:
                     console.sleep(200);
                     listVideoGames(store, console);
-                    console.sleep(200);
                     break;
                 case 5:
                     console.writeLine("\nVolviendo...");
@@ -79,6 +75,7 @@ public class AdminVideoGameMenu {
         } catch (Exception e) {
             console.writeError("No se pudo agregar el videojuego: " + e.getMessage());
         }
+        console.sleep(2000);
     }
 
     /**
@@ -111,6 +108,7 @@ public class AdminVideoGameMenu {
         } catch (Exception e) {
             console.writeError("No se pudo eliminar el videojuego: " + e.getMessage());
         }
+        console.sleep(2000);
     }
 
     /**
@@ -206,6 +204,7 @@ public class AdminVideoGameMenu {
                         console.sleep(1000);
                 }
             }
+            console.sleep(2000);
             return;
         }
     }
@@ -227,5 +226,8 @@ public class AdminVideoGameMenu {
         for (VideoGame g : games) {
             console.printDisplayableDetails(g);
         }
+        
+        console.readString("Presione cualquier tecla para continuar.");
+        console.sleep(200);
     }
 }
