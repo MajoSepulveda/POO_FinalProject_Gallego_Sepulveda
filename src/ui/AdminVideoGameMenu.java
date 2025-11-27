@@ -227,7 +227,7 @@ public class AdminVideoGameMenu {
             console.printDisplayableDetails(g);
         }
         
-        console.readString("Presione cualquier tecla para continuar.");
+        console.readString("Presione ENTER para continuar.");
         console.sleep(200);
     }
 }

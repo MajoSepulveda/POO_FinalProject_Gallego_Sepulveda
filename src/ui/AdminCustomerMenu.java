@@ -185,7 +185,7 @@ public class AdminCustomerMenu {
             console.printDisplayableDetails(c);
         }
 
-        console.readString("Presione cualquier tecla para continuar.");
+        console.readString("Presione ENTER para continuar.");
         console.sleep(200);
     }
 }

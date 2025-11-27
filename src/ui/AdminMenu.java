@@ -84,7 +84,7 @@ public class AdminMenu {
             console.writeError("Reporte no generado: " + e.getMessage());
         }
 
-        console.readString("Presione cualquier tecla para continuar");
+        console.readString("Presione ENTER para continuar");
         console.sleep(200);
     }
 

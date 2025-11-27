@@ -116,8 +116,10 @@ public class SelectMenu {
                     console.writeStringf("Saldo antes: $%.2f | Precio: $%.2f | Saldo ahora: $%.2f%n",
                             before, price, after);
                     console.writeLine("Stock restante del juego: " + game.getStock());
+                    console.sleep(1000);
                 } catch (Exception e) {
                     console.writeLine("\nNo se pudo completar la compra: " + e.getMessage());
+                    console.sleep(1000);
                 }
                 finished = true;
                 break;

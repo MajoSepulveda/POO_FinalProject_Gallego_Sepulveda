@@ -38,7 +38,7 @@ public class Main {
             List<Sale> sales = DataStorage.loadSales(SALES_CSV, store);
             store.loadInitialSales(sales);
             console.writeSucces("\nDatos cargados desde los archivos CSV con éxito.");
-            console.readString("Pulse cualquier tecla para continuar");
+            console.readString("Pulse ENTER para continuar");
             return store;
         } catch (IOException e) {
             console.writeError("\nCarga de datos desde archivos CSV incorrecta. " + e.getMessage());
@@ -128,7 +128,6 @@ public class Main {
         
         // --- Program Execution and Shutdown ---
         if (store != null) {
-            console.sleep(1500);
             StartMenu.show(store, console);
             console.cls();
             console.writeLine("Guardando cambios de la sesión...");
