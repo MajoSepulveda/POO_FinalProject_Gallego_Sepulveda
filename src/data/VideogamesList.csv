@@ -1,6 +1,6 @@
 id,title,genre,raiting,price,stock
 A001,The Legend of Zelda: TOTK,Aventura,9.7,69.99,15
-A002,God of War Ragnarök,Accion,9.5,59.99,22
+A002,God of War Ragnarok,Accion,9.5,59.99,22
 R003,Elden Ring,Rol,9.6,49.99,30
 E004,Civilization VI,Estrategia,9.0,29.99,18
 S005,Forza Horizon 5,Simulacion,9.2,39.99,10
@@ -39,3 +39,33 @@ D195,Gran Turismo 6,Deportes,8.0,9.99,27
 C196,Threes!,Casual,8.5,5.99,30
 E197,Tropico 6,Estrategia,8,15.99,16
 R199,Divinity: Original Sin 2,Rol,9.5,24.99,11
+R201,Disco Elysium,Rol,9.3,24.99,15
+E202,Stellaris,Estrategia,8.8,19.99,12
+A203,Horizon Zero Dawn,Aventura,9.0,19.99,28
+D204,Rocket League,Deportes,8.9,9.99,40
+S205,Microsoft Flight Sim,Simulacion,9.1,59.99,9
+C206,Among Us,Casual,8.0,4.99,55
+A207,Sekiro Shadows Die Twice,Accion,9.4,39.99,18
+R208,Dragon Quest XI,Rol,9.0,29.99,20
+E209,XCOM 2,Estrategia,8.7,14.99,15
+S210,Kerbal Space Program,Simulacion,8.8,29.99,11
+A211,Batman Arkham Knight,Accion,8.9,9.99,33
+D212,NBA 2K24,Deportes,8.5,69.99,30
+C213,Unpacking,Casual,9.2,19.99,25
+R214,Persona 5 Royal,Rol,9.6,49.99,14
+E215,Age of Empires II,Estrategia,9.2,19.99,22
+A216,Marvels Spiderman,Accion,9.3,29.99,27
+S217,Cities Skylines II,Simulacion,8.5,49.99,10
+D218,MLB The Show 23,Deportes,8.3,39.99,19
+C219,Fall Guys,Casual,7.9,0.00,60
+A220,Days Gone,Aventura,8.4,14.99,24
+R221,Nier Automata,Rol,9.1,19.99,21
+E222,Crusader Kings III,Estrategia,9.0,39.99,13
+S223,Farming Simulator 22,Simulacion,8.1,24.99,16
+A224,Control,Accion,8.8,14.99,29
+D225,WWE 2K24,Deportes,8.2,59.99,20
+C226,Plants vs Zombies,Casual,9.0,9.99,45
+R227,Mass Effect Legendary,Rol,9.4,39.99,17
+E228,Starcraft II,Estrategia,9.5,0.00,35
+A229,Diablo IV,Accion,8.9,69.99,10
+S230,Prison Architect,Simulacion,8.6,19.99,14

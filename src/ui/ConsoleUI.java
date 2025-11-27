@@ -79,6 +79,10 @@ public class ConsoleUI {
         this.writeLine(coloredMessage);
     }   
 
+    /**
+     * Writes a success or verification message in green color.
+     * @param message The success message to be displayed.
+     */
     public void writeSucces(String message) {
         String coloredMessage = ANSI_GREEN +  message + ANSI_RESET;
         this.writeLine(coloredMessage);
