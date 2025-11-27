@@ -148,8 +148,8 @@ Datos de la tienda guardados con éxito en src/data/store_data.ser
 ---
 
 
-## Diagrama de Clases (Modelo de Datos)
+## 📄 Diagrama de Clases (Modelo de Datos)
 
-El modelo de datos del sistema está representado en el siguiente diagrama de clases, que ilustra las relaciones y atributos de las entidades principales.
+El modelo de datos del sistema está representado en el siguiente diagrama:
 
-[Enlace al Diagrama de Clases (ModelDiagram.gif)](ModelDiagram.gif)
+[Diagrama de Clases UML](ModelDiagram.png)
