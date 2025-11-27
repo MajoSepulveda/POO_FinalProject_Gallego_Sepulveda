@@ -62,6 +62,7 @@ A continuación, se muestra el flujo de interacción del usuario para agregar un
 Datos de la tienda cargados con éxito desde src/data/store_data.ser
 Iniciando programa...
 
+========================================
 BIENVENIDO/A A LA TIENDA DE JUEGOS
 ========================================
 1) Entrar a la tienda.
