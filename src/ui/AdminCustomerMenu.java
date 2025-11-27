@@ -17,6 +17,7 @@ public class AdminCustomerMenu {
     public static boolean show(Store store, ConsoleUI console){
 
         while (true) {
+            console.cls();
             console.writeLine("----------- GESTIÓN DE CLIENTES  -----------");
             console.writeLine("1) Agregar cliente.");
             console.writeLine("2) Eliminar cliente.");
@@ -24,26 +25,35 @@ public class AdminCustomerMenu {
             console.writeLine("4) Lista de clientes.");
             console.writeLine("5) Volver.");
             
-            int option = console.readInt("Seleccione una opción: ");
+            int option = console.readInt("\nSeleccione una opción: ");
             switch (option) {
                 case 1:
+                    console.sleep(option);
                     addCustomer(store, console);
+                    console.sleep(option);
                     break;
                 case 2:
+                    console.sleep(option);
                     removeCustomer(store, console);
+                    console.sleep(option);
                     break;
                 case 3:
+                    console.sleep(option);
                     modifyCustomer(store, console);
+                    console.sleep(option);
                     break;
                 case 4:
+                    console.sleep(option);
                     listCustomers(store, console);
+                    console.sleep(option);
                     break;
                 case 5:
-                    console.writeLine("Volviendo...");
+                    console.writeLine("\nVolviendo...");
                     console.sleep(1000);
                     return true;
                 default:
-                    console.writeLine("Opción inválida. Intente de nuevo.");
+                    console.writeLine("\nOpción inválida. Intente de nuevo.");
+                    console.sleep(1000);
             }
         }
     }
@@ -55,6 +65,7 @@ public class AdminCustomerMenu {
     * @param console The ConsoleUI object for input/output operations.
     */
     private static void addCustomer(Store store, ConsoleUI console) {
+        console.cls();
         try {
             String name = console.readValidName("Nombre del cliente: ");
             String id = console.readCustomerID("ID: ");
@@ -63,7 +74,7 @@ public class AdminCustomerMenu {
             store.addCustomer(c);
             console.writeLine("Cliente agregado: ID = " + c.getId() + " Nombre = " + c.getName());
         } catch (Exception e) {
-            console.writeLine("No se pudo agregar el cliente: " + e.getMessage());
+            console.writeError("No se pudo agregar el cliente: " + e.getMessage());
         }
     }
 
@@ -74,22 +85,22 @@ public class AdminCustomerMenu {
     * @param console The ConsoleUI object for input/output operations.
     */
     private static void removeCustomer(Store store, ConsoleUI console) {
+        console.cls();
         try {
             String id = console.readCustomerID("ID del cliente a eliminar: ");
             Customer customer = store.findCustomerById(id);
 
             if (customer == null) {
-                console.writeError("Cliente no encontrado con ID: " + id);
+                console.writeLine("\nCliente no encontrado con ID: " + id);
                 return;
             }
 
             String confirmationMessage = String.format("¿Está seguro de que desea eliminar al cliente %s (ID: %s)? Escriba 'SI' para confirmar: ", customer.getName(), customer.getId());
-        
             String confirmation = console.readString(confirmationMessage);
 
             if (confirmation.trim().equalsIgnoreCase("SI")) {
                 store.removeCustomer(id);
-                console.writeLine("Cliente eliminado: " + customer.getName() + " (ID: " + id + ")");
+                console.writeSucces("Cliente eliminado: " + customer.getName() + " (ID: " + id + ")");
             } else {
                 console.writeLine("Operación de eliminación cancelada.");
             }
@@ -107,46 +118,50 @@ public class AdminCustomerMenu {
     private static void modifyCustomer(Store store, ConsoleUI console) {
         if (store == null) return;
         while (true) {
+            console.cls();
             String id = console.readCustomerID("Ingrese ID del cliente a modificar: ");
             Customer customer = store.findCustomerById(id);
             if (customer == null) {
-                console.writeLine("Cliente no encontrado. Verifique el ID.");
+                console.writeLine("\nCliente no encontrado. Verifique el ID.");
                 break;
             }
 
             boolean done = false;
             while (!done) {
+                console.cls();
                 console.writeLine("\nCliente actual: " + customer);
-                console.writeLine("1) Cambiar nombre");
-                console.writeLine("2) Agregar saldo");
-                console.writeLine("3) Volver");
-                int option = console.readInt("Seleccione una opción");
+                console.writeLine("1) Cambiar nombre.");
+                console.writeLine("2) Agregar saldo.");
+                console.writeLine("3) Volver.");
+
+                int option = console.readInt("\nSeleccione una opción");
+                console.cls();
                 switch (option) {
                     case 1:
-                        String name = console.readValidName("Nuevo nombre");
+                        String name = console.readValidName("Nuevo nombre: ");
                         try {
                             customer.setName(name);
-                            console.writeLine("Nombre actualizado.");
+                            console.writeSucces("Nombre actualizado.");
                         } catch (Exception e) {
-                            console.writeLine("Error: " + e.getMessage());
+                            console.writeError(e.getMessage());
                         }
                         break;
                     case 2:
                         float amount = console.readPositiveFloat("Monto a agregar.");
                         try {
                             customer.addBalance(amount);
-                            console.writeLine("Saldo agregado. Nuevo saldo: $" + String.format("%.2f", customer.getBalance()));
+                            console.writeSucces("Saldo agregado. Nuevo saldo: $" + String.format("%.2f", customer.getBalance()));
                         } catch (NumberFormatException nfe) {
-                            console.writeLine("Número inválido.");
+                            console.writeError("Número inválido.");
                         } catch (Exception e) {
-                            console.writeLine("Error: " + e.getMessage());
+                            console.writeError(e.getMessage());
                         }
                         break;
                     case 3:
                         done = true;
                         break;
                     default:
-                        console.writeLine("Opción inválida.");
+                        console.writeLine("\nOpción inválida. Intente de nuevo.");
                 }
             }
             return;
@@ -160,6 +175,7 @@ public class AdminCustomerMenu {
     */
     private static void listCustomers(Store store, ConsoleUI console) {
         List<Customer> customers = store.getCustomers();
+        console.cls();
         if (customers == null || customers.isEmpty()) {
             console.writeLine("No hay clientes registrados.");
             return;

@@ -17,57 +17,67 @@ public class AdminVideoGameMenu {
     public static void show(Store store, ConsoleUI console){
 
         while (true) {
-            console.writeLine("----------- GESTIÓN DE VIDEOJUEGOS  -----------");
+            console.cls();
+            console.writeLine("----------- GESTIÓN DE VIDEOJUEGOS -----------");
             console.writeLine("1) Agregar videojuego.");
             console.writeLine("2) Eliminar videojuego.");
             console.writeLine("3) Modificar videojuego.");
             console.writeLine("4) Lista de videojuegos.");
             console.writeLine("5) Volver.");
 
-            int option = console.readInt("Seleccione una opción: ");
+            int option = console.readInt("\nSeleccione una opción: ");
             switch (option) {
                 case 1:
+                    console.sleep(200);
                     addVideoGame(store, console);
+                    console.sleep(200);
                     break;
                 case 2:
+                    console.sleep(200);
                     removeVideoGame(store, console);
+                    console.sleep(200);
                     break;
                 case 3:
+                    console.sleep(200);
                     modifyVideoGame(store, console);
+                    console.sleep(200);
                     break;
                 case 4:
+                    console.sleep(200);
                     listVideoGames(store, console);
+                    console.sleep(200);
                     break;
                 case 5:
-                    console.writeLine("Volviendo...");
+                    console.writeLine("\nVolviendo...");
                     console.sleep(1000);
                     return;
                 default:
-                    console.writeLine("Opción inválida. Intente de nuevo.");
+                    console.writeLine("\nOpción inválida. Intente de nuevo.");
+                    console.sleep(1000);
             }   
         }
     }
 
     /**
-    * Prompts the user for all video game details (ID, Title, Genre, Rating, Price, Stock)
-    * and adds a new video game to the store.
+    * Prompts the user for all video game details (ID, Title, Genre, Rating, Price, Stock) and adds a new video game to the store.
     * Handles potential exceptions during data input or game creation.
     * @param store The Store object to which the video game will be added.
     * @param console The ConsoleUI object for input/output operations.
     */
     private static void addVideoGame(Store store, ConsoleUI console) {
         try {
+            console.cls();
             String id = console.readVideoGameID("ID del videojuego: ");
-            String title = console.readValidString("Titulo: ");
-            String genre = console.readGenre("Genero: ");
-            float rating = console.readRating("Rating: ");
+            String title = console.readValidString("Título: ");
+            String genre = console.readGenre("Género: ");
+            float rating = console.readRating("Calificación: ");
             float price = console.readPositiveFloat("Precio: ");
             int stock = console.readStock("Stock: ");
             VideoGame vg = new VideoGame(title, genre, rating, price, id, stock);
             store.addGame(vg);
             console.writeLine("Videojuego agregado: ID = " + vg.getId() + " Título = " + vg.getTitle());
         } catch (Exception e) {
-            console.writeLine("No se pudo agregar el videojuego: " + e.getMessage());
+            console.writeError("No se pudo agregar el videojuego: " + e.getMessage());
         }
     }
 
@@ -79,21 +89,22 @@ public class AdminVideoGameMenu {
     */
     private static void removeVideoGame(Store store, ConsoleUI console) {
         try {
+            console.cls();
             String id = console.readVideoGameID("ID del videojuego a eliminar: ");
             VideoGame game = store.findVideoGameById(id);
 
             if (game == null) {
-                console.writeError("Videojuego no encontrado con ID: " + id);
+                console.writeLine("\nVideojuego no encontrado con ID: " + id);
+                console.sleep(1500);
                 return;
             }
         
             String confirmationMessage = String.format("¿Está seguro de que desea eliminar el videojuego '%s' (ID: %s)? Escriba 'SI' para confirmar: ", game.getTitle(), game.getId());
-        
             String confirmation = console.readString(confirmationMessage);
 
             if (confirmation.trim().equalsIgnoreCase("SI")) {
                 store.removeVideoGame(id);
-                console.writeLine("Videojuego eliminado: " + game.getTitle() + " (ID: " + id + ")");
+                console.writeSucces("Videojuego eliminado: " + game.getTitle() + " (ID: " + id + ")");
             } else {
                 console.writeLine("Operación de eliminación cancelada.");
             }
@@ -111,80 +122,88 @@ public class AdminVideoGameMenu {
     private static void modifyVideoGame(Store store, ConsoleUI console) {
         if (store == null) return;
         while (true) {
-            String id = console.readVideoGameID("Ingrese ID del videojuego a modificar. ");
+            console.cls();
+            String id = console.readVideoGameID("Ingrese ID del videojuego a modificar: ");
             VideoGame g = store.findVideoGameById(id);
             if (g == null) {
-                console.writeLine("Videojuego no encontrado. Verifique el ID.");
+                console.writeLine("\nVideojuego no encontrado. Verifique el ID.");
+                console.sleep(1500);
                 break;
             }
 
             boolean done = false;
             while (!done) {
+                console.cls();
                 console.writeLine("\nVideojuego actual: " + g.getTitle());
-                console.writeLine("1) Cambiar título");
-                console.writeLine("2) Cambiar género");
-                console.writeLine("3) Cambiar rating");
-                console.writeLine("4) Cambiar precio");
-                console.writeLine("5) Agregar stock");
-                console.writeLine("6) Volver");
-                int option = console.readInt("Selecione una opción");
+                console.writeLine("1) Cambiar título.");
+                console.writeLine("2) Cambiar género.");
+                console.writeLine("3) Cambiar rating.");
+                console.writeLine("4) Cambiar precio.");
+                console.writeLine("5) Agregar stock.");
+                console.writeLine("6) Volver.");
+
+                int option = console.readInt("\nSeleccione una opción: ");
+                console.cls();
+
                 switch (option) {
                     case 1:
                         String newTitle = console.readValidString("Nuevo titulo: ");
                         try {
                             g.setTitle(newTitle);
-                            console.writeLine("Título actualizado.");
+                            console.writeSucces("Título actualizado.");
                         } catch (Exception e) {
-                            console.writeLine("Error: " + e.getMessage());
+                            console.writeError(e.getMessage());
                         }
                         break;
                     case 2:
-                        String newGenre = console.readGenre("Nuevo género (Acción, Aventura, RPG, Estrategia, Simulación, Carreras, Deportes, Casual): ");
+                        String newGenre = console.readGenre("Nuevo género (Accion, Aventura, Rol, Estrategia, Simulacion, Carreras, Deportes, Casual): ");
                         try {
                             g.setGenre(newGenre);
-                            console.writeLine("Género actualizado.");
+                            console.writeSucces("Género actualizado.");
                         } catch (Exception e) {
-                            console.writeLine("Error: " + e.getMessage());
+                            console.writeError(e.getMessage());
                         }
                         break;
                     case 3:
                         float newRating = console.readRating("Nuenvo rating (0.0 - 10.0): ");
                         try {
                             g.setRating(newRating);
-                            console.writeLine("Rating actualizado.");
+                            console.writeSucces("Rating actualizado.");
                         } catch (NumberFormatException nfe) {
-                            console.writeLine("Número inválido.");
+                            console.writeError("Número inválido.");
                         } catch (Exception e) {
-                            console.writeLine("Error: " + e.getMessage());
+                            console.writeError(e.getMessage());
                         }
                         break;
                     case 4:
                         float newPrice = console.readPositiveFloat("Nuevo precio: ");
                         try {
                             g.setPrice(newPrice);
-                            console.writeLine("Precio actualizado.");
+                            console.writeSucces("Precio actualizado.");
                         } catch (NumberFormatException nfe) {
-                            console.writeLine("Número inválido.");
+                            console.writeError("Número inválido.");
                         } catch (Exception e) {
-                            console.writeLine("Error: " + e.getMessage());
+                            console.writeError(e.getMessage());
                         }
                         break;
                     case 5:
                         int addStock = console.readStock("Cantidad a agregar al stock: ");
                         try {
                             g.addStock(addStock);
-                            console.writeLine("Stock actualizado. Nuevo stock: " + g.getStock());
+                            console.writeSucces("Stock actualizado.");
+                            console.writeLine("Nuevo stock: " + g.getStock());
                         } catch (NumberFormatException nfe) {
-                            console.writeLine("Número inválido.");
+                            console.writeError("Número inválido.");
                         } catch (Exception e) {
-                            console.writeLine("Error: " + e.getMessage());
+                            console.writeError(e.getMessage());
                         }
                         break;
                     case 6:
                         done = true;
                         break;
                     default:
-                        console.writeLine("Opción inválida.");
+                        console.writeLine("\nOpción inválida. Intente de nuevo");
+                        console.sleep(1000);
                 }
             }
             return;
@@ -199,6 +218,7 @@ public class AdminVideoGameMenu {
     */
     private static void listVideoGames(Store store, ConsoleUI console) {
         List<VideoGame> games = store.getVideoGames();
+        console.cls();
         if (games == null || games.isEmpty()) {
             console.writeLine("No hay videojuegos registrados.");
             return;

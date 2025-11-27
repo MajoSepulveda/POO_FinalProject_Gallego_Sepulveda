@@ -17,25 +17,30 @@ public class AdminSaleMenu {
     public static void show(Store store, ConsoleUI console){
 
         while (true) {
-            console.writeLine("----------- GESTIÓN DE CLIENTES  -----------");
+            console.writeLine("----------- GESTIÓN DE VENTAS  -----------");
             console.writeLine("1) Eliminar venta.");
             console.writeLine("2) Lista de ventas.");
             console.writeLine("3) Volver.");
 
-            int option = console.readInt("Seleccione una opción; ");
+            int option = console.readInt("\nSeleccione una opción: ");
             switch (option) {
                 case 1:
+                    console.sleep(200);
                     removeSale(store, console);
+                    console.sleep(200);
                     break;
                 case 2:
+                    console.sleep(200);
                     listSales(store, console);
+                    console.sleep(200);
                     break;
                 case 3:
-                    console.writeLine("Volviendo...");
+                    console.writeLine("\nVolviendo...");
                     console.sleep(1000);
                     return;
                 default:
-                    console.writeLine("Opción inválida. Intente de nuevo.");
+                    console.writeLine("\nOpción inválida. Intente de nuevo.");
+                    console.sleep(1000);
             }
         }
     }
@@ -48,20 +53,22 @@ public class AdminSaleMenu {
     */
     private static void removeSale(Store store, ConsoleUI console) {
         try {
-            String id = console.readSaleId("ID de la venta a eliminar: ");
+            console.cls();
+            String id = console.readSaleId("Ingrese el ID de la venta a eliminar: ");
             Sale sale = store.findSaleById(id);
 
             if (sale == null) {
-                console.writeError("Venta no encontrada con ID: " + id);
+                console.writeLine("\nVenta no encontrada con ID: " + id);
+                console.sleep(1500);
                 return;
             }
         
-            String confirmationMessage = String.format("¿Está seguro de que desea eliminar la Venta ID: %s? Esta acción afectará el stock y los ingresos. Escriba 'SI' para confirmar: ", sale.getId());
+            String confirmationMessage = String.format("\n¿Está seguro de que desea eliminar la Venta ID: %s? Esta acción es irreversible. Escriba 'SI' para confirmar: ", sale.getId());
             String confirmation = console.readString(confirmationMessage);
 
             if (confirmation.trim().equalsIgnoreCase("SI")) {
                 store.removeSale(id);
-                console.writeLine("Venta eliminada: " + sale.getId());
+                console.writeSucces("Venta eliminada: " + sale.getId());
             } else {
                 console.writeLine("Operación de eliminación de venta cancelada.");
             }
@@ -78,8 +85,10 @@ public class AdminSaleMenu {
     */
     private static void listSales(Store store, ConsoleUI console) {
         List<Sale> sales = store.getSales();
+        console.cls();
         if (sales == null || sales.isEmpty()) {
             console.writeLine("No hay ventas registradas.");
+            console.sleep(1500);
             return;
         }
         console.writeLine("--- VENTAS ---");
@@ -87,5 +96,4 @@ public class AdminSaleMenu {
             console.printDisplayableDetails(s);
         }
     }
-    
 }

@@ -15,46 +15,52 @@ public class AdminMenu {
     * @param console The ConsoleUI object used for user input and output.
     */
     public static void Show(Store store, ConsoleUI console) {
-        if (store == null) {
-            console.writeLine("Tienda no inicializada.");
-            return;
-        }
-        
         while (true) {
-            console.writeLine("\n--- ADMINISTRACIÓN DE LA TIENDA ---");
+            console.cls();
+            console.writeLine("--- ADMINISTRACIÓN DE LA TIENDA ---");
             console.writeLine("1) Gestionar clientes.");
             console.writeLine("2) Gestionar videojuegos.");
             console.writeLine("3) Gestionar ventas.");
             console.writeLine("4) Generar reporte."); 
             console.writeLine("5) Volver al menú principal.");
 
-            int option = console.readInt("Seleccione una opción: ");
+            int option = console.readInt("\nSeleccione una opción: ");
             try {
                 switch (option) {
                     case 1:
                         // Navigates to the Customer Management menu
+                        console.sleep(200);
                         AdminCustomerMenu.show(store, console);
+                        console.sleep(200);
                         break;
                     case 2:
                         // Navigates to the Video Game Management menu
+                        console.sleep(200);
                         AdminVideoGameMenu.show(store, console);
+                        console.sleep(200);
                         break;
                     case 3:
                         // Navigates to the Sales Management menu
+                        console.sleep(200);
                         AdminSaleMenu.show(store, console);
+                        console.sleep(200);
                         break;
                     case 4:
                         // Generates a financial report for a specific period
+                        console.sleep(200);
                         generateIncomeReport(store, console);
+                        console.sleep(200);
                         break;
                     case 5:
-                        console.writeLine("Volviendo al menú principal...");
+                        console.writeLine("\nVolviendo...");
                         console.sleep(1000);
                         return;
-                    default: System.out.println("Opción inválida.");
+                    default: 
+                        System.out.println("\nOpción inválida. Intente de nuevo.");
+                        console.sleep(1000);
                 }
             } catch (Exception e) {
-                console.writeLine("Error: " + e.getMessage());
+                console.writeError(e.getMessage());
             }
         }
     }
@@ -66,6 +72,7 @@ public class AdminMenu {
     * @param console The ConsoleUI object for input/output operations.
     */
     private static void generateIncomeReport(Store store, ConsoleUI console) {
+        console.cls();
         try {
             LocalDate[] period = readPeriod(console);
             String report = store.generateIncomeReport(period[0], period[1]);

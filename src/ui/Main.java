@@ -128,7 +128,7 @@ public class Main {
         
         // --- Program Execution and Shutdown ---
         if (store != null) {
-            console.sleep(2000);
+            console.sleep(1500);
             StartMenu.show(store, console);
             console.cls();
             console.writeLine("Guardando cambios de la sesión...");
