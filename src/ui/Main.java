@@ -37,15 +37,12 @@ public class Main {
             // Load Sales, which requires the initialized Store to link Customer/VideoGame objects
             List<Sale> sales = DataStorage.loadSales(SALES_CSV, store);
             store.loadInitialSales(sales);
-            console.writeLine("\nDatos cargados desde los archivos CSV con éxito.");
-            console.readString("[Enter] para continuar");
-            console.sleep(2000);
+            console.writeSucces("\nDatos cargados desde los archivos CSV con éxito.");
+            console.readString("Pulse cualquier tecla para continuar");
             return store;
         } catch (IOException e) {
-            console.writeError("Carga de datos desde archivos CSV incorrecta. " + e.getMessage());
+            console.writeError("\nCarga de datos desde archivos CSV incorrecta. " + e.getMessage());
             console.writeLine("Verifique la existencia y formato de los archivos CSV.");
-            console.readString("[Enter] para continuar");
-            console.sleep(2000);
             return null;
         }
     }
@@ -59,20 +56,18 @@ public class Main {
     private static Store handleFailedLoad(Scanner input) {
         console.cls();
         console.writeLine("--- OPCIONES DE INICIO ---");
-        console.writeLine("1. Cargar datos iniciales desde archivos CSV.");
-        console.writeLine("2. Iniciar la tienda vacía.");
+        console.writeLine("1) Cargar datos iniciales desde archivos CSV.");
+        console.writeLine("2) Iniciar la tienda vacía.");
         int option = console.readInt("\nSeleccione una opción (1 o 2): ");
             
         if (option == 1) {
-            console.sleep(2000);
+            console.sleep(500);
             return loadFromCSV(input);
         } else if (option == 2) { 
             console.writeLine("\nIniciando tienda vacía...");
-            console.sleep(2000);
             return new Store(); 
         } else {
-            console.writeError("\nOpción inválida. El programa finalizará.");
-            console.sleep(2000);
+            console.writeError("Opción inválida. El programa finalizará.");
             return null;
         }
     }
@@ -87,14 +82,14 @@ public class Main {
         try {
             // Attempt 1: Save to the main file
             DataStorage.save(store, MAIN_FILE);
-            console.writeLine("\nDatos de la tienda guardados con éxito en " + MAIN_FILE);
+            console.writeSucces("\nDatos de la tienda guardados con éxito en " + MAIN_FILE);
         } catch (IOException e) {
             console.writeError("\nAvertencia: Falló el guardado principal en " + MAIN_FILE + ". Intentando respaldo en " + BACKUP_FILE);
 
             // Attempt 2: Save to the backup file
             try {
                 DataStorage.save(store, BACKUP_FILE);
-                console.writeLine("\nDatos guardados con éxito en el archivo de respaldo " + BACKUP_FILE);
+                console.writeSucces("\nDatos guardados con éxito en el archivo de respaldo " + BACKUP_FILE);
             } catch (IOException innerE) {
                 // Both attempts failed
                 console.writeError("\nERROR CRÍTICO: Fallaron ambos intentos de guardado. Los datos de esta sesión no se guardarán. " + innerE.getMessage());
@@ -116,23 +111,29 @@ public class Main {
 
         // --- Load Serialized Data --- 
         console.cls();
-        console.sleep(1000);
+        console.sleep(200);
         try{
             store = DataStorage.load(MAIN_FILE);
-            console.writeLine("Datos de la tienda cargados con éxito desde " + MAIN_FILE + "\n Inicializando programa...");
+            console.writeSucces("Datos de la tienda cargados con éxito desde " + MAIN_FILE);
+            console.writeLine("\nIniciando programa...");
         } catch (IOException | ClassNotFoundException e){
             console.writeError("No se pudo cargar los datos de la tienda desde el archivo: " + e.getMessage());
-            console.sleep(2000);
+            console.writeLine("Se presentarán otras opciones de incio.");
+            console.sleep(4000);
+
             store = handleFailedLoad(scanner);
+            console.sleep(1500);
             console.cls();
         }
         
         // --- Program Execution and Shutdown ---
         if (store != null) {
+            console.sleep(2000);
             StartMenu.show(store, console);
             console.cls();
             console.writeLine("Guardando cambios de la sesión...");
             handleSave(store);
+            console.sleep(3000);
         }
         
         scanner.close();

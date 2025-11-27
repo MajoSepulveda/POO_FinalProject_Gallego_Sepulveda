@@ -11,8 +11,9 @@ import src.domain.*;
 public class ConsoleUI {
     private final Scanner input;
 
-    // Defines the ANSI escape code sequence to initiate the RED font color in the console output. Used primarily for error messages.
+    // Defines the ANSI escape code sequence to initiate font color in the console output.
     private static final String ANSI_RED = "\u001b[31m";
+    public static final String ANSI_GREEN = "\u001b[32m";
 
     //Defines the ANSI escape code sequence to RESET the font color to the console's default setting.
     private static final String ANSI_RESET = "\u001b[0m";
@@ -77,6 +78,11 @@ public class ConsoleUI {
         String coloredMessage = ANSI_RED + "[ERROR] " + message + ANSI_RESET;
         this.writeLine(coloredMessage);
     }   
+
+    public void writeSucces(String message) {
+        String coloredMessage = ANSI_GREEN +  message + ANSI_RESET;
+        this.writeLine(coloredMessage);
+    } 
 
     /**
      * Reads a line of text from the console, prompts the user, and trims whitespace.

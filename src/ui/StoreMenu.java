@@ -19,26 +19,26 @@ public class StoreMenu {
             console.writeLine("----------- TIENDA -----------");
             console.writeLine("1) Mostrar catálogo completo.");
             console.writeLine("2) Buscar juego.");
-            console.writeLine("3) Administrar la tienda.");
+            console.writeLine("3) Administrar tienda.");
             console.writeLine("4) Volver al menú principal.");
 
             int option = console.readInt("\nSeleccione una opción: ");
             switch (option) {
                 case 1:
-                    console.sleep(300);
+                    console.sleep(200);
                     showCatalog(store, console);
                     break;
                 case 2:
-                    console.sleep(300);
+                    console.sleep(200);
                     SearchMenu.show(store, console);
                     break;
                 case 3:
-                    console.sleep(300);
+                    console.sleep(200);
                     AdminMenu.Show(store, console);
                     break;
                 case 4:
                     console.writeLine("\nVolviendo al menú principal...");
-                    console.sleep(1000);
+                    console.sleep(1500);
                     return;
                 default:
                     console.writeLine("\nOpción inválida. Intente de nuevo.");
@@ -54,11 +54,6 @@ public class StoreMenu {
      * @param console The ConsoleUI object for output operations.
      */
     private static void showCatalog(Store store, ConsoleUI console) {
-        if (store == null) {
-            console.writeError("Tienda no inicializada.");
-            return;
-        }
-
         List<VideoGame> games = store.getVideoGames();
         if (games == null || games.isEmpty()) {
             console.writeLine("\nCatálogo vacío.");
@@ -68,7 +63,7 @@ public class StoreMenu {
 
         // Display header
         console.writeStringf("%-6s  %-60s  %-12s  %-6s  %-7s  %-5s%n",
-                "ID", "TÍTULO", "GÉNERO", "RATING", "PRECIO", "STOCK");
+                "ID", "TÍTULO", "GÉNERO", "CALIFICACIÓN", "PRECIO", "STOCK");
         console.writeLine("-------------------------------------------------------------------------------------------------------------");
 
         // Display each game using its displayObject method
@@ -79,6 +74,5 @@ public class StoreMenu {
         // Allows the user to select one of the displayed games
         SelectMenu.SelectById(store, console);
         console.sleep(300);
-
     }
 }

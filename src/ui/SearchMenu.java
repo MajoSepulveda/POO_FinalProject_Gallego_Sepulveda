@@ -28,8 +28,8 @@ public class SearchMenu {
             console.writeLine("2) Género: " + (currentGenre != null ? currentGenre : "[No Aplicado]."));
             console.writeLine("3) Precio Máximo: " + (currentMaxPrice != null ? "$" + currentMaxPrice : "[No Aplicado]."));
             console.writeLine("4) Rating Mínimo: " + (currentMinRating != null ? currentMinRating : "[No Aplicado]."));
-            console.writeLine("5) Aplicar Filtros y Mostrar Resultados.");
-            console.writeLine("6) Restablecer Filtros.");
+            console.writeLine("5) Ver resultados.");
+            console.writeLine("6) Restablecer filtros.");
             console.writeLine("7) Volver.");
             option = console.readInt("\nSelecione una opción: ");
             console.writeLine("------------------------------\n");
@@ -47,6 +47,8 @@ public class SearchMenu {
                 case 4: 
                     currentMinRating = console.readFloatObject("Ingrese el rating mínimo que desea: ");
                     break;
+                case 5: 
+                    break;
                 case 6: 
                     currentTitle = null;
                     currentGenre = null;
@@ -54,26 +56,25 @@ public class SearchMenu {
                     currentMinRating = null; 
                     break;
                 case 7:
-                    console.writeLine("Volviendo al menú principal sin aplicar filtros...");
-                    console.sleep(1000);
+                    console.writeLine("Volviendo a la tienda...");
+                    console.sleep(1500);
                     return;
                 default:
                     console.writeLine("Opción inválida. Intente de nuevo.");
+                    console.sleep(1000);
             }
         } 
 
-        console.sleep(1000);
+        console.sleep(200);
         console.cls();
-
         List<VideoGame> results = store.filterVideoGames(currentTitle, currentGenre, currentMaxPrice, currentMinRating);
 
         if (results.isEmpty()) {
             console.writeLine("\nNo se encontraron videojuegos que coincidan con los filtros aplicados.");
+            console.sleep(1500);
         } else {
             displayVideoGameList(results, console, null);
             SelectMenu.SelectById(store, console);
-            console.sleep(2000);
-            console.cls();
         }   
     }
 
@@ -83,7 +84,8 @@ public class SearchMenu {
      * @param console The ConsoleUI instance used for printing the output.
      */
     private static void displayVideoGameList(List<VideoGame> videoGames, ConsoleUI console, Displayable videoGame) {
-        console.writeLine("\n--- RESULTADOS ---");
+        console.cls();
+        console.writeLine("--- RESULTADOS ---");
         console.writeStringf("%-6s  %-60s  %-12s  %-6s  %-7s  %-5s%n",
                 "ID", "TÍTULO", "GÉNERO", "RATING", "PRECIO", "STOCK");
         console.writeLine("-------------------------------------------------------------------------------------------------------------");
@@ -91,7 +93,6 @@ public class SearchMenu {
         for (VideoGame game : videoGames) {
             console.printDisplayableDetails(game);
         }
-        
         console.writeLine("------------------");
     }
 }

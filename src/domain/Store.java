@@ -419,9 +419,6 @@ public class Store implements Serializable {
      * @param gameId The validated Game ID (e.g., "A001").
      * @return The generated Sale ID (e.g., "100A"), or an empty string if gameId is invalid/missing.
      */
-    // En la clase src.domain.Store
-
-
     public String generateSaleId() {
         int currentId = 1;
         String newSaleId;

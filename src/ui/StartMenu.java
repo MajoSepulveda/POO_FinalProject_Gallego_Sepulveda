@@ -17,25 +17,26 @@ public class StartMenu {
     public static void show(Store store, ConsoleUI console) {
         while (true) {
             console.cls();
-            console.writeLine("======================================");
+            console.writeLine("========================================");
             console.writeLine("   BIENVENIDO/A A LA TIENDA DE JUEGOS");
-            console.writeLine("======================================");
-            console.writeLine("1) Entrar a la tienda");
-            console.writeLine("2) Salir");
+            console.writeLine("========================================");
+            console.writeLine("1) Entrar a la tienda.");
+            console.writeLine("2) Salir.");
 
             int option = console.readInt("\nSeleccione una opción: ");
             switch (option) {
                 case 1:
                     // Enters the main store browsing and interaction menu
-                    console.sleep(300);
+                    console.sleep(200);
                     StoreMenu.show(store, console);
                     break;
                 case 2:
                     console.writeLine("\nGracias por visitar la tienda. Saliendo...");
-                    console.sleep(1000);
+                    console.sleep(1500);
                     return; // Terminates the application loop
                 default:
                     console.writeLine("\nOpción inválida. Intenta de nuevo.");
+                    console.sleep(1000);
             }
         }
     }

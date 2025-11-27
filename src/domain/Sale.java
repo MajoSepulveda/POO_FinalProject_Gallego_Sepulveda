@@ -132,7 +132,7 @@ public class Sale implements Serializable, Displayable {
      * Returns the sale date formatted as a String (dd/MM/yyyy).
      * @return The formatted date string.
      */
-    public String getFormattedDate() {
+    private String getFormattedDate() {
         return date.format(DATE_FORMATTER);
     }
 
