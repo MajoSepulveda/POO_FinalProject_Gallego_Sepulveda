@@ -132,7 +132,7 @@ public class AdminVideoGameMenu {
             boolean done = false;
             while (!done) {
                 console.cls();
-                console.writeLine("\nVideojuego actual: " + g.getTitle());
+                console.writeLine("Videojuego actual: " + g.getTitle());
                 console.writeLine("1) Cambiar título.");
                 console.writeLine("2) Cambiar género.");
                 console.writeLine("3) Cambiar rating.");

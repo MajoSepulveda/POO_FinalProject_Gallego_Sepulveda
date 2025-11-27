@@ -20,6 +20,7 @@ public class SelectMenu {
         VideoGame game = store.findVideoGameById(id);
         if (game == null) {
             console.writeLine("\nNo se encontró un videojuego con el ID: " + id);
+            console.sleep(1500);
             return null;
         }
 
@@ -100,7 +101,7 @@ public class SelectMenu {
                 break;
             }
 
-            String confirm = console.readValidString("¿Confirmar compra? (s/n)").toLowerCase();
+            String confirm = console.readValidString("¿Confirmar compra? (s/n): ").toLowerCase();
             if (!confirm.equals("s") && !confirm.equals("y")) {
                 console.writeLine("Compra cancelada.");
                 console.sleep(1500);

@@ -116,6 +116,7 @@ public class Main {
             store = DataStorage.load(MAIN_FILE);
             console.writeSucces("Datos de la tienda cargados con éxito desde " + MAIN_FILE);
             console.writeLine("\nIniciando programa...");
+            console.sleep(2000);
         } catch (IOException | ClassNotFoundException e){
             console.writeError("No se pudo cargar los datos de la tienda desde el archivo: " + e.getMessage());
             console.writeLine("Se presentarán otras opciones de incio.");

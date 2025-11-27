@@ -127,12 +127,12 @@ public class AdminCustomerMenu {
             boolean done = false;
             while (!done) {
                 console.cls();
-                console.writeLine("\nCliente actual: " + customer);
+                console.writeLine("Cliente actual: " + customer.getName());
                 console.writeLine("1) Cambiar nombre.");
                 console.writeLine("2) Agregar saldo.");
                 console.writeLine("3) Volver.");
 
-                int option = console.readInt("\nSeleccione una opción");
+                int option = console.readInt("\nSeleccione una opción: ");
                 console.cls();
                 switch (option) {
                     case 1:
@@ -145,7 +145,7 @@ public class AdminCustomerMenu {
                         }
                         break;
                     case 2:
-                        float amount = console.readPositiveFloat("Monto a agregar.");
+                        float amount = console.readPositiveFloat("Monto a agregar: ");
                         try {
                             customer.addBalance(amount);
                             console.writeSucces("Saldo agregado. Nuevo saldo: $" + String.format("%.2f", customer.getBalance()));
@@ -162,8 +162,8 @@ public class AdminCustomerMenu {
                         console.writeLine("\nOpción inválida. Intente de nuevo.");
                         console.sleep(1000);
                 }
+                console.sleep(2000);
             }
-            console.sleep(2000);
             return;
         }
     }
@@ -185,7 +185,7 @@ public class AdminCustomerMenu {
             console.printDisplayableDetails(c);
         }
 
-        console.readString("Presione ENTER para continuar.");
+        console.readString("\nPresione ENTER para continuar.");
         console.sleep(200);
     }
 }

@@ -17,6 +17,7 @@ public class AdminSaleMenu {
     public static void show(Store store, ConsoleUI console){
 
         while (true) {
+            console.cls();
             console.writeLine("----------- GESTIÓN DE VENTAS  -----------");
             console.writeLine("1) Eliminar venta.");
             console.writeLine("2) Lista de ventas.");
@@ -94,7 +95,7 @@ public class AdminSaleMenu {
         for (Sale s : sales) {
             console.printDisplayableDetails(s);
         }
-        console.readString("Presione ENTER para continuar.");
+        console.readString("\nPresione ENTER para continuar.");
         console.sleep(200);
     }
 }
